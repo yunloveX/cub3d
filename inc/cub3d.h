@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 07:29:23 by iestero-          #+#    #+#             */
-/*   Updated: 2024/06/30 16:34:20 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:48:40 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,9 @@ char	**ft_dstrdup(char **dstr, int size);
 int		create_trgb(int t, int r, int g, int b);
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+
+void	cub3d_error(char *message, int error);
+
+void	double_free(char **str);
 
 #endif

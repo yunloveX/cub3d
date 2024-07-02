@@ -123,4 +123,4 @@ main(){
 		(cd test ; ${MAKE} -f Makefile.gen all )
 }
 
-main "$@"
+main "$@" > /dev/null

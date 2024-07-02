@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/06/28 18:38:42 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:00:58 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ typedef struct s_texture
 
 typedef struct s_walls
 {
-	t_texture	*north;
-	t_texture	*south;
-	t_texture	*west;
-	t_texture	*east;
+	t_texture	north;
+	t_texture	south;
+	t_texture	west;
+	t_texture	east;
 }	t_walls;
 
 typedef struct s_colors

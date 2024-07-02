@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/06/30 16:06:08 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:48:33 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,25 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
 	return (new_ptr);
+}
+
+/**
+ * @brief 
+ * Frees a double pointer.
+ *
+ * @details
+ * Frees each string in the array, then frees the array itself.
+ *
+ * @param str The double pointer to free.
+ */
+void	double_free(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	while (i >= 0)
+		free(str[i--]);
+	free(str);
 }

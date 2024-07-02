@@ -6,7 +6,7 @@
 #    By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2024/06/17 11:46:47 by yunlovex         ###   ########.fr        #
+#    Updated: 2024/07/02 20:27:10 by yunlovex         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,15 +48,21 @@ LIBCUB3D_BONUS		=	$(LIBS_DIR)/libcub3dbonus.a
 LIBFT_DIR			=	./libft
 LIBFT				=	$(LIBFT_DIR)/libft.a
 
-MINILIBX_DIR		=	minilibx-linux
+MINILIBX_DIR		=	./minilibx-linux
 MINILIBX			=	$(MINILIBX_DIR)/libmlx.a
 
 #Directories
 
 OBJ_DIR				=	build
 OBJBNS_DIR			=	buildbonus
+
 SRC_DIR				=	src
 SRCBNS_DIR			= 	srcbonus
+
+TESTS_DIR			=	test
+TESTS_DIR_BIN		=	$(TESTS_DIR)/bin
+TESTS_DIR_SRC		=	$(TESTS_DIR)/src
+TESTS_DIR_OBJ		=	$(TESTS_DIR)/obj
 
 INC_DIR				=	inc
 INCBONUS_DIR		=	incbonus
@@ -72,9 +78,9 @@ LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT)
 
 CC					=	gcc
 
-CFLAGS				=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES) 
+CFLAGS				=	-g -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES) 
 CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES_BONUS)
-LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
+LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -lmlx -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
 LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
 INCLUDES			=	-I$(INC_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_DIR)
 INCLUDES_BONUS		=	-I$(INCBONUS_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_DIR)
@@ -91,9 +97,14 @@ ARFLAGS 			= 	rsc
 
 MAIN_FILES	=	cub3d.c
 
-PARSE_FILES	=	
+PARSE_FILES	=	parse.c			\
+				parse_map.c		\
+				parse_options.c	\
 
-UTILS_FILES	=	utils.c
+UTILS_FILES	=	utils.c			\
+				errors.c		\
+				events.c		\
+				initializer.c	\
 
 
 SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
@@ -124,26 +135,44 @@ DIRSBONUS			=	$(OBJBNS_DIR) $(addprefix $(OBJBNS_DIR)/, $(UTILS_DIR) $(MAIN_DIR)
 
 OBJBONUS_MAIN		=	$(addprefix $(OBJBNS_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES:.c=.o)))
 
+# Tests
+
+TESTS_FILES				=	TestParseMap.c		\
+
+TESTS					=	$(addprefix $(TESTS_DIR_SRC)/, $(TESTS_FILES:.c))
+TESTS_BINARIES			=	$(addprefix $(TESTS_DIR_BIN)/, $(TESTS_FILES:.c=))
+TESTSOBJS				=	$(addprefix $(TESTS_DIR_OBJ)/, $(TESTS_FILES:.c=.o))
+
 # Rules
 
 all:				$(NAME)
 
 bonus:				$(BONUS)
 
+test:				$(TESTS_BINARIES)
+
+tclean:
+	@$(RM) $(TESTS_BINARIES)
+	@$(RM) $(TESTSOBJS)
+	
+
 clean:
-	@make -s fclean -C $(LIBFT_DIR)
-	@make -s clean -C $(MINILIBX_DIR)
+	@make -s clean -C $(LIBFT_DIR)
 	@$(RM) -r $(LIBS_DIR)
 	@$(RM) -r $(OBJ_DIR)
 	@$(RM) -r $(OBJBNS_DIR)
 	@echo "---- $(YELLOW)Object files deleted. $(CHECK)$(NC) ----"
 
 fclean:				clean
+	@make -s fclean -C $(LIBFT_DIR)
+	@make -s clean -C $(MINILIBX_DIR)
 	$(RM) $(NAME)
 	$(RM) $(BONUS)
 	@echo "---- $(YELLOW)Binary files deleted. $(CHECK)$(NC) ----"
 
 re:					fclean all
+
+sre:			clean all
 
 # Mandatory Part Targets
 
@@ -152,7 +181,7 @@ $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
 	@sleep 0.5
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):			$(OBJ_MAIN) $(LIBFRACTOL) $(LIBFT) $(MINILIBX)
+$(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(MINILIBX)
 	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
 	@sleep 1
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"	
@@ -165,14 +194,14 @@ $(MINILIBX):
 	@make -s  -C $(MINILIBX_DIR)
 	@echo "   $(CHECK) $(GREEN)Library created.$(NC)"
 
-$(LIBFRACTOL): 		$(OBJS)
+$(LIBCUB3D): 		$(OBJS)
 	@$(AR) $(ARFLAGS) $@ $?
 	@echo "\n   $(CHECK) $(GREEN)Library created.$(NC)"
 
 $(DIRS):
 	@clear
 	@echo $(MANDATORY_PART)
-	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)libFractol$(NC)"
+	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)libCub3D$(NC)"
 	@$(MKDIR) $(DIRS)
 
 $(LIBS_DIR):
@@ -199,7 +228,17 @@ $(DIRSBONUS):
 $(BONUS):				$(OBJBONUS_MAIN) $(LIBFRACTOL_BONUS) $(LIBFT) $(MINILIBX)
 	@$(CC) $(OBJBONUS_MAIN) $(LDFLAGS_BONUS) -o $@
 	@sleep 1
-	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"	
+	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
+
+# Tests Targets
+
+$(TESTS_DIR_OBJ)/%.o:	$(TESTS_DIR_SRC)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(TESTS_BINARIES):	$(TESTSOBJS)
+	@$(CC) $< $(LDFLAGS) -o $@ 
+	@echo "---------- $(CHECK) $(GREEN)Binary created.$(NC) ----------"
+	
 
 .SILENT:			clean fclean
-.PHONY:				all clean fclean re bonus
+.PHONY:				all clean fclean re sre bonus tclean test

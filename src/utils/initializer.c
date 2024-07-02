@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/06/30 16:33:57 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:44:56 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,4 @@ void	init(t_cub3d *cub3d)
 {
 	init_graph(cub3d);
 	//init_events(cub3d);
-}
-
-
-void	deinit(t_cub3d *cub3d)
-{
-	
 }
