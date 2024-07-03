@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 20:03:20 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/03 08:36:52 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	parse_textures(char *line, t_walls *walls, void *mlx)
 	if (!path)
 		cub3d_error("malloc", 1);
 	if (!path[0] || !path[1])
-        cub3d_error("Invalid texture path", 1);
+		cub3d_error("Invalid texture path", 1);
 	if (*line == 'N' && !walls->north.img)
 		walls->north.img = mlx_xpm_file_to_image(mlx, path[1],
 				&walls->north.width, &walls->north.height);
@@ -35,8 +35,6 @@ static int	parse_textures(char *line, t_walls *walls, void *mlx)
 				&walls->east.width, &walls->east.height);
 	else
 		cub3d_error("Invalid texture", 1);
-	if (!walls->north.img || !walls->south.img)
-        cub3d_error("Failed to load texture", 1);
 	double_free(path);
 	free(line);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:36:48 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 19:49:05 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/03 08:35:14 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	parse(t_cub3d *cub3d, char *file)
 	}
 	parse_map(fd, &cub3d->map);
 	close(fd);
+	parse_player(cub3d);
 }

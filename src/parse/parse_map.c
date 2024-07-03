@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:19:43 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 20:47:01 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:10:01 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ static void	check_cell(char **grid, int x, int y, int height)
 	if (x < 0 || y < 0 || x >= height || y >= width)
 		return ;
 	if (((x == 0 || y == 0 || x == height - 1 || y == width - 1
-			|| !grid[x + 1] || grid[x][y + 1] == '\0' || grid[x][y + 1] == ' '
-			|| (x + 1 <= height && grid[x + 1][y] == ' '))
+				|| !grid[x + 1] || grid[x][y + 1] == '\0'
+			|| grid[x][y + 1] == ' '
+		|| (x + 1 <= height && grid[x + 1][y] == ' '))
 		&& (grid[x][y] == '0' || grid[x][y] == 'N' || grid[x][y] == 'S'
 			|| grid[x][y] == 'W' || grid[x][y] == 'E'))
 		|| (grid[x][y] != '0' && grid[x][y] != 'N' && grid[x][y] != 'S'

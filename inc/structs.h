@@ -6,7 +6,7 @@
 /*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 20:00:58 by yunlovex         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:12:29 by yunlovex         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef struct s_player
 	float	y;
 	float	dir_x;
 	float	dir_y;
-	float	plane_x;
-	float	plane_y;
 }	t_player;
 
 typedef struct s_cub3d
