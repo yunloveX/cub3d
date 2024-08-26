@@ -14,7 +14,28 @@
 
 //TODO render
 
-void	render(t_cub3d *cub3d)
+void	render(double xpos, double ypos, t_cub3d *cub3d)
 {
+	uint32_t	h;
+	uint32_t	v;
+	uint32_t	r;
+	uint32_t	g;
+	uint32_t	b;
+
+	h = 0;
+	v = 0;
+	while (v < HEIGHT)
+	{
+		g = 256 * ((v + (int) ypos) % HEIGHT) / HEIGHT;
+		h = 0;
+		while (h < WIDTH)
+		{
+			r = 256 * ((h + (int) xpos) % WIDTH) / WIDTH;
+			b = 255 - r - g;
+			mlx_put_pixel(cub3d->img, h, v, color_rgba(r, g, b, 255));
+			h++;
+		}
+		v++;
+	}
 	//TODO render
 }

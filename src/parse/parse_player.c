@@ -12,54 +12,55 @@
 
 #include "cub3d.h"
 
-static void	parse_position_player(t_cub3d *cub3d, int i, char c)
+static void	locate_player(t_cub3d *cub3d, int i, int j)
 {
-	int	j;
+	char	c;
 
-	j = 0;
-	while (cub3d->map.grid[i][j])
+	cub3d->player.x = 0.5 + j;
+	cub3d->player.y = 0.5 + i;
+	cub3d->player.z = 0.5;
+	cub3d->player.dir_x = 0;
+	cub3d->player.dir_y = 0;
+	cub3d->player.dir_z = 0;
+	c = cub3d->map.grid[i][j];
+	if (c == 'N' || c == 'S')
+		cub3d->player.dir_y = 1.0;
+	else
+		cub3d->player.dir_x = 1.0;
+	if (c == 'N' || c == 'E')
 	{
-		if (cub3d->map.grid[i][j] == c)
-		{
-			cub3d->player.x = j;
-			cub3d->player.y = i;
-			cub3d->player.dir_y = 0;
-			if (c == 'N')
-				cub3d->player.dir_x = 90;
-			else if (c == 'S')
-				cub3d->player.dir_x = 270;
-			else if (c == 'W')
-				cub3d->player.dir_x = 180;
-			else if (c == 'E')
-				cub3d->player.dir_x = 0;
-		}
-		j++;
+		cub3d->player.dir_x *= -1;
+		cub3d->player.dir_y *= -1;
 	}
+}
+
+static int	is_player(char c)
+{
+	return (c == NORTH || c == SOUTH || c == EAST || c == WEST);
 }
 
 void	parse_player(t_cub3d *cub3d)
 {
 	int		i;
+	int		j;
 
 	i = 0;
-	cub3d->player.x = -1;
+	cub3d->player.x = NO_PLAYER;
 	while (i < cub3d->map.height)
 	{
-		if (ft_strchr(cub3d->map.grid[i], 'N') && cub3d->player.x == -1)
-			parse_position_player(cub3d, i, 'N');
-		else if (ft_strchr(cub3d->map.grid[i], 'S') && cub3d->player.x == -1)
-			parse_position_player(cub3d, i, 'S');
-		else if (ft_strchr(cub3d->map.grid[i], 'W') && cub3d->player.x == -1)
-			parse_position_player(cub3d, i, 'W');
-		else if (ft_strchr(cub3d->map.grid[i], 'E') && cub3d->player.x == -1)
-			parse_position_player(cub3d, i, 'E');
-		else if ((ft_strchr(cub3d->map.grid[i], 'N')
-				|| ft_strchr(cub3d->map.grid[i], 'S')
-				|| ft_strchr(cub3d->map.grid[i], 'W')
-				|| ft_strchr(cub3d->map.grid[i], 'E')) && cub3d->player.x != -1)
-			cub3d_error("Error\nMultiple players found", 1);
+		j = 0;
+		while (cub3d->map.grid[i][j])
+		{
+			if (is_player(cub3d->map.grid[i][j]))
+			{
+				if (cub3d->player.x != NO_PLAYER)
+					cub3d_error("Error\nMultiple players found", 1);
+				locate_player(cub3d, i, j);
+			}
+			j++;
+		}
 		i++;
 	}
-	if (cub3d->player.x == -1)
+	if (cub3d->player.x == NO_PLAYER)
 		cub3d_error("Error\nNo player found", 1);
 }

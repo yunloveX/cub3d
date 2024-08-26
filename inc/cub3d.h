@@ -19,25 +19,30 @@
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <error.h>
+# include <math.h>
+
 # include "structs.h"
 # include "constants.h"
 # include "parse.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <error.h>
-# include <math.h>
 
 
+void	render(double xpos, double ypos, t_cub3d *cub3d);
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void    cursor_hook_function(double xpos, double ypos, void *param);
+
+//void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 void	init(t_cub3d *cub3d);
 
 char	**ft_dstrdup(char **dstr, int size);
 
-int		create_trgb(int t, int r, int g, int b);
+uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 

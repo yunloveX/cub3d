@@ -48,8 +48,10 @@ LIBCUB3D_BONUS		=	$(LIBS_DIR)/libcub3dbonus.a
 LIBFT_DIR			=	./libft
 LIBFT				=	$(LIBFT_DIR)/libft.a
 
-MINILIBX_INCLUDE	=	./MLX42/include
-MINILIBX			=	./MLX42/build/libmlx42.a
+MINILIBX_DIR		=	./MLX42
+MINILIBX_INCLUDE	=	$(MINILIBX_DIR)/include
+MINILIBX_BUILD		=	$(MINILIBX_DIR)/build
+MINILIBX			=	$(MINILIBX_BUILD)/libmlx42.a
 
 #Directories
 
@@ -70,17 +72,19 @@ INCBONUS_DIR		=	incbonus
 MAIN_DIR			=	main
 UTILS_DIR			=	utils
 PARSE_DIR			=	parse
+RENDER_DIR			=	render
 
 # Compilation Options
 
-LDLIBS				=	$(LIBCUB3D) $(LIBFT)
-LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT)
+LDLIBS				=	$(LIBCUB3D) $(LIBFT) $(MINILIBX)
+LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT) $(MINILIBX)
 
 CC					=	gcc
 
 CFLAGS				=	-g -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES) 
 CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES_BONUS)
-LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -lmlx -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
+#LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -lmlx42 -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
+LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
 LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
 INCLUDES			=	-I$(INC_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_INCLUDE)
 INCLUDES_BONUS		=	-I$(INCBONUS_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_DIR)
@@ -97,9 +101,9 @@ ARFLAGS 			= 	rsc
 
 MAIN_FILES	=	cub3d.c
 
-PARSE_FILES	=	parse.c			\
-				parse_map.c		\
-				parse_options.c	\
+#PARSE_FILES	=	parse.c			\
+#				parse_map.c		\
+#				parse_options.c	\
 
 UTILS_FILES	=	utils.c			\
 				errors.c		\
@@ -113,7 +117,7 @@ SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
 
 SRCS 		=	$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS 		=	$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
-DIRS		=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, $(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR))
+DIRS		=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, $(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) $(RENDER_DIR))
 
 OBJ_MAIN	=	$(addprefix $(OBJ_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_FILES:.c=.o)))
 
@@ -123,15 +127,18 @@ MAIN_BONUS_FILES	=
 
 PARSE_BONUS_FILES	=	
 
+RENDER_BONUS_FILES	=	
+
 UTILS_BONUS_FILES	=	
 
 SRCSBONUS_FILES		=	$(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES)) 		\
 						$(addprefix $(UTILS_DIR)/, $(UTILS_BONUS_FILES)) 	\
 						$(addprefix $(PARSE_DIR)/, $(PARSE_BONUS_FILES)) 	\
+						$(addprefix $(RENDER_DIR)/, $(RENDER_BONUS_FILES)) 	\
 
 SRCSBONUS 			=	$(addprefix $(SRCBNS_DIR)/, $(SRCSBONUS_FILES))
 OBJSBONUS 			=	$(addprefix $(OBJBNS_DIR)/, $(SRCSBONUS_FILES:.c=.o))
-DIRSBONUS			=	$(OBJBNS_DIR) $(addprefix $(OBJBNS_DIR)/, $(UTILS_DIR) $(MAIN_DIR) $(PARSE_DIR))
+DIRSBONUS			=	$(OBJBNS_DIR) $(addprefix $(OBJBNS_DIR)/, $(UTILS_DIR) $(MAIN_DIR) $(PARSE_DIR) $(RENDER_DIR))
 
 OBJBONUS_MAIN		=	$(addprefix $(OBJBNS_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES:.c=.o)))
 
@@ -165,7 +172,7 @@ clean:
 
 fclean:				clean
 	@make -s fclean -C $(LIBFT_DIR)
-	@make -s clean -C $(MINILIBX_DIR)
+#	@make -s clean -C $(MINILIBX_DIR)
 	$(RM) $(NAME)
 	$(RM) $(BONUS)
 	@echo "---- $(YELLOW)Binary files deleted. $(CHECK)$(NC) ----"
@@ -190,9 +197,15 @@ $(LIBFT):
 	@make -s -C $(LIBFT_DIR)
 
 $(MINILIBX):
-	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)minilibx$(NC)"
-	@make -s  -C $(MINILIBX_DIR)
-	@echo "   $(CHECK) $(GREEN)Library created.$(NC)"
+	echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)MLX42$(NC)"
+	cmake -S $(MINILIBX_DIR) -B $(MINILIBX_BUILD)
+	make -C $(MINILIBX_BUILD) -j4
+	echo "   $(CHECK) $(GREEN)Library created.$(NC)"
+
+#$(MINILIBX):
+#		git submodule update --init
+#		cmake $(MLX42_DIR) -B $(MLX42_DIR)/build
+#		$(MAKE) -C $(MLX42_DIR)/build -j4 --quiet
 
 $(LIBCUB3D): 		$(OBJS)
 	@$(AR) $(ARFLAGS) $@ $?

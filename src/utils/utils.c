@@ -11,23 +11,19 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/* YA NO HACE FALTA, LA MLX FUNCIONA BIEN
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
-}
+}*/
 
 
-int	create_trgb(int t, int r, int g, int b)
+uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-	if (t > 255 || r > 255 || g > 255 || b > 255)
-		return (-1);
-	if (t < 0 || r < 0 || g < 0 || b < 0)
-		return (-1);
-	return (t << 24 | r << 16 | g << 8 | b);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 char	**ft_dstrdup(char **dstr, int size)

@@ -16,14 +16,15 @@ int	main(int argc, char **argv)
 {
 	t_cub3d	cub3d;
 
-	if (argc != 2)
+	if (argc != 2 || !argv)
 		printf("Error\nInvalid number of arguments\n");
 	else
 	{
+		//parse(&cub3d, argv[1]);
 		init(&cub3d);
-		parse(&cub3d, argv[1]);
 		//render(&cub3d); //TODO
 		mlx_loop(cub3d.mlx);
+		mlx_terminate(cub3d.mlx);
 	}
 	return (0);
 }

@@ -15,5 +15,10 @@
 
 # define WIDTH 640
 # define HEIGHT 480
+# define NORTH 'N'
+# define SOUTH 'S'
+# define EAST 'E'
+# define WEST 'W'
+# define NO_PLAYER -1
 
 #endif

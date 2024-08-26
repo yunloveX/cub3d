@@ -40,7 +40,7 @@ typedef struct s_colors
 	int	floor_color;
 	int	ceiling_color;
 }	t_colors;
-
+/*
 typedef struct s_data
 {
 	void	*img;
@@ -48,21 +48,23 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}	t_data;
+}	t_data;*/
 
 typedef struct s_player
 {
 	float	x;
 	float	y;
+	float	z;
 	float	dir_x;
 	float	dir_y;
+	float	dir_z;
 }	t_player;
 
 typedef struct s_cub3d
 {
-	void		*mlx;
+	mlx_t		*mlx;
 	void		*win;
-	t_data		*img;
+	mlx_image_t	*img;
 	t_map		map;
 	t_walls		textures;
 	t_colors	colors;
