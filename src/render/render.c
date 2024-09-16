@@ -13,7 +13,7 @@
 #include "cub3d.h"
 
 //TODO render
-/*
+
 void	render(double xpos, double ypos, t_cub3d *cub3d)
 {
 	uint32_t	h;
@@ -37,8 +37,8 @@ void	render(double xpos, double ypos, t_cub3d *cub3d)
 		}
 		v++;
 	}
-}*/
-
+}
+/*
 uint32_t	raycast(t_cub3d *cub3d, uint32_t h, uint32_t v)
 {
 	uint32_t	color;
@@ -66,4 +66,4 @@ void	render(t_cub3d *cub3d)
 		}
 		h++;
 	}
-}
+}*/

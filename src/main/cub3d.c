@@ -20,8 +20,8 @@ int	main(int argc, char **argv)
 		printf("Error\nInvalid number of arguments\n");
 	else
 	{
-		parse(&cub3d, argv[1]);
-		render(&cub3d); //TODO
+		//parse(&cub3d, argv[1]);
+		//render(&cub3d); //TODO
 		init(&cub3d);
 		mlx_loop(cub3d.mlx);
 		mlx_terminate(cub3d.mlx);
