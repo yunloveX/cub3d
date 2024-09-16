@@ -105,6 +105,8 @@ MAIN_FILES	=	cub3d.c
 #				parse_map.c		\
 #				parse_options.c	\
 
+RENDER_FILES	=	render.c			\
+
 UTILS_FILES	=	utils.c			\
 				errors.c		\
 				events.c		\
@@ -112,6 +114,7 @@ UTILS_FILES	=	utils.c			\
 
 
 SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
+				$(addprefix $(RENDER_DIR)/, $(RENDER_FILES)) 	\
 				$(addprefix $(UTILS_DIR)/, $(UTILS_FILES)) 	\
 				$(addprefix $(PARSE_DIR)/, $(PARSE_FILES)) 	\
 
@@ -132,13 +135,13 @@ RENDER_BONUS_FILES	=
 UTILS_BONUS_FILES	=	
 
 SRCSBONUS_FILES		=	$(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES)) 		\
+						$(addprefix $(RENDER_DIR)/, $(RENDER_BONUS_FILES)) 	\
 						$(addprefix $(UTILS_DIR)/, $(UTILS_BONUS_FILES)) 	\
 						$(addprefix $(PARSE_DIR)/, $(PARSE_BONUS_FILES)) 	\
-						$(addprefix $(RENDER_DIR)/, $(RENDER_BONUS_FILES)) 	\
 
 SRCSBONUS 			=	$(addprefix $(SRCBNS_DIR)/, $(SRCSBONUS_FILES))
 OBJSBONUS 			=	$(addprefix $(OBJBNS_DIR)/, $(SRCSBONUS_FILES:.c=.o))
-DIRSBONUS			=	$(OBJBNS_DIR) $(addprefix $(OBJBNS_DIR)/, $(UTILS_DIR) $(MAIN_DIR) $(PARSE_DIR) $(RENDER_DIR))
+DIRSBONUS			=	$(OBJBNS_DIR) $(addprefix $(OBJBNS_DIR)/, $(RENDER_DIR) $(UTILS_DIR) $(MAIN_DIR) $(PARSE_DIR))
 
 OBJBONUS_MAIN		=	$(addprefix $(OBJBNS_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES:.c=.o)))
 

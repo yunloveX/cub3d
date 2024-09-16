@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	render(double xpos, double ypos, t_cub3d *cub3d)
+/*void	render(double xpos, double ypos, t_cub3d *cub3d)
 {
 	uint32_t	h;
 	uint32_t	v;
@@ -36,7 +36,7 @@ void	render(double xpos, double ypos, t_cub3d *cub3d)
 		v++;
 	}
 	//TODO render
-}
+}*/
 
 void    cursor_hook_function(double xpos, double ypos, void *param)
 {

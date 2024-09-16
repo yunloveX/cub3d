@@ -32,7 +32,7 @@
 
 
 
-void	render(double xpos, double ypos, t_cub3d *cub3d);
+void	render(t_cub3d *cub3d);
 
 void    cursor_hook_function(double xpos, double ypos, void *param);
 

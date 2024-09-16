@@ -15,8 +15,6 @@ In Progress:
 
 		*	render() ahora mismo muestra unos colores en la ventana
 
-		*	(sobre esto último: por alguna razón que no he conseguido averiguar, si no coloco la función render() en el mismo archivo que la función llamada por el evento, no la localiza y me genera un error de compilación)
-
 	Definir la funcion de parseo teniendo en cuenta el bonus
 	
 		*	>>>>>>>> OJO!!! <<<<<<<< He deshabilitado todo el parseo para que se abra la ventana gráfica

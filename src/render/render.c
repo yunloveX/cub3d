@@ -13,7 +13,7 @@
 #include "cub3d.h"
 
 //TODO render
-
+/*
 void	render(double xpos, double ypos, t_cub3d *cub3d)
 {
 	uint32_t	h;
@@ -37,5 +37,33 @@ void	render(double xpos, double ypos, t_cub3d *cub3d)
 		}
 		v++;
 	}
-	//TODO render
+}*/
+
+uint32_t	raycast(t_cub3d *cub3d, uint32_t h, uint32_t v)
+{
+	uint32_t	color;
+	float		a;
+	float		b;
+	float		c;
+
+	
+	return (color_rgba(r, g, b, 255));
+}
+
+void	render(t_cub3d *cub3d)
+{
+	uint32_t	h;
+	uint32_t	v;
+
+	h = 0;
+	while(h < WIDTH)
+	{
+		v = 0;
+		while(v < HEIGHT)
+		{
+			mlx_put_pixel(cub3d->img, h, v, raycast(cub3d, h, v));
+			v++;
+		}
+		h++;
+	}
 }

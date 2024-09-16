@@ -54,11 +54,11 @@ static int	parse_colors(char *line, t_colors *colors)
 	if (!rgb)
 		cub3d_error("malloc", 1);
 	if (*line == 'F' && rgb[0] && rgb[1] && rgb[2])
-		colors->floor_color = create_trgb(0, ft_atoi(rgb[0]),
-				ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
+				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
 	else if (*line == 'C' && rgb[0] && rgb[1] && rgb[2])
-		colors->ceiling_color = create_trgb(0, ft_atoi(rgb[0]),
-				ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
+				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
 	else
 		cub3d_error("Invalid color", 1);
 	if (colors->floor_color < 0 || colors->ceiling_color < 0)
@@ -72,7 +72,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 {
 	char	*tmp;
 
-	tmp = ft_strtrim(line, " \n");
+	tmp = ft_strtrim(line, " \n"); //PREGUNTA: ¿Por qué ft_strtrim si la línea viene de GNL, luego no tiene \n?
 	if (!tmp)
 		cub3d_error("malloc", 1);
 	if (*tmp == 'N' || *tmp == 'S' || *tmp == 'E' || *tmp == 'W')

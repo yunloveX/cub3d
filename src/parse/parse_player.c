@@ -23,20 +23,19 @@ static void	locate_player(t_cub3d *cub3d, int i, int j)
 	cub3d->player.dir_y = 0;
 	cub3d->player.dir_z = 0;
 	c = cub3d->map.grid[i][j];
-	if (c == 'N' || c == 'S')
+	if (c == 'N')
+		cub3d->player.dir_y = -1.0;
+	if (c == 'S')
 		cub3d->player.dir_y = 1.0;
-	else
+	if (c == 'E')
 		cub3d->player.dir_x = 1.0;
-	if (c == 'N' || c == 'E')
-	{
-		cub3d->player.dir_x *= -1;
-		cub3d->player.dir_y *= -1;
-	}
+	if (c == 'W')
+		cub3d->player.dir_x = -1.0;
 }
 
 static int	is_player(char c)
 {
-	return (c == NORTH || c == SOUTH || c == EAST || c == WEST);
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
 void	parse_player(t_cub3d *cub3d)

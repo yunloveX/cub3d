@@ -15,10 +15,7 @@
 
 # define WIDTH 640
 # define HEIGHT 480
-# define NORTH 'N'
-# define SOUTH 'S'
-# define EAST 'E'
-# define WEST 'W'
+# define CAM_DIST 1024
 # define NO_PLAYER -1
 
 #endif

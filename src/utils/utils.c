@@ -20,6 +20,19 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }*/
 
+/**
+ * @brief Creates a 32-bit rgba color from its constituents.
+ *
+ * @details This function creates a single unsigned 32-bit color value created from
+ * its four constituents, red (most significant byte), green, blue and alpha
+ * (less significant byte). Params are unsigned 8-bit integers.
+ *
+ * @param r The red component.
+ * @param g The green component.
+ * @param b The blue component.
+ * @param a The alpha component (complementary of transparency).
+ * @return unsigned 32-bit value.
+ */
 
 uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
