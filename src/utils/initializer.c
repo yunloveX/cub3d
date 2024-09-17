@@ -17,6 +17,10 @@ static void	init_events(t_cub3d *cub3d)
 	mlx_cursor_hook(cub3d->mlx, cursor_hook_function, cub3d);
 }
 
+static void	init_cam(t_cub3d *cub3d)
+{
+}
+
 static void	init_graph(t_cub3d *cub3d)
 {
 	cub3d->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);

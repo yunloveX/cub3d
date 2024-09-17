@@ -52,12 +52,9 @@ typedef struct s_data
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
-	float	z;
-	float	dir_x;
-	float	dir_y;
-	float	dir_z;
+	t_quaternion	pos;
+	t_quaternion	dir;
+	t_quaternion	zenith;
 }	t_player;
 
 typedef struct s_cub3d

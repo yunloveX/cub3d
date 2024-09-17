@@ -16,12 +16,13 @@ static void	locate_player(t_cub3d *cub3d, int i, int j)
 {
 	char	c;
 
-	cub3d->player.x = 0.5 + j;
-	cub3d->player.y = 0.5 + i;
-	cub3d->player.z = 0.5;
-	cub3d->player.dir_x = 0;
-	cub3d->player.dir_y = 0;
-	cub3d->player.dir_z = 0;
+	cub3d->player.pos.r = 0.0;
+	cub3d->player.pos.i = -0.5 - j;
+	cub3d->player.pos.j = 0.5 + i;
+	cub3d->player.pos.k = 0.5;
+	cub3d->player.dir.i = 0.0;
+	cub3d->player.dir.j = 0.0;
+	cub3d->player.dir.k = 0.0;
 	c = cub3d->map.grid[i][j];
 	if (c == 'N')
 		cub3d->player.dir_y = -1.0;

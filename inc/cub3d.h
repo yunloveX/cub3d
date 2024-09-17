@@ -16,6 +16,8 @@
 # include "libft.h"
 # include "get_next_line.h"
 
+# include "quatlib.h"
+
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
