@@ -37,16 +37,16 @@ static char	*skip_empty_lines(int fd)
  */
 static int	check_line(char *line)
 {
-	int	i;
+	int	x;
 
-	i = 0;
-	while (line[i])
+	x = 0;
+	while (line[x])
 	{
-		if (line[i] != '\t'
-			&& line[i] != ' ' && line[i] != '0'
-			&& line[i] != '1' && line[i] != '2'
-			&& line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'E' && line[i] != 'W')
+		if (line[x] != '\t'
+			&& line[x] != ' ' && line[x] != '0'
+			&& line[x] != '1' && line[x] != '2'
+			&& line[x] != 'N' && line[x] != 'S'
+			&& line[x] != 'E' && line[x] != 'W')
 			return (EXIT_FAILURE);
 		i++;
 	}
@@ -72,14 +72,14 @@ static void	check_cell(char **grid, int y, int x, int height)
 	check_cell(grid, y, x + 1, height);
 }
 
-static void	find_zero(char **grid, int *i, int *j, int rows)
+static void	find_zero(char **grid, int *y, int *x, int rows)
 {
-	*i = -1;
-	while (++*i < rows && grid[*i][*j] != '0')
+	*y = -1;
+	while (++*y < rows && grid[*y][*x] != '0')
 	{
-		*j = 0;
-		while (grid[*i][*j])
-			if (grid[*i][*j++] == '0')
+		*x = 0;
+		while (grid[*y][*x])
+			if (grid[*y][*x++] == '0')
 				return ;
 	}
 	return ;
@@ -88,15 +88,15 @@ static void	find_zero(char **grid, int *i, int *j, int rows)
 int	check_map(char **grid, int rows)
 {
 	char	**copy_grid;
-	int		i;
-	int		j;
+	int		y;
+	int		x;
 
 	copy_grid = ft_dstrdup(grid, rows);
-	find_zero(copy_grid, &i, &j, rows);
-	check_cell(copy_grid, i, j, rows);
-	find_zero(copy_grid, &i, &j, rows);
+	find_zero(copy_grid, &y, &x, rows);
+	check_cell(copy_grid, y, x, rows);
+	find_zero(copy_grid, &y, &x, rows);
 	double_free(copy_grid);
-	if (i < rows)
+	if (y < rows)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -105,9 +105,9 @@ int	parse_map(int fd, t_map *map)
 {
 	char	*line;
 	char	*tmp;
-	int		i;
+	int		y;
 
-	i = 0;
+	y = 0;
 	line = skip_empty_lines(fd);
 	while (line)
 	{
@@ -115,16 +115,16 @@ int	parse_map(int fd, t_map *map)
 		free(line);
 		if (check_line(tmp))
 			cub3d_error("Invalid map", 1);
-		map->grid = ft_realloc(map->grid, sizeof(char *) * i,
-				sizeof(char *) * (i + 1));
+		map->grid = ft_realloc(map->grid, sizeof(char *) * y,
+				sizeof(char *) * (y + 1));
 		if (!map->grid)
 			cub3d_error("malloc", 1);
-		map->grid[i++] = tmp;
+		map->grid[y++] = tmp;
 		if ((int) ft_strlen(tmp) > map->width)
 			map->width = ft_strlen(tmp);
 		line = get_next_line(fd);
 	}
 	free(line);
-	map->height = i;
+	map->height = y;
 	return (check_map(map->grid, map->height));
 }

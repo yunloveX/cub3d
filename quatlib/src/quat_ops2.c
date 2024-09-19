@@ -12,6 +12,14 @@
 
 #include "quatlib.h"
 
+void	q_zero(t_quaternion *q)
+{
+	q->r = 0.0;
+	q->i = 0.0;
+	q->j = 0.0;
+	q->k = 0.0;
+}
+
 t_quaternion	q_conj(t_quaternion q)
 {
 	q.i *= -1.0;

@@ -31,6 +31,7 @@ double			q_dot(t_quaternion q1, t_quaternion q2);
 t_quaternion	q_scale(t_quaternion q1, double s);
 
 /*quat_ops2.c*/
+void			q_zero(t_quaternion *q);
 t_quaternion	q_conj(t_quaternion q);
 double			q_norm(t_quaternion q);
 void			q_normalize(t_quaternion *q);

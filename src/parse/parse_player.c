@@ -16,22 +16,19 @@ static void	locate_player(t_cub3d *cub3d, int i, int j)
 {
 	char	c;
 
-	cub3d->player.pos.r = 0.0;
 	cub3d->player.pos.i = -0.5 - j;
 	cub3d->player.pos.j = 0.5 + i;
 	cub3d->player.pos.k = 0.5;
-	cub3d->player.dir.i = 0.0;
-	cub3d->player.dir.j = 0.0;
-	cub3d->player.dir.k = 0.0;
+	q_zero(&cub3d->player.dir);
 	c = cub3d->map.grid[i][j];
 	if (c == 'N')
-		cub3d->player.dir_y = -1.0;
+		cub3d->player.dir.j = 1.0;
 	if (c == 'S')
-		cub3d->player.dir_y = 1.0;
+		cub3d->player.dir.j = -1.0;
 	if (c == 'E')
-		cub3d->player.dir_x = 1.0;
+		cub3d->player.dir.i = 1.0;
 	if (c == 'W')
-		cub3d->player.dir_x = -1.0;
+		cub3d->player.dir.i = -1.0;
 }
 
 static int	is_player(char c)
@@ -41,26 +38,26 @@ static int	is_player(char c)
 
 void	parse_player(t_cub3d *cub3d)
 {
-	int		i;
-	int		j;
+	int		y;
+	int		x;
 
-	i = 0;
-	cub3d->player.x = NO_PLAYER;
-	while (i < cub3d->map.height)
+	y = 0;
+	q_zero(&cub3d->player.pos);
+	while (y < cub3d->map.height)
 	{
-		j = 0;
-		while (cub3d->map.grid[i][j])
+		x = 0;
+		while (cub3d->map.grid[y][x])
 		{
-			if (is_player(cub3d->map.grid[i][j]))
+			if (is_player(cub3d->map.grid[y][x]))
 			{
-				if (cub3d->player.x != NO_PLAYER)
+				if (cub3d->player.pos.k)
 					cub3d_error("Error\nMultiple players found", 1);
-				locate_player(cub3d, i, j);
+				locate_player(cub3d, y, x);
 			}
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
-	if (cub3d->player.x == NO_PLAYER)
+	if (!cub3d->player.pos.k)
 		cub3d_error("Error\nNo player found", 1);
 }

@@ -54,7 +54,7 @@ typedef struct s_player
 {
 	t_quaternion	pos;
 	t_quaternion	dir;
-	t_quaternion	zenith;
+	t_quaternion	top;
 }	t_player;
 
 typedef struct s_cub3d
