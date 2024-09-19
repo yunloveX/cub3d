@@ -15,7 +15,7 @@
 
 # define WIDTH 640
 # define HEIGHT 480
-# define CAM_DIST 1024
+# define CAM_DIST 1024.0
 # define NO_PLAYER -1
 
 #endif

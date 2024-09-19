@@ -26,6 +26,7 @@ typedef struct s_quaternion
 
 /*quat_ops1.c*/
 t_quaternion	q_add(t_quaternion q1, t_quaternion q2);
+t_quaternion	q_sub(t_quaternion q1, t_quaternion q2);
 t_quaternion	q_mul(t_quaternion q1, t_quaternion q2);
 double			q_dot(t_quaternion q1, t_quaternion q2);
 t_quaternion	q_scale(t_quaternion q1, double s);

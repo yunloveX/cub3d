@@ -35,7 +35,10 @@
 
 
 //void	render(t_cub3d *cub3d);
-void	render(double xpos, double ypos, t_cub3d *cub3d);
+
+uint32_t	raycast(t_cub3d *cub3d, int h, int v);
+
+void	render(t_cub3d *cub3d);
 
 void    cursor_hook_function(double xpos, double ypos, void *param);
 

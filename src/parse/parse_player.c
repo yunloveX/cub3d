@@ -12,23 +12,28 @@
 
 #include "cub3d.h"
 
-static void	locate_player(t_cub3d *cub3d, int i, int j)
+static void	locate_player(t_cub3d *cub3d, int y, int x)
 {
 	char	c;
 
-	cub3d->player.pos.i = -0.5 - j;
-	cub3d->player.pos.j = 0.5 + i;
+	cub3d->player.pos.i = -0.5 - x;
+	cub3d->player.pos.j = 0.5 + y;
 	cub3d->player.pos.k = 0.5;
-	q_zero(&cub3d->player.dir);
-	c = cub3d->map.grid[i][j];
+	q_zero(&cub3d->player.down);
+	cub3d->player.down.k = -1.0 / HEIGHT;
+	q_zero(&cub3d->player.right);
+	c = cub3d->map.grid[y][x];
 	if (c == 'N')
-		cub3d->player.dir.j = 1.0;
+		cub3d->player.right.i = 1.0 / WIDTH;
 	if (c == 'S')
-		cub3d->player.dir.j = -1.0;
+		cub3d->player.right.i = -1.0 / WIDTH;
 	if (c == 'E')
-		cub3d->player.dir.i = 1.0;
+		cub3d->player.right.j = -1.0 / WIDTH;
 	if (c == 'W')
-		cub3d->player.dir.i = -1.0;
+		cub3d->player.right.j = 1.0 / WIDTH;
+	cub3d->player.cam = q_mul(cub3d->player.right, cub3d->player.down);
+	cub3d->player.cam = q_add(cub3d->player.pos, 
+		q_scale(cub3d->player.cam, -CAM_DIST * HEIGHT));
 }
 
 static int	is_player(char c)

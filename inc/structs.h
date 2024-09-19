@@ -53,8 +53,9 @@ typedef struct s_data
 typedef struct s_player
 {
 	t_quaternion	pos;
-	t_quaternion	dir;
-	t_quaternion	top;
+	t_quaternion	right;
+	t_quaternion	down;
+	t_quaternion	cam;
 }	t_player;
 
 typedef struct s_cub3d
