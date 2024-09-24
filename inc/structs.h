@@ -31,8 +31,8 @@ typedef struct s_walls
 {
 	t_texture	north;
 	t_texture	south;
-	t_texture	west;
 	t_texture	east;
+	t_texture	west;
 }	t_walls;
 
 typedef struct s_colors

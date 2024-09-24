@@ -48,8 +48,10 @@ static int	check_line(char *line)
 			&& line[x] != 'N' && line[x] != 'S'
 			&& line[x] != 'E' && line[x] != 'W')
 			return (EXIT_FAILURE);
-		i++;
+		x++;
 	}
+	if (!x)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -120,7 +122,7 @@ int	parse_map(int fd, t_map *map)
 		if (!map->grid)
 			cub3d_error("malloc", 1);
 		map->grid[y++] = tmp;
-		if ((int) ft_strlen(tmp) > map->width)
+		if ((int) ft_strlen(tmp) > map->width) // y si la línea termina en espacio?
 			map->width = ft_strlen(tmp);
 		line = get_next_line(fd);
 	}
