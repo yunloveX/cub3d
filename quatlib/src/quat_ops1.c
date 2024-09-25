@@ -32,7 +32,7 @@ t_quaternion	q_sub(t_quaternion q1, t_quaternion q2)
 t_quaternion	q_mul(t_quaternion q1, t_quaternion q2)
 {
 	t_quaternion	ret;
-	//(0,0,1,a)*(0,0,-a,1)=(0,1+a2,0,0)
+
 	ret.r = q1.r * q2.r - q1.i * q2.i - q1.j * q2.j - q1.k * q2.k;
 	ret.i = q1.r * q2.i + q1.i * q2.r + q1.j * q2.k - q1.k * q2.j;
 	ret.j = q1.r * q2.j + q1.j * q2.r + q1.k * q2.i - q1.i * q2.k;

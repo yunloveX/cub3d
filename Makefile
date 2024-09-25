@@ -48,6 +48,11 @@ LIBCUB3D_BONUS		=	$(LIBS_DIR)/libcub3dbonus.a
 LIBFT_DIR			=	./libft
 LIBFT				=	$(LIBFT_DIR)/libft.a
 
+QUAT_DIR		=	./quatlib
+QUAT_INCLUDE	=	$(QUAT_DIR)/inc
+QUAT_BUILD		=	$(QUAT_DIR)/build
+QUAT			=	$(QUAT_DIR)/quatlib.a
+
 MINILIBX_DIR		=	./MLX42
 MINILIBX_INCLUDE	=	$(MINILIBX_DIR)/include
 MINILIBX_BUILD		=	$(MINILIBX_DIR)/build
@@ -84,9 +89,9 @@ CC					=	gcc
 CFLAGS				=	-g -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES) 
 CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES_BONUS)
 #LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -lmlx42 -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
-LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
+LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -L$(QUAT_DIR) -L/usr/lib -I$(MINILIBX_DIR) -I$(QUAT_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
 LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
-INCLUDES			=	-I$(INC_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_INCLUDE)
+INCLUDES			=	-I$(INC_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(addsuffix $(INC_DIR), $(QUAT_DIR)/) -I$(QUAT_INCLUDE) -I$(MINILIBX_INCLUDE)
 INCLUDES_BONUS		=	-I$(INCBONUS_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_DIR)
 
 SANITIZE			=	-fsanitize=address
@@ -168,6 +173,7 @@ tclean:
 
 clean:
 	@make -s clean -C $(LIBFT_DIR)
+	@make -s clean -C $(QUAT_DIR)
 	@$(RM) -r $(LIBS_DIR)
 	@$(RM) -r $(OBJ_DIR)
 	@$(RM) -r $(OBJBNS_DIR)
@@ -175,6 +181,7 @@ clean:
 
 fclean:				clean
 	@make -s fclean -C $(LIBFT_DIR)
+	@make -s fclean -C $(QUAT_DIR)
 #	@make -s clean -C $(MINILIBX_DIR)
 	$(RM) $(NAME)
 	$(RM) $(BONUS)
@@ -191,13 +198,16 @@ $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
 	@sleep 0.5
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(MINILIBX)
+$(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(QUAT) $(MINILIBX)
 	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
 	@sleep 1
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"	
 
 $(LIBFT):
 	@make -s -C $(LIBFT_DIR)
+
+$(QUAT):
+	@make -s -C $(QUAT_DIR)
 
 $(MINILIBX):
 	echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)MLX42$(NC)"

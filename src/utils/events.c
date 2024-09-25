@@ -38,11 +38,31 @@
 	//TODO render
 }*/
 
-void    cursor_hook_function(double xpos, double ypos, void *param)
+void	rotate_view(t_cub3d *cub3d, double xoffset)
+{
+	t_quaternion	rot;
+	double			costh;
+	double			sinth;
+
+	sinth = 1.0 + xoffset / 1000;
+	costh = sqrt(1.0 - sinth * sinth);
+	rot.r = costh;
+	rot.i = 0.0;
+	rot.j = 0.0;
+	rot.k = sinth;
+	cub3d->player.right = q_rotate(cub3d->player.right, rot);
+}
+
+void    scroll_hook_function(double xoffset, double yoffset, void *param)
 {
     t_cub3d *cub3d;
 
 
     cub3d = (t_cub3d *)param;
-    render(xpos, ypos, cub3d);
+	if (xoffset)
+		rotate_view(cub3d, xoffset);
+	if (yoffset)
+		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.cam, cub3d->player.pos), yoffset / 1000));
+	locate_cam(cub3d);
+    render(cub3d);
 }

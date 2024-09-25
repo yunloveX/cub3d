@@ -50,7 +50,8 @@ uint32_t	color_north_south(
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.south.height;
 		point *= cub3d->textures.south.width;
 		point += (progress.i - floor(progress.i)) * cub3d->textures.south.width;
-		*color = ((uint32_t *)cub3d->textures.south.img)[point];
+//		*color = ((uint32_t *)cub3d->textures.south.img)[point];
+		*color = 0xFF0000FF;
 		return ('s');
 	}
 	if (j > 0 && cub3d->map.grid
@@ -59,10 +60,11 @@ uint32_t	color_north_south(
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.north.height;
 		point *= cub3d->textures.north.width;
 		point += (ceil(progress.i) - progress.i) * cub3d->textures.north.width;
-		*color = ((uint32_t *)cub3d->textures.north.img)[point];
+//		*color = ((uint32_t *)cub3d->textures.north.img)[point];
+		*color = 0x0000FFFF;
 		return ('n');
 	}
-	return ('/0');
+	return ('\0');
 }
 
 uint32_t	color_east_west(
@@ -76,7 +78,8 @@ uint32_t	color_east_west(
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.east.height;
 		point *= cub3d->textures.east.width;
 		point += (ceil(progress.j) - progress.j) * cub3d->textures.east.width;
-		*color = ((uint32_t *)cub3d->textures.east.img)[point];
+//		*color = ((uint32_t *)cub3d->textures.east.img)[point];
+		*color = 0x00FF00FF;
 		return ('e');
 	}
 	if (i > 0 && cub3d->map.grid
@@ -85,10 +88,11 @@ uint32_t	color_east_west(
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.west.height;
 		point *= cub3d->textures.west.width;
 		point += (progress.j - floor(progress.j)) * cub3d->textures.west.width;
-		*color = ((uint32_t *)cub3d->textures.west.img)[point];
+//		*color = ((uint32_t *)cub3d->textures.west.img)[point];
+		*color = 0x00FFFFFF;
 		return ('w');
 	}
-	return ('/0');
+	return ('\0');
 }
 
 uint32_t	check_k(t_cub3d *cub3d, float k)
@@ -116,7 +120,7 @@ char	meet_wall(t_cub3d *cub3d, t_quaternion progress, t_quaternion ray, uint32_t
 		return (color_east_west(cub3d, progress, ray.i, color));
 	if (y == floor(y))
 		return (color_north_south(cub3d, progress, ray.j, color));
-	return ('/0');
+	return ('\0');
 }
 
 t_quaternion	q_part(t_quaternion p, t_quaternion r)

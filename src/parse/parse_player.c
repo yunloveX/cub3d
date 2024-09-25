@@ -12,6 +12,13 @@
 
 #include "cub3d.h"
 
+void	locate_cam(t_cub3d *cub3d)
+{
+	cub3d->player.cam = q_mul(cub3d->player.right, cub3d->player.down);
+	cub3d->player.cam = q_add(cub3d->player.pos, 
+		q_scale(cub3d->player.cam, -CAM_DIST * HEIGHT));
+}
+
 static void	locate_player(t_cub3d *cub3d, int y, int x)
 {
 	char	c;
@@ -31,6 +38,7 @@ static void	locate_player(t_cub3d *cub3d, int y, int x)
 		cub3d->player.right.j = -1.0 / WIDTH;
 	if (c == 'W')
 		cub3d->player.right.j = 1.0 / WIDTH;
+	locate_cam(cub3d);
 	cub3d->player.cam = q_mul(cub3d->player.right, cub3d->player.down);
 	cub3d->player.cam = q_add(cub3d->player.pos, 
 		q_scale(cub3d->player.cam, -CAM_DIST * HEIGHT));
