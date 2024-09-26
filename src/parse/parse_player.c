@@ -12,36 +12,31 @@
 
 #include "cub3d.h"
 
-void	locate_cam(t_cub3d *cub3d)
-{
-	cub3d->player.cam = q_mul(cub3d->player.right, cub3d->player.down);
-	cub3d->player.cam = q_add(cub3d->player.pos, 
-		q_scale(cub3d->player.cam, -CAM_DIST * HEIGHT));
-}
+
 
 static void	locate_player(t_cub3d *cub3d, int y, int x)
 {
 	char	c;
 
-	cub3d->player.pos.i = -0.5 - x;
-	cub3d->player.pos.j = 0.5 + y;
+	cub3d->player.pos.i = 0.5 + x;
+	cub3d->player.pos.j = -0.5 - y;
 	cub3d->player.pos.k = 0.5;
 	q_zero(&cub3d->player.down);
 	cub3d->player.down.k = -1.0 / HEIGHT;
 	q_zero(&cub3d->player.right);
 	c = cub3d->map.grid[y][x];
 	if (c == 'N')
-		cub3d->player.right.i = 1.0 / WIDTH;
+	{
+		cub3d->player.right.i = 4.0 / HEIGHT / 5.0;
+		cub3d->player.right.j = 3.0 / HEIGHT / 5.0;
+	}
 	if (c == 'S')
-		cub3d->player.right.i = -1.0 / WIDTH;
+		cub3d->player.right.i = -1.0 / HEIGHT;
 	if (c == 'E')
-		cub3d->player.right.j = -1.0 / WIDTH;
+		cub3d->player.right.j = -1.0 / HEIGHT;
 	if (c == 'W')
-		cub3d->player.right.j = 1.0 / WIDTH;
+		cub3d->player.right.j = 1.0 / HEIGHT;
 	locate_cam(cub3d);
-	cub3d->player.cam = q_mul(cub3d->player.right, cub3d->player.down);
-	cub3d->player.cam = q_add(cub3d->player.pos, 
-		q_scale(cub3d->player.cam, -CAM_DIST * HEIGHT));
 }
 
 static int	is_player(char c)

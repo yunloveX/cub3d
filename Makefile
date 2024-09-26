@@ -81,7 +81,7 @@ RENDER_DIR			=	render
 
 # Compilation Options
 
-LDLIBS				=	$(LIBCUB3D) $(LIBFT) $(MINILIBX)
+LDLIBS				=	$(LIBCUB3D) $(LIBFT) $(MINILIBX) $(QUAT)
 LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT) $(MINILIBX)
 
 CC					=	gcc
@@ -106,9 +106,10 @@ ARFLAGS 			= 	rsc
 
 MAIN_FILES	=	cub3d.c
 
-#PARSE_FILES	=	parse.c			\
-#				parse_map.c		\
-#				parse_options.c	\
+PARSE_FILES	=	parse.c			\
+				parse_map.c		\
+				parse_options.c	\
+				parse_player.c	\
 
 RENDER_FILES	=	render.c			\
 
@@ -214,6 +215,7 @@ $(MINILIBX):
 	cmake -S $(MINILIBX_DIR) -B $(MINILIBX_BUILD)
 	make -C $(MINILIBX_BUILD) -j4
 	echo "   $(CHECK) $(GREEN)Library created.$(NC)"
+	@sleep 2.5
 
 #$(MINILIBX):
 #		git submodule update --init

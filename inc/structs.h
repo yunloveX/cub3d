@@ -13,6 +13,9 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include "MLX42/MLX42.h"
+# include "quatlib.h"
+
 typedef struct s_map
 {
 	char	**grid;
@@ -37,8 +40,8 @@ typedef struct s_walls
 
 typedef struct s_colors
 {
-	int	floor_color;
-	int	ceiling_color;
+	uint32_t	floor_color;
+	uint32_t	ceiling_color;
 }	t_colors;
 /*
 typedef struct s_data

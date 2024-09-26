@@ -18,6 +18,10 @@
 
 # include "quatlib.h"
 
+# include "structs.h"
+# include "constants.h"
+# include "parse.h"
+
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
@@ -28,9 +32,6 @@
 # include <error.h>
 # include <math.h>
 
-# include "structs.h"
-# include "constants.h"
-# include "parse.h"
 
 
 
@@ -38,7 +39,7 @@ uint32_t	raycast(t_cub3d *cub3d, int h, int v);
 
 void	render(t_cub3d *cub3d);
 
-void    scroll_hook_function(double xoffset, double yoffset, void *param);
+void    cursor_hook_function(double xpos, double ypos, void *param);
 
 //void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 

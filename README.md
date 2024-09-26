@@ -32,3 +32,6 @@ Done:
 To Checking:
 
 Closed:
+
+
+./text_north 

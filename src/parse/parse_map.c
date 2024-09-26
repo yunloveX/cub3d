@@ -81,7 +81,7 @@ static void	find_zero(char **grid, int *y, int *x, int rows)
 	{
 		*x = 0;
 		while (grid[*y][*x])
-			if (grid[*y][*x++] == '0')
+			if (grid[*y][(*x)++] == '0')
 				return ;
 	}
 	return ;
@@ -94,6 +94,8 @@ int	check_map(char **grid, int rows)
 	int		x;
 
 	copy_grid = ft_dstrdup(grid, rows);
+	y = 0;
+	x = 0;
 	find_zero(copy_grid, &y, &x, rows);
 	check_cell(copy_grid, y, x, rows);
 	find_zero(copy_grid, &y, &x, rows);

@@ -23,7 +23,7 @@ void	parse(t_cub3d *cub3d, char *file)
 		cub3d_error(file, 1);
 	options = 0;
 	line = get_next_line(fd);
-	while (line && options < 6)
+	while (line && options < 2)
 	{
 		options += parse_options(line, cub3d);
 		free(line);
