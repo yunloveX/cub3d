@@ -8,20 +8,24 @@ To Do:
 
 In Progress:
 
-	Implementar la MLX42:
-		*	La ventana ya abre
+	Implementar movimiento:
+		*	Cambiar el nombre de player.pos por canvas
 
+		*	Cambiar el nombre de player.cam por player
+
+		*	Estoy a medias de cambiar la lógica del movimiento: antes, al girar o movernos el
+			centro de la ventana permanecía inmóvil y la cámara se movía para situarse detrás del centro.
+			Ahora  la cámara  gira y el centro (player.pos) se mueve delante. PERO EN ESTAS,YA NO SALE IMAGEN.
+
+	Implementar eventos:
+	
 		*	Definido un evento que captura el movimiento del puntero y llama a render ()
 
-		*	render() ahora mismo muestra unos colores en la ventana
+		*	Moviendo el puntero por la ventana se avanza, retrocede y gira a ambos lados.
 
 	Definir la funcion de parseo teniendo en cuenta el bonus
 	
-		*	>>>>>>>> OJO!!! <<<<<<<< He deshabilitado todo el parseo para que se abra la ventana gráfica
-
 		* 	Parsear las texturas para cada orientacion  
-		
-		* 	Parsear los colores para el suelo y el techo
 		
 		* 	Parsear el mapa viendo los posibles errores (mapa no cerrado, simbolos no reconocidos)
 

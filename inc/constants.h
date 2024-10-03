@@ -15,8 +15,9 @@
 
 # define WIDTH 640
 # define HEIGHT 480
-# define CAM_DIST 1024.0
+# define CAM_DIST 2048.0
 # define FAR 1000000.0
+# define TOLERANCE 0.0000001
 # define NO_PLAYER -1
 
 #endif

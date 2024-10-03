@@ -118,7 +118,7 @@ void	double_free(char **str)
 
 void	locate_cam(t_cub3d *cub3d)
 {
-	cub3d->player.cam = q_mul(cub3d->player.right, cub3d->player.down);
-	cub3d->player.cam = q_add(cub3d->player.pos, 
-		q_scale(cub3d->player.cam, -HEIGHT * 40));
+	cub3d->player.pos = q_mul(cub3d->player.right, cub3d->player.down);
+	cub3d->player.pos = q_add(cub3d->player.cam,
+		q_scale(cub3d->player.pos, HEIGHT * 40));
 }

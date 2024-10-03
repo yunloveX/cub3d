@@ -57,14 +57,13 @@ void    cursor_hook_function(double xpos, double ypos, void *param)
 {
     t_cub3d *cub3d;
 
-	printf("scrolling xpos: %f, ypos: %f\n", xpos, ypos);
+//	printf("scrolling xpos: %f, ypos: %f\n", xpos, ypos);
     cub3d = (t_cub3d *)param;
 	if (xpos != WIDTH / 2)
-		rotate_view(cub3d, (xpos - WIDTH / 2) / 100);
+		rotate_view(cub3d, -(xpos - WIDTH / 2) / 100);
 	if (ypos != HEIGHT / 2)
-		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.cam,
-			cub3d->player.pos), (ypos - HEIGHT / 2) / 1000));
+		cub3d->player.cam = q_add(cub3d->player.cam, q_scale(q_sub(cub3d->player.pos,
+			cub3d->player.cam), (ypos - HEIGHT / 2) / 1000));
 	locate_cam(cub3d);
-	printf("scrolling xpos: %f, ypos: %f\n", xpos, ypos);
     render(cub3d);
 }
