@@ -14,7 +14,7 @@
 
 static void	init_events(t_cub3d *cub3d)
 {
-	mlx_cursor_hook(cub3d->mlx, cursor_hook_function, cub3d);
+	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);
 }
 
 static void	init_graph(t_cub3d *cub3d)
@@ -29,6 +29,7 @@ static void	init_graph(t_cub3d *cub3d)
 		free(cub3d->mlx);
 		cub3d_error("image", 1);
 	}
+	cub3d->frames_shown = 0;
 	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);
 }
 

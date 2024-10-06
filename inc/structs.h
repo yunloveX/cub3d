@@ -70,6 +70,7 @@ typedef struct s_cub3d
 	t_walls		textures;
 	t_colors	colors;
 	t_player	player;
+	int			frames_shown;
 }	t_cub3d;
 
 #endif

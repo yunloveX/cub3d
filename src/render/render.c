@@ -56,7 +56,7 @@ uint32_t	color_north_south(
 		return ('s');
 	}
 	if (j > 0 && cub3d->map.grid
-		[(int) floor(0.5 - progress.j)][(int) floor(progress.i)] == '1')
+		[(int) floor(- 0.5 - progress.j)][(int) floor(progress.i)] == '1')
 	{
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.north.height;
 		point *= cub3d->textures.north.width;
@@ -187,18 +187,13 @@ uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
 	uint32_t	color;
 
 	jump = 0.0;
-	progress = cub3d->player.cam;
+	progress = q_add(ray, cub3d->player.cam);
 	while (1)
 	{
 		gap = q_gaps(progress, ray);
 		d_jump = min_jump(gap, ray);
 		if (d_jump == 0)
-		{
-			printf("******************ERROR: intersect !!!************\n");
-			printf("gap: %f %f %f\n", gap.i, gap.j, gap.k);
-			printf("ray: %f %f %f\n", ray.i, ray.j, ray.k);
 			return (0x888888FF); //GRAY
-		}
 		jump += d_jump;
 //		printf("jump: %f\n", jump);
 		progress = q_add(cub3d->player.cam, q_scale(ray, jump));
@@ -232,11 +227,14 @@ void	render(t_cub3d *cub3d)
 		while(v < HEIGHT / 2)
 		{
 			color = raycast(cub3d, h, v);
-			if (color == 0x888888FF)
-				printf("h, v: %d %d\n", h, v);
-			mlx_put_pixel(cub3d->img, h + WIDTH / 2, v + HEIGHT / 2,color);
+//			if (color == 0x888888FF)
+//				printf("h, v: %d %d\n", h, v);
+			mlx_put_pixel(cub3d->img, h + WIDTH / 2, v + HEIGHT / 2, color);
 			v++;
 		}
 		h++;
 	}
+	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);
+	cub3d->frames_shown++;
+	printf("frames_shown: %d\n", cub3d->frames_shown);
 }

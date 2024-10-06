@@ -9,19 +9,11 @@ To Do:
 In Progress:
 
 	Implementar movimiento:
-		*	Cambiar el nombre de player.pos por canvas
-
-		*	Cambiar el nombre de player.cam por player
-
-		*	Estoy a medias de cambiar la lógica del movimiento: antes, al girar o movernos el
-			centro de la ventana permanecía inmóvil y la cámara se movía para situarse detrás del centro.
-			Ahora  la cámara  gira y el centro (player.pos) se mueve delante. PERO EN ESTAS,YA NO SALE IMAGEN.
+		*	Implementar choque con muros.
 
 	Implementar eventos:
-	
-		*	Definido un evento que captura el movimiento del puntero y llama a render ()
 
-		*	Moviendo el puntero por la ventana se avanza, retrocede y gira a ambos lados.
+		*	Pulsando el botón derecho y moviendo el puntero por la ventana se avanza, retrocede y gira a ambos lados.
 
 	Definir la funcion de parseo teniendo en cuenta el bonus
 	

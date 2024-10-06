@@ -38,7 +38,7 @@
 	//TODO render
 }*/
 
-void	rotate_view(t_cub3d *cub3d, double xpos)
+void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 {
 	t_quaternion	rot;
 	double			costh;
@@ -53,17 +53,22 @@ void	rotate_view(t_cub3d *cub3d, double xpos)
 	cub3d->player.right = q_rotate(cub3d->player.right, rot);
 }
 
-void    cursor_hook_function(double xpos, double ypos, void *param)
+void    loop_hook_function(void *param)
 {
-    t_cub3d *cub3d;
+    t_cub3d	*cub3d;
+	int	xpos;
+	int	ypos;
 
 //	printf("scrolling xpos: %f, ypos: %f\n", xpos, ypos);
     cub3d = (t_cub3d *)param;
+	if (!mlx_is_mouse_down(cub3d->mlx, MLX_MOUSE_BUTTON_RIGHT))
+		return ;
+	mlx_get_mouse_pos(cub3d->mlx, &xpos, &ypos);
 	if (xpos != WIDTH / 2)
-		rotate_view(cub3d, -(xpos - WIDTH / 2) / 100);
+		rotate_horizontal(cub3d, -((double)xpos - (double)WIDTH / 2.0) / 10.0);
 	if (ypos != HEIGHT / 2)
-		cub3d->player.cam = q_add(cub3d->player.cam, q_scale(q_sub(cub3d->player.pos,
-			cub3d->player.cam), (ypos - HEIGHT / 2) / 1000));
+		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
+			cub3d->player.cam), -((double)ypos - (double)HEIGHT / 2.0) / 400.0));
 	locate_cam(cub3d);
-    render(cub3d);
+	render(cub3d);
 }
