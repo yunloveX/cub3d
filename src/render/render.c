@@ -40,13 +40,25 @@ void	render(double xpos, double ypos, t_cub3d *cub3d)
 	}
 }*/
 
+char	map(t_cub3d *cub3d, int x, int y)
+{
+	if (x < 0 || y < 0 || x >= cub3d->map.width || y >= cub3d->map.height)
+		return ('1');
+	return (cub3d->map.grid[y][x]);
+}
+
 uint32_t	color_north_south(
-			t_cub3d *cub3d, t_quaternion progress, float j, uint32_t *color)
+			t_cub3d *cub3d, t_quaternion progress, float delta_j, uint32_t *color)
 {
 	int	point;
+	int	x;
+	int	y;
 
-	if (j < 0 && cub3d->map.grid
-		[(int) floor(0.5 - progress.j)][(int) floor(progress.i)] == '1')
+	x = (int) floor(progress.i);
+	y = (int) floor(0.5 - progress.j);
+//	if (j < 0 && cub3d->map.grid
+//		[(int) floor(0.5 - progress.j)][(int) floor(progress.i)] == '1')
+	if (delta_j < 0 && map(cub3d, x, y) == '1')
 	{
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.south.height;
 		point *= cub3d->textures.south.width;
@@ -55,8 +67,8 @@ uint32_t	color_north_south(
 		*color = 0xFF0000FF; //RED
 		return ('s');
 	}
-	if (j > 0 && cub3d->map.grid
-		[(int) floor(- 0.5 - progress.j)][(int) floor(progress.i)] == '1')
+	y--;
+	if (delta_j > 0 && map(cub3d, x, y) == '1')
 	{
 		point = (ceil(progress.k) - progress.k) * cub3d->textures.north.height;
 		point *= cub3d->textures.north.width;
@@ -69,12 +81,16 @@ uint32_t	color_north_south(
 }
 
 uint32_t	color_east_west(
-			t_cub3d *cub3d, t_quaternion progress, float i, uint32_t *color)
+			t_cub3d *cub3d, t_quaternion progress, float delta_i, uint32_t *color)
 {
 	int	pixel;
+	int	x;
+	int	y;
 
-	if (i < 0 && cub3d->map.grid
-		[(int) floor(-progress.j)][(int) floor(progress.i - 0.5)] == '1')
+	x = (int) floor(progress.i - 0.5);
+	y = (int) floor(-progress.j);
+
+	if (delta_i < 0 && map(cub3d, x, y) == '1')
 	{
 		pixel = (ceil(progress.k) - progress.k) * cub3d->textures.east.height;
 		pixel *= cub3d->textures.east.width;
@@ -83,8 +99,8 @@ uint32_t	color_east_west(
 		*color = 0x00FF00FF; //GREEN
 		return ('e');
 	}
-	if (i > 0 && cub3d->map.grid
-		[(int) floor(-progress.j)][(int) floor(progress.i + 0.5)] == '1')
+	x++;
+	if (delta_i > 0 && map(cub3d, x, y) == '1')
 	{
 		pixel = (ceil(progress.k) - progress.k) * cub3d->textures.west.height;
 		pixel *= cub3d->textures.west.width;
@@ -186,7 +202,7 @@ uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
 	double		d_jump; 
 	uint32_t	color;
 
-	jump = 0.0;
+	jump = 1.0;
 	progress = q_add(ray, cub3d->player.cam);
 	while (1)
 	{
@@ -202,15 +218,23 @@ uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
 			return (color);
 	}	
 }
-
-uint32_t	raycast(t_cub3d *cub3d, int h, int v)
-{
-	t_quaternion	ray;
-
+/*
 	ray = q_add(q_scale(cub3d->player.right, h),
 		q_scale(cub3d->player.down, v));
 	ray = q_add(cub3d->player.pos, ray);
 	ray = q_sub(ray, cub3d->player.cam);
+*/
+uint32_t	raycast(t_cub3d *cub3d, int h, int v)
+{
+	t_quaternion	ray;
+
+	ray.r = 0;
+	ray.i = cub3d->player.right.i * h + cub3d->player.down.i * v;
+	ray.j = cub3d->player.right.j * h + cub3d->player.down.j * v;
+	ray.k = cub3d->player.right.k * h + cub3d->player.down.k * v;
+	ray.i += cub3d->player.pos.i - cub3d->player.cam.i;
+	ray.j += cub3d->player.pos.j - cub3d->player.cam.j;
+	ray.k += cub3d->player.pos.k - cub3d->player.cam.k;
 	return (intersect(cub3d, ray));
 }
 

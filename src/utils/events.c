@@ -61,7 +61,7 @@ void    loop_hook_function(void *param)
 
 //	printf("scrolling xpos: %f, ypos: %f\n", xpos, ypos);
     cub3d = (t_cub3d *)param;
-	if (!mlx_is_mouse_down(cub3d->mlx, MLX_MOUSE_BUTTON_RIGHT))
+	if (!mlx_is_mouse_down(cub3d->mlx, MLX_MOUSE_BUTTON_LEFT))
 		return ;
 	mlx_get_mouse_pos(cub3d->mlx, &xpos, &ypos);
 	if (xpos != WIDTH / 2)

@@ -74,7 +74,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 	if (!tmp)
 		cub3d_error("malloc", 1);
 	if (*tmp == 'N' || *tmp == 'S' || *tmp == 'E' || *tmp == 'W')
-		return (0);
+		return(0);
 //		return (parse_textures(tmp, &cub3d->textures, cub3d->mlx));
 	else if (*tmp == 'F' || *tmp == 'C')
 		return (parse_colors(tmp, &cub3d->colors));
