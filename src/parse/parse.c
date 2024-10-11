@@ -21,9 +21,13 @@ void	parse(t_cub3d *cub3d, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		cub3d_error(file, 1);
+	cub3d->textures.north = NULL;
+	cub3d->textures.south = NULL;
+	cub3d->textures.east = NULL;
+	cub3d->textures.west = NULL;
 	options = 0;
 	line = get_next_line(fd);
-	while (line && options < 2)
+	while (line && options < 6)
 	{
 		options += parse_options(line, cub3d);
 		free(line);

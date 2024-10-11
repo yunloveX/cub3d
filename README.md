@@ -13,17 +13,19 @@ In Progress:
 
 	Implementar eventos:
 
-		*	Pulsando el botón derecho y moviendo el puntero por la ventana se avanza, retrocede y gira a ambos lados.
 
 	Definir la funcion de parseo teniendo en cuenta el bonus
 	
-		* 	Parsear las texturas para cada orientacion  
-		
-		* 	Parsear el mapa viendo los posibles errores (mapa no cerrado, simbolos no reconocidos)
 
 Done:
 
 	Definir la funcion de inicio para la ventana y los datos de inicio
+
+	* 	OK: Parsear las texturas para cada orientacion  
+	
+	*	OK: movimiento con teclas: asdw y flechas.
+
+	* 	OK: Parsear el mapa viendo los posibles errores (mapa no cerrado, simbolos no reconocidos)
 
 To Checking:
 

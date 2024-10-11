@@ -23,19 +23,12 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
-typedef struct s_texture
-{
-	void	*img;
-	int		width;
-	int		height;
-}	t_texture;
-
 typedef struct s_walls
 {
-	t_texture	north;
-	t_texture	south;
-	t_texture	east;
-	t_texture	west;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*east;
+	mlx_texture_t	*west;
 }	t_walls;
 
 typedef struct s_colors

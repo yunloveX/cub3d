@@ -53,6 +53,31 @@ void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 	cub3d->player.right = q_rotate(cub3d->player.right, rot);
 }
 
+void	key_hook_function(mlx_key_data_t key_data, void *param)
+{
+    t_cub3d	*cub3d;
+
+	if (key_data.action == MLX_RELEASE)
+		return ;
+	cub3d = (t_cub3d *)param;
+	if (key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT)
+		rotate_horizontal(cub3d, 10.0);
+	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
+		rotate_horizontal(cub3d, -10.0);
+	else if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
+		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
+			cub3d->player.cam), 0.2));
+	else if (key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN)
+		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
+			cub3d->player.cam), -0.2));
+	else if (key_data.key == MLX_KEY_ESCAPE)
+		mlx_terminate(cub3d->mlx);
+	else
+		return ;
+	locate_cam(cub3d);
+	render(cub3d);
+}
+/*
 void    loop_hook_function(void *param)
 {
     t_cub3d	*cub3d;
@@ -71,4 +96,4 @@ void    loop_hook_function(void *param)
 			cub3d->player.cam), -((double)ypos - (double)HEIGHT / 2.0) / 400.0));
 	locate_cam(cub3d);
 	render(cub3d);
-}
+}*/

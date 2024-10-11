@@ -1,3 +1,8 @@
+NO ./assets/textures/T1.png
+SO ./assets/textures/T2.png
+EA ./assets/textures/T3.png
+WE ./assets/textures/T4.png
+
 F 160,160,0
 C 160,160,160
 

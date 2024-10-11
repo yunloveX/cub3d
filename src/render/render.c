@@ -60,22 +60,22 @@ uint32_t	color_north_south(
 //		[(int) floor(0.5 - progress.j)][(int) floor(progress.i)] == '1')
 	if (delta_j < 0 && map(cub3d, x, y) == '1')
 	{
-		point = (ceil(progress.k) - progress.k) * cub3d->textures.south.height;
-		point *= cub3d->textures.south.width;
-		point += (progress.i - floor(progress.i)) * cub3d->textures.south.width;
-//		*color = ((uint32_t *)cub3d->textures.south.img)[point];
-		*color = 0xFF0000FF; //RED
-		return ('s');
+		point = (ceil(progress.k) - progress.k) * cub3d->textures.north->height;
+		point *= cub3d->textures.north->width;
+		point += (ceil(progress.i) - progress.i) * cub3d->textures.north->width;
+		*color = ((uint32_t *)cub3d->textures.north->pixels)[point];
+//		*color = 0xFF0000FF; //RED
+		return ('n');
 	}
 	y--;
 	if (delta_j > 0 && map(cub3d, x, y) == '1')
 	{
-		point = (ceil(progress.k) - progress.k) * cub3d->textures.north.height;
-		point *= cub3d->textures.north.width;
-		point += (ceil(progress.i) - progress.i) * cub3d->textures.north.width;
-//		*color = ((uint32_t *)cub3d->textures.north.img)[point];
-		*color = 0x0000FFFF; //BLUE
-		return ('n');
+		point = (ceil(progress.k) - progress.k) * cub3d->textures.south->height;
+		point *= cub3d->textures.south->width;
+		point += (progress.i - floor(progress.i)) * cub3d->textures.south->width;
+		*color = ((uint32_t *)cub3d->textures.south->pixels)[point];
+//		*color = 0x0000FFFF; //BLUE
+		return ('s');
 	}
 	return ('\0');
 }
@@ -92,21 +92,21 @@ uint32_t	color_east_west(
 
 	if (delta_i < 0 && map(cub3d, x, y) == '1')
 	{
-		pixel = (ceil(progress.k) - progress.k) * cub3d->textures.east.height;
-		pixel *= cub3d->textures.east.width;
-		pixel += (ceil(progress.j) - progress.j) * cub3d->textures.east.width;
-//		*color = ((uint32_t *)cub3d->textures.east.img)[pixel];
-		*color = 0x00FF00FF; //GREEN
+		pixel = (ceil(progress.k) - progress.k) * cub3d->textures.east->height;
+		pixel *= cub3d->textures.east->width;
+		pixel += (progress.j - floor(progress.j)) * cub3d->textures.east->width;
+		*color = ((uint32_t *)cub3d->textures.east->pixels)[pixel];
+//		*color = 0x00FF00FF; //GREEN
 		return ('e');
 	}
 	x++;
 	if (delta_i > 0 && map(cub3d, x, y) == '1')
 	{
-		pixel = (ceil(progress.k) - progress.k) * cub3d->textures.west.height;
-		pixel *= cub3d->textures.west.width;
-		pixel += (progress.j - floor(progress.j)) * cub3d->textures.west.width;
-//		*color = ((uint32_t *)cub3d->textures.west.img)[pixel];
-		*color = 0x00FFFFFF; //CYAN
+		pixel = (ceil(progress.k) - progress.k) * cub3d->textures.west->height;
+		pixel *= cub3d->textures.west->width;
+		pixel += (ceil(progress.j) - progress.j) * cub3d->textures.west->width;
+		*color = ((uint32_t *)cub3d->textures.west->pixels)[pixel];
+//		*color = 0x00FFFFFF; //CYAN
 		return ('w');
 	}
 	return ('\0');
@@ -253,12 +253,13 @@ void	render(t_cub3d *cub3d)
 			color = raycast(cub3d, h, v);
 //			if (color == 0x888888FF)
 //				printf("h, v: %d %d\n", h, v);
-			mlx_put_pixel(cub3d->img, h + WIDTH / 2, v + HEIGHT / 2, color);
+			((uint32_t *)cub3d->img->pixels)[(v + HEIGHT / 2) * WIDTH + h + WIDTH / 2] = color;
+//			mlx_put_pixel(cub3d->img, h + WIDTH / 2, v + HEIGHT / 2, color);
 			v++;
 		}
 		h++;
 	}
-	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);
+//	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);
 	cub3d->frames_shown++;
 	printf("frames_shown: %d\n", cub3d->frames_shown);
 }

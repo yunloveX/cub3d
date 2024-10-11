@@ -39,7 +39,9 @@ uint32_t	raycast(t_cub3d *cub3d, int h, int v);
 
 void	render(t_cub3d *cub3d);
 
-void    loop_hook_function(void *param);
+//void    loop_hook_function(void *param);
+
+void	key_hook_function(mlx_key_data_t key_data, void *param);
 
 //void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 

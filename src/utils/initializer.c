@@ -14,7 +14,8 @@
 
 static void	init_events(t_cub3d *cub3d)
 {
-	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);
+/*	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);*/
+	mlx_key_hook(cub3d->mlx, key_hook_function, cub3d);
 }
 
 static void	init_graph(t_cub3d *cub3d)

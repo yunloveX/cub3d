@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-/*
-static int	parse_textures(char *line, t_walls *walls, void *mlx)
+
+static int	parse_textures(char *line, t_walls *walls)
 {
 	char	**path;
 
@@ -21,25 +21,24 @@ static int	parse_textures(char *line, t_walls *walls, void *mlx)
 		cub3d_error("malloc", 1);
 	if (!path[0] || !path[1])
 		cub3d_error("Invalid texture path", 1);
-	if (*line == 'N' && !walls->north.img)
-		walls->north.img = mlx_texture_to_image(mlx, path[1],
-				&walls->north.width, &walls->north.height);
-	else if (*line == 'S' && !walls->south.img)
-		walls->south.img = mlx_texture_to_image(mlx, path[1],
-				&walls->south.width, &walls->south.height);
-	else if (*line == 'W' && !walls->west.img)
-		walls->west.img = mlx_texture_to_image(mlx, path[1],
-				&walls->west.width, &walls->west.height);
-	else if (*line == 'E' && !walls->east.img)
-		walls->east.img = mlx_texture_to_image(mlx, path[1],
-				&walls->east.width, &walls->east.height);
+	if (ft_strnstr(line, "NO ", 3) == line && !walls->north)
+		walls->north = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "SO ", 3) == line && !walls->south)
+		walls->south = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "EA ", 3) == line && !walls->east)
+		walls->east = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "WE ", 3) == line && !walls->west)
+		walls->west = mlx_load_png(path[1]);
 	else
+	{
+		printf("line: %s\n", line);
 		cub3d_error("Invalid texture", 1);
+	}
 	double_free(path);
 	free(line);
 	return (1);
 }
-*/
+
 static int	parse_colors(char *line, t_colors *colors)
 {
 	char	**split;
@@ -54,11 +53,15 @@ static int	parse_colors(char *line, t_colors *colors)
 	if (!rgb)
 		cub3d_error("malloc", 1);
 	if (*line == 'F' && rgb[0] && rgb[1] && rgb[2])
-		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
-				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
+//		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
+//				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
+		colors->floor_color = color_rgba(255, ft_atoi(rgb[2]),
+				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
 	else if (*line == 'C' && rgb[0] && rgb[1] && rgb[2])
-		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
-				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
+//		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
+//				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
+		colors->ceiling_color = color_rgba(255, ft_atoi(rgb[2]),
+				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
 	else
 		cub3d_error("Invalid color1", 1);
 	double_free(rgb);
@@ -73,9 +76,9 @@ int	parse_options(char *line, t_cub3d *cub3d)
 	tmp = ft_strtrim(line, " \n"); //PREGUNTA: ¿Por qué ft_strtrim si la línea viene de GNL, luego no tiene \n?
 	if (!tmp)
 		cub3d_error("malloc", 1);
-	if (*tmp == 'N' || *tmp == 'S' || *tmp == 'E' || *tmp == 'W')
-		return(0);
-//		return (parse_textures(tmp, &cub3d->textures, cub3d->mlx));
+	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
+		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
+		return (parse_textures(tmp, &cub3d->textures));
 	else if (*tmp == 'F' || *tmp == 'C')
 		return (parse_colors(tmp, &cub3d->colors));
 //	else if (*tmp != '\0')
