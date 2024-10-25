@@ -63,6 +63,8 @@ typedef struct s_cub3d
 	t_walls		textures;
 	t_colors	colors;
 	t_player	player;
+	t_player	player_old;
+	double		jumps[3];
 	int			frames_shown;
 }	t_cub3d;
 

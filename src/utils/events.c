@@ -44,6 +44,7 @@ void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 	double			costh;
 	double			sinth;
 
+/*	cub3d->player_old = cub3d->player;*/
 	sinth = xpos / 1000;
 	costh = sqrt(1.0 - sinth * sinth);
 	rot.r = costh;
@@ -52,6 +53,31 @@ void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 	rot.k = sinth;
 	cub3d->player.right = q_rotate(cub3d->player.right, rot);
 }
+
+void	move(t_cub3d *cub3d, double step)
+{
+/*	cub3d->player_old = cub3d->player;*/
+	cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
+		cub3d->player.cam), step));
+}
+/*
+void	no_collision(t_cub3d *cub3d)
+{
+	t_quaternion	tmp;
+
+	tmp = q_add(cub3d->player.pos, q_scale(cub3d->player.right, -WIDTH / 2));
+	if (cub3d->map.grid[(int) -tmp.j][(int) tmp.i] == '1')
+	{
+		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(cub3d->player.right, WIDTH / 20));
+		no_collision(cub3d);
+	}
+	tmp = q_add(cub3d->player.pos, q_scale(cub3d->player.right, WIDTH / 2));
+	if (cub3d->map.grid[(int) -tmp.j][(int) tmp.i] == '1')
+	{
+		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(cub3d->player.right, -WIDTH / 20));
+		no_collision(cub3d);
+	}
+}*/
 
 void	key_hook_function(mlx_key_data_t key_data, void *param)
 {
@@ -65,15 +91,14 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
 		rotate_horizontal(cub3d, -10.0);
 	else if (key_data.key == MLX_KEY_W || key_data.key == MLX_KEY_UP)
-		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
-			cub3d->player.cam), 0.2));
+		move(cub3d, 0.2);
 	else if (key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN)
-		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
-			cub3d->player.cam), -0.2));
+		move(cub3d, -0.2);
 	else if (key_data.key == MLX_KEY_ESCAPE)
 		mlx_terminate(cub3d->mlx);
 	else
 		return ;
+/*	no_collision(cub3d);*/
 	locate_cam(cub3d);
 	render(cub3d);
 }

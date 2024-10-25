@@ -166,32 +166,50 @@ t_quaternion	q_gaps(t_quaternion point, t_quaternion dir)
 	return (ret);
 }
 
-double	min_jump(t_quaternion gap, t_quaternion dir)
+double	d_abs(double x)
 {
-	double	jump_i;
-	double	jump_j;
-	double	jump_k;
+	if (x < 0)
+		return (-x);
+	return (x);
+}
 
-	jump_i = FAR;
-	jump_j = FAR;
-	jump_k = FAR;
-	if (dir.i)
-		jump_i = gap.i / dir.i;
-	if (dir.j)
-		jump_j = gap.j / dir.j;
-	if (dir.k)
-		jump_k = gap.k / dir.k;
+double	min_jump(t_cub3d *cub3d, t_quaternion *gap, t_quaternion dir)
+{
+	double	min;
+
+	min = 0;
+	if (d_abs(dir.i) < TOLERANCE)
+		cub3d->jumps[0] = gap->i / dir.i;
+	else
+		cub3d->jumps[0] = FAR;
+	if (d_abs(dir.j) < TOLERANCE)
+		cub3d->jumps[1] = gap->j / dir.j;
+	else
+		cub3d->jumps[1] = FAR;
+	if (d_abs(dir.i) < TOLERANCE)
+		cub3d->jumps[2] = gap->k / dir.k;
+	else
+		cub3d->jumps[2] = FAR;
 //	printf("jump_i: %f\n", jump_i);
 //	printf("jump_j: %f\n", jump_j);
 //	printf("jump_k: %f\n", jump_k);
-	if (jump_i > 0 && jump_i < FAR && jump_i <= jump_j && jump_i <= jump_k)
-		return (jump_i);
-	if (jump_j > 0 && jump_j < FAR && jump_j <= jump_i && jump_j <= jump_k)
-		return (jump_j);
-	if (jump_k > 0 && jump_k < FAR && jump_k <= jump_i && jump_k <= jump_j)
-		return (jump_k);
+	if (cub3d->jumps[0] > 0 && cub3d->jumps[0] < FAR
+		&& cub3d->jumps[0] <= cub3d->jumps[1] && cub3d->jumps[0] <= cub3d->jumps[2])
+		min = (cub3d->jumps[0]);
+	if (cub3d->jumps[1] > 0 && cub3d->jumps[1] < FAR
+		&& cub3d->jumps[1] <= cub3d->jumps[0] && cub3d->jumps[1] <= cub3d->jumps[2])
+		min = (cub3d->jumps[1]);
+	if (cub3d->jumps[2] > 0 && cub3d->jumps[2] < FAR
+		&& cub3d->jumps[2] <= cub3d->jumps[0] && cub3d->jumps[2] <= cub3d->jumps[1])
+		min = (cub3d->jumps[2]);
+	if (min)
+	{
+		gap->i = gap->i - dir.i * min;
+		gap->j = gap->j - dir.j * min;
+		gap->k = gap->k - dir.k * min;
+	}
 //	printf("******************ERROR: min_jump !!!************\n");
-	return (0);
+	return (min);
 }
 
 uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
@@ -204,10 +222,10 @@ uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
 
 	jump = 1.0;
 	progress = q_add(ray, cub3d->player.cam);
+	gap = q_gaps(progress, ray);
 	while (1)
 	{
-		gap = q_gaps(progress, ray);
-		d_jump = min_jump(gap, ray);
+		d_jump = min_jump(cub3d, &gap, ray);
 		if (d_jump == 0)
 			return (0x888888FF); //GRAY
 		jump += d_jump;
