@@ -178,15 +178,15 @@ double	min_jump(t_cub3d *cub3d, t_quaternion *gap, t_quaternion dir)
 	double	min;
 
 	min = 0;
-	if (d_abs(dir.i) < TOLERANCE)
+	if (d_abs(dir.i) > TOLERANCE)
 		cub3d->jumps[0] = gap->i / dir.i;
 	else
 		cub3d->jumps[0] = FAR;
-	if (d_abs(dir.j) < TOLERANCE)
+	if (d_abs(dir.j) > TOLERANCE)
 		cub3d->jumps[1] = gap->j / dir.j;
 	else
 		cub3d->jumps[1] = FAR;
-	if (d_abs(dir.i) < TOLERANCE)
+	if (d_abs(dir.k) > TOLERANCE)
 		cub3d->jumps[2] = gap->k / dir.k;
 	else
 		cub3d->jumps[2] = FAR;
@@ -205,8 +205,14 @@ double	min_jump(t_cub3d *cub3d, t_quaternion *gap, t_quaternion dir)
 	if (min)
 	{
 		gap->i = gap->i - dir.i * min;
+		if (gap->i * dir.i <= 0)
+			gap->i = dir.i / d_abs(dir.i);
 		gap->j = gap->j - dir.j * min;
+		if (gap->j * dir.j <= 0)
+			gap->j = dir.j / d_abs(dir.j);
 		gap->k = gap->k - dir.k * min;
+		if (gap->k * dir.k <= 0)
+			gap->k = dir.k / d_abs(dir.k);
 	}
 //	printf("******************ERROR: min_jump !!!************\n");
 	return (min);
@@ -221,13 +227,13 @@ uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
 	uint32_t	color;
 
 	jump = 1.0;
-	progress = q_add(ray, cub3d->player.cam);
+	progress = q_add(cub3d->player.cam, ray);
 	gap = q_gaps(progress, ray);
 	while (1)
 	{
 		d_jump = min_jump(cub3d, &gap, ray);
 		if (d_jump == 0)
-			return (0x888888FF); //GRAY
+			return (0xFF0000FF); //RED
 		jump += d_jump;
 //		printf("jump: %f\n", jump);
 		progress = q_add(cub3d->player.cam, q_scale(ray, jump));
