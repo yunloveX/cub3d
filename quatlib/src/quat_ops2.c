@@ -30,12 +30,14 @@ t_quaternion	q_conj(t_quaternion q)
 
 double	q_norm(t_quaternion q)
 {
-	return (pow(q_dot(q, q), -0.5));
+/*	return (pow(q_dot(q, q), -0.5)); */
+	return (sqrt(q_dot(q, q)));
 }
 
 void	q_normalize(t_quaternion *q)
 {
-	*q = q_scale(*q, q_norm(*q));
+	if (q->r || q->i || q->j || q->k)
+		*q = q_scale(*q, 1 / q_norm(*q));
 }
 
 t_quaternion	q_rotate(t_quaternion p, t_quaternion rot)

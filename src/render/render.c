@@ -285,5 +285,5 @@ void	render(t_cub3d *cub3d)
 	}
 //	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);
 	cub3d->frames_shown++;
-	printf("frames_shown: %d\n", cub3d->frames_shown);
+//	printf("frames_shown: %d\n", cub3d->frames_shown);
 }
