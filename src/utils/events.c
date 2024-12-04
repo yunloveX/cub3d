@@ -100,6 +100,8 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 		return ;
 /*	no_collision(cub3d);*/
 	locate_cam(cub3d);
+	printf("pos: %f, %f, %f\n", cub3d->player.pos.i, cub3d->player.pos.j, cub3d->player.pos.k);
+	printf("cam: %f, %f, %f\n", cub3d->player.cam.i, cub3d->player.cam.j, cub3d->player.cam.k);
 	render(cub3d);
 }
 /*

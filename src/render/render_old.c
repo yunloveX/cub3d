@@ -218,30 +218,29 @@ double	min_jump(t_cub3d *cub3d, t_quaternion *gap, t_quaternion dir)
 	return (min);
 }
 
-int	intersect(t_cub3d *cub3d, t_quaternion ray, double *tx_h, double *dist)
+uint32_t	intersect(t_cub3d *cub3d, t_quaternion ray)
 {
 	t_quaternion	gap;
 	t_quaternion	progress;
-	double			d_jump;
-	int				ret;
+	double		jump; 
+	double		d_jump; 
+	uint32_t	color;
 
-	*dist = q_norm(ray);
+	jump = 1.0;
 	progress = q_add(cub3d->player.cam, ray);
-	q_normalize(&ray);
 	gap = q_gaps(progress, ray);
-	ret = meet_wall(cub3d, progress, ray, tx_h);
-	while (ret < 0)
+	while (1)
 	{
 		d_jump = min_jump(cub3d, &gap, ray);
 		if (d_jump == 0)
 			return (0xFF0000FF); //RED
-		*dist += d_jump;
+		jump += d_jump;
 //		printf("jump: %f\n", jump);
-		progress = q_add(cub3d->player.cam, q_scale(ray, *dist));
+		progress = q_add(cub3d->player.cam, q_scale(ray, jump));
 //		printf("progress: %f %f %f\n", progress.i, progress.j, progress.k);
-		ret = meet_wall(cub3d, progress, ray, tx_h);
-	}
-	return (ret);
+		if (meet_wall(cub3d, progress, ray, &color))
+			return (color);
+	}	
 }
 /*
 	ray = q_add(q_scale(cub3d->player.right, h),
@@ -249,52 +248,29 @@ int	intersect(t_cub3d *cub3d, t_quaternion ray, double *tx_h, double *dist)
 	ray = q_add(cub3d->player.pos, ray);
 	ray = q_sub(ray, cub3d->player.cam);
 */
-int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
+uint32_t	raycast(t_cub3d *cub3d, int h, int v)
 {
 	t_quaternion	ray;
 
-	ray.r = 0.0;
-	ray.i = cub3d->player.right.i * h;
-	ray.j = cub3d->player.right.j * h;
-	ray.k = 0.0;
+	ray.r = 0;
+	ray.i = cub3d->player.right.i * h + cub3d->player.down.i * v;
+	ray.j = cub3d->player.right.j * h + cub3d->player.down.j * v;
+	ray.k = cub3d->player.right.k * h + cub3d->player.down.k * v;
 	ray.i += cub3d->player.pos.i - cub3d->player.cam.i;
 	ray.j += cub3d->player.pos.j - cub3d->player.cam.j;
-	return (intersect(cub3d, ray, tx_h, dist));
+	ray.k += cub3d->player.pos.k - cub3d->player.cam.k;
+	return (intersect(cub3d, ray));
 }
 
-void	drawline(t_cub3d *cub3d, int h, int tx_h, int dist, int side)
-{
-	int			v;
-	int			tx_v;
-	uint32_t	color;
-	double		lim;
-
-	lim = h - WIDTH / 2;
-	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + lim * lim);
-	v = -1;
-	while(++v < HEIGHT)
-	{
-		if (v < HEIGHT / 2 - lim)
-			color = cub3d->colors.ceiling_color;
-		else if (v > HEIGHT / 2 + lim)
-			color = cub3d->colors.floor_color;
-		else
-			color = pixel_color(cub3d, tx_h, tx_v, side);
-	}
-}
 void	render(t_cub3d *cub3d)
 {
-	int		h;
-	double	dist;
-	double	tx_h;
-	int		side;
+	int	h;
+	int	v;
+	uint32_t	color;
 
-	h = -1;
-	while(++h < WIDTH)
+	h = -WIDTH / 2;
+	while(h < WIDTH / 2)
 	{
-		side = raycast(cub3d, h, &tx_h, &dist);
-		drawline(cub3d, h, tx_h, dist, side);
-	}
 		v = -HEIGHT / 2;
 		while(v < HEIGHT / 2)
 		{
@@ -309,5 +285,5 @@ void	render(t_cub3d *cub3d)
 	}
 //	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);
 	cub3d->frames_shown++;
-	printf("frames_shown: %d\n", cub3d->frames_shown);
+//	printf("frames_shown: %d\n", cub3d->frames_shown);
 }

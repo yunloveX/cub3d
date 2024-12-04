@@ -22,17 +22,19 @@ static void	locate_player(t_cub3d *cub3d, int y, int x)
 	cub3d->player.pos.j = -0.5 - y;
 	cub3d->player.pos.k = 0.5;
 	q_zero(&cub3d->player.down);
-	cub3d->player.down.k = -0.5 / WIDTH;
+	cub3d->player.down.k = -1.0 / CUBE_EDGE;
 	q_zero(&cub3d->player.right);
 	c = cub3d->map.grid[y][x];
 	if (c == 'N')
-		cub3d->player.right.i = 0.5 / WIDTH;
+		cub3d->player.right.i = 1.0 / CUBE_EDGE;
 	if (c == 'S')
-		cub3d->player.right.i = -0.5 / WIDTH;
+		cub3d->player.right.i = -1.0 / CUBE_EDGE;
 	if (c == 'E')
-		cub3d->player.right.j = -0.5 / WIDTH;
+		cub3d->player.right.j = -1.0 / CUBE_EDGE;
 	if (c == 'W')
-		cub3d->player.right.j = 0.5 / WIDTH;
+		cub3d->player.right.j = 1.0 / CUBE_EDGE;
+	printf("right: %f, %f, %f\n", cub3d->player.right.i, cub3d->player.right.j, cub3d->player.right.k);
+	printf("down: %f, %f, %f\n", cub3d->player.down.i, cub3d->player.down.j, cub3d->player.down.k);
 	locate_cam(cub3d);
 }
 

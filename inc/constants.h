@@ -15,7 +15,8 @@
 
 # define WIDTH 640
 # define HEIGHT 480
-# define CAM_DIST 1
+# define CAM_DIST (WIDTH * 1)
+# define CUBE_EDGE (WIDTH * 2)
 # define FAR 1000000.0
 # define TOLERANCE 0.0000001
 # define NO_PLAYER -1

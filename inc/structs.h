@@ -23,14 +23,6 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
-typedef struct s_walls
-{
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
-	mlx_texture_t	*east;
-	mlx_texture_t	*west;
-}	t_walls;
-
 typedef struct s_colors
 {
 	uint32_t	floor_color;
@@ -56,16 +48,16 @@ typedef struct s_player
 
 typedef struct s_cub3d
 {
-	mlx_t		*mlx;
-	void		*win;
-	mlx_image_t	*img;
-	t_map		map;
-	t_walls		textures;
-	t_colors	colors;
-	t_player	player;
-	t_player	player_old;
-	double		jumps[3];
-	int			frames_shown;
+	mlx_t			*mlx;
+	void			*win;
+	mlx_image_t		*img;
+	t_map			map;
+	mlx_texture_t	*textures[4];
+	t_colors		colors;
+	t_player		player;
+	t_player		player_old;
+	double			jumps[3];
+	int				frames_shown;
 }	t_cub3d;
 
 #endif

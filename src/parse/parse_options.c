@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static int	parse_textures(char *line, t_walls *walls)
+static int	parse_textures(char *line, mlx_texture_t *walls[4])
 {
 	char	**path;
 
@@ -21,14 +21,14 @@ static int	parse_textures(char *line, t_walls *walls)
 		cub3d_error("malloc", 1);
 	if (!path[0] || !path[1])
 		cub3d_error("Invalid texture path", 1);
-	if (ft_strnstr(line, "NO ", 3) == line && !walls->north)
-		walls->north = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "SO ", 3) == line && !walls->south)
-		walls->south = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "EA ", 3) == line && !walls->east)
-		walls->east = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "WE ", 3) == line && !walls->west)
-		walls->west = mlx_load_png(path[1]);
+	if (ft_strnstr(line, "NO ", 3) == line && !walls[0])
+		walls[0] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "SO ", 3) == line && !walls[2])
+		walls[2] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "EA ", 3) == line && !walls[1])
+		walls[1] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "WE ", 3) == line && !walls[3])
+		walls[3] = mlx_load_png(path[1]);
 	else
 	{
 		printf("line: %s\n", line);
@@ -78,7 +78,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 		cub3d_error("malloc", 1);
 	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
 		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
-		return (parse_textures(tmp, &cub3d->textures));
+		return (parse_textures(tmp, cub3d->textures));
 	else if (*tmp == 'F' || *tmp == 'C')
 		return (parse_colors(tmp, &cub3d->colors));
 //	else if (*tmp != '\0')

@@ -35,7 +35,7 @@
 
 
 
-uint32_t	raycast(t_cub3d *cub3d, int h, int v);
+//uint32_t	raycast(t_cub3d *cub3d, int h, int v);
 
 void	render(t_cub3d *cub3d);
 
