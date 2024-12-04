@@ -216,15 +216,34 @@ int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
 	return (intersect(cub3d, ray, tx_h, dist));
 }
 
+int	darkness(int y, int height)
+{
+	int		dark_y;
+
+	if (y < 10)
+		dark_y = 28 * y;
+	else if (height - y < 10)
+		dark_y = 28 * (height - y);
+	else
+		dark_y = 255;
+	return (dark_y);
+}
+
 uint32_t	pixel_color(t_cub3d *cub3d, double tx_h, double tx_v, int side)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
+	uint32_t	color;
+	int			dark;
 
 	x = (int) (tx_h * cub3d->textures[side]->width);
 	y = (int) (tx_v * cub3d->textures[side]->height);
-	return (((uint32_t *)cub3d->textures[side]->pixels)
-		[y * cub3d->textures[side]->width + x]);
+	color = ((uint32_t *)cub3d->textures[side]->pixels)
+		[y * cub3d->textures[side]->width + x];
+	dark = darkness(y, cub3d->textures[side]->height);
+	color &= 0x00ffffff;
+	color |= dark << 24;
+	return (color);
 }
 
 void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
@@ -236,18 +255,21 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + h * h); //0.5 * CUBE_EDGE
 //	printf("[dist, lim: %f, %f] ", dist, lim);
 	v = -1;
-	while(++v < (HEIGHT + 1) / 2 - lim)
+	while(++v <= (HEIGHT + 1) / 2 - lim)
 	{
 		((uint32_t *)cub3d->img->pixels)
 		[v * WIDTH + h + WIDTH / 2] = cub3d->colors.ceiling_color;
 		((uint32_t *)cub3d->img->pixels)
 		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = cub3d->colors.floor_color;
 	}
+	v--;
 	while(++v < (HEIGHT + 1) / 2)
 	{
 		tx_v = (2 * v - HEIGHT) / (4 * lim) + 0.5;
 		((uint32_t *)cub3d->img->pixels)
 		[v * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, tx_v, side);
+		((uint32_t *)cub3d->img->pixels)
+		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = 0;
 		((uint32_t *)cub3d->img->pixels)
 		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, 1 - tx_v, side);
 	}
@@ -267,5 +289,5 @@ void	render(t_cub3d *cub3d)
 		drawline(cub3d, h, tx_h, dist, side);
 	}
 	cub3d->frames_shown++;
-	printf("frames_shown: %d\n", cub3d->frames_shown);
+//	printf("frames_shown: %d\n", cub3d->frames_shown);
 }

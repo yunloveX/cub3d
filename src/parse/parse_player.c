@@ -18,7 +18,7 @@ static void	locate_player(t_cub3d *cub3d, int y, int x)
 {
 	char	c;
 
-	cub3d->player.pos.i = 0.5 + x;
+	cub3d->player.pos.i = 0.51 + x;
 	cub3d->player.pos.j = -0.5 - y;
 	cub3d->player.pos.k = 0.5;
 	q_zero(&cub3d->player.down);

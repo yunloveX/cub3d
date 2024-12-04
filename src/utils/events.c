@@ -38,6 +38,32 @@
 	//TODO render
 }*/
 
+int	collision(t_cub3d *cub3d)
+{
+	t_quaternion	tmp1;
+	int				x1;
+	int				y1;
+	t_quaternion	tmp2;
+	int				x2;
+	int				y2;
+
+	tmp1 = q_add(cub3d->player.pos, q_scale(cub3d->player.right, -WIDTH / 2));
+	x1 = (int) tmp1.i;
+	y1 = (int) -tmp1.j;
+	if (cub3d->map.grid[y1][x1] == '1')
+		return (1);
+	tmp2 = q_add(cub3d->player.pos, q_scale(cub3d->player.right, WIDTH / 2));
+	x2 = (int) tmp2.i;
+	y2 = (int) -tmp2.j;
+	if (cub3d->map.grid[y2][x2] == '1')
+		return (1);
+	if (x1 == x2 || y1 == y2)
+		return (0);
+	if (cub3d->map.grid[y1][x2] == '1' || cub3d->map.grid[y2][x1] == '1')
+		return (1);
+	return (0);
+}
+
 void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 {
 	t_quaternion	rot;
@@ -52,6 +78,9 @@ void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 	rot.j = 0.0;
 	rot.k = sinth;
 	cub3d->player.right = q_rotate(cub3d->player.right, rot);
+	locate_cam(cub3d);
+	if (collision(cub3d))
+		rotate_horizontal(cub3d, -xpos);
 }
 
 void	move(t_cub3d *cub3d, double step)
@@ -59,25 +88,10 @@ void	move(t_cub3d *cub3d, double step)
 /*	cub3d->player_old = cub3d->player;*/
 	cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
 		cub3d->player.cam), step));
+	locate_cam(cub3d);
+	if (collision(cub3d))
+		move(cub3d, -step);
 }
-/*
-void	no_collision(t_cub3d *cub3d)
-{
-	t_quaternion	tmp;
-
-	tmp = q_add(cub3d->player.pos, q_scale(cub3d->player.right, -WIDTH / 2));
-	if (cub3d->map.grid[(int) -tmp.j][(int) tmp.i] == '1')
-	{
-		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(cub3d->player.right, WIDTH / 20));
-		no_collision(cub3d);
-	}
-	tmp = q_add(cub3d->player.pos, q_scale(cub3d->player.right, WIDTH / 2));
-	if (cub3d->map.grid[(int) -tmp.j][(int) tmp.i] == '1')
-	{
-		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(cub3d->player.right, -WIDTH / 20));
-		no_collision(cub3d);
-	}
-}*/
 
 void	key_hook_function(mlx_key_data_t key_data, void *param)
 {
@@ -98,10 +112,6 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 		mlx_terminate(cub3d->mlx);
 	else
 		return ;
-/*	no_collision(cub3d);*/
-	locate_cam(cub3d);
-	printf("pos: %f, %f, %f\n", cub3d->player.pos.i, cub3d->player.pos.j, cub3d->player.pos.k);
-	printf("cam: %f, %f, %f\n", cub3d->player.cam.i, cub3d->player.cam.j, cub3d->player.cam.k);
 	render(cub3d);
 }
 /*

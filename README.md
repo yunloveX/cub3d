@@ -8,10 +8,8 @@ To Do:
 
 In Progress:
 
-	Implementar movimiento:
-		*	Implementar choque con muros.
 
-	Implementar eventos:
+	Implementar eventos: ratón
 
 
 	Definir la funcion de parseo teniendo en cuenta el bonus
@@ -27,7 +25,11 @@ Done:
 
 	* 	OK: Parsear el mapa viendo los posibles errores (mapa no cerrado, simbolos no reconocidos)
 
-To Checking:
+	Implementar movimiento:
+		*	Implementar choque con muros.
+
+To be Checked:
+
 
 Closed:
 
