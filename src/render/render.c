@@ -275,6 +275,90 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	}
 }
 
+void transparent_pixel(uint8_t *pixel, uint32_t color)
+{
+	int		alpha;
+	uint32_t	tmp;
+
+	alpha = color & 0xff;
+	tmp = *pixel * (255 - alpha);
+	tmp += (color >> 24 & 0xff) * alpha;
+	tmp /= 255;
+	*pixel = tmp;
+	tmp = *++pixel * (255 - alpha);
+	tmp += (color >> 16 & 0xff) * alpha;
+	tmp /= 255;
+	*pixel = tmp;
+	tmp = *++pixel * (255 - alpha);
+	tmp += (color >> 8 & 0xff) * alpha;
+	tmp /= 255;
+	*pixel = tmp;
+}
+/*
+void	mix_colors(int color, uint32_t *pixel)
+{
+	uint32_t	r;
+	uint32_t	g;
+	uint32_t	b;
+	uint32_t	a;
+
+	r = (color & 0xff0000) >> 16;
+	g = (color & 0xff00) >> 8;
+	b = color & 0xff;
+	a = (color & 0xff000000) >> 24;
+	r = (r * a + ((*pixel & 0xff0000) >> 16) * (255 - a)) / 255;
+	g = (g * a + ((*pixel & 0xff00) >> 8) * (255 - a)) / 255;
+	b = (b * a + (*pixel & 0xff) * (255 - a)) / 255;
+	*pixel = (r << 16) | (g << 8) | b;
+}
+*/
+
+void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < 5)
+	{
+		j = 0;
+		while (j < 5)
+		{
+//			mlx_put_pixel(cub3d->img, x * 5 + i, y * 5 + j, color);
+//			mlx_draw_pixel(cub3d->img->pixels +
+			transparent_pixel(cub3d->img->pixels +
+			4 * ((y * 5 + j) * WIDTH + x * 5 + i), color);
+			j++;
+		}
+		i++;
+//		mlx_put_pixel(cub3d->img, x * 5, y * 5, color);
+	}
+}
+
+void	show_map(t_cub3d *cub3d)
+{
+	int		x;
+	int		y;
+	int		color;
+
+	y = -2;
+	while (++y < cub3d->map.height + 1)
+	{
+		x = -2;
+		while (++x < cub3d->map.width + 1)
+		{
+			if (x == (int) cub3d->player.pos.i && y == (int) -cub3d->player.pos.j)
+				color = 0xff0000ff;
+			else if (x < 0 || x == cub3d->map.width|| y < 0
+				|| y == cub3d->map.height || cub3d->map.grid[y][x] != '1')
+				color = 0xffffff40;
+			else
+				color = 0x000000c0;
+			put_map_dot(cub3d, x + 1, y + 1, color);
+		}
+	}
+}
+
 void	render(t_cub3d *cub3d)
 {
 	int		h;
@@ -288,6 +372,7 @@ void	render(t_cub3d *cub3d)
 		side = raycast(cub3d, h, &tx_h, &dist);
 		drawline(cub3d, h, tx_h, dist, side);
 	}
+	show_map(cub3d);
 	cub3d->frames_shown++;
 //	printf("frames_shown: %d\n", cub3d->frames_shown);
 }
