@@ -3,8 +3,8 @@ SO ./assets/textures/T2.png
 EA ./assets/textures/T3.png
 WE ./assets/textures/T4.png
 
-F 255,255,0
-C 0,0,0
+F 160,80,0
+C 80,200,240
 
         1111111111111111111111111
         1000000000110000000000001

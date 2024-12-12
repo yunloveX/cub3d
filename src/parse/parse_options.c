@@ -74,10 +74,13 @@ static int	parse_colors(char *line, t_colors *colors)
 //		colors->floor_color = color_rgba(255, ft_atoi(rgb[2]),
 //				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
 	else if (*line == 'C' && rgb[0] && rgb[1] && rgb[2])
+	{
 		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
 				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
 //		colors->ceiling_color = color_rgba(255, ft_atoi(rgb[2]),
 //				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
+		printf("ceiling_color: %x\n", colors->ceiling_color);
+	}
 	else
 		cub3d_error("Invalid color1", 1);
 	double_free(rgb);

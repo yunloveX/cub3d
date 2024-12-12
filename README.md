@@ -30,8 +30,7 @@ Done:
 	
 	OK: implementar minimap
 
-	Añadida una sombra en los bordes horizontales de los muros, pero extrañamente debería ser negro y es gris (51,51,51)
-	VER IMAGEN DEL ERROR EN: assets/maps/textures/error.png, ni siquiera la transparencia consigue oscurecer el borde.
+	OK: Añadida una sombra en los bordes horizontales de los muros.
 
 To be Checked:
 

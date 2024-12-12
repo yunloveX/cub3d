@@ -216,9 +216,9 @@ int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
 	return (intersect(cub3d, ray, tx_h, dist));
 }
 
-uint32_t	darkness(int y, int height)
+uint8_t	darkness(int y, int height)
 {
-	uint32_t		dark_y;
+	uint8_t		dark_y;
 
 	if (y < 10)
 		dark_y = 28 * y;
@@ -229,20 +229,35 @@ uint32_t	darkness(int y, int height)
 	return (dark_y);
 }
 
+void	light_part(uint32_t *color, uint8_t fraction)
+{
+	uint32_t	tmp;
+
+	tmp = (*color & 0xff00) >> 8;
+	tmp *= fraction;
+	tmp = (tmp + (tmp >> 8) + 0x80) >> 8;
+	*color = (*color & 0xffff00ff) | (tmp << 8);
+	tmp = (*color & 0xff0000) >> 16;
+	tmp *= fraction;
+	tmp = (tmp + (tmp >> 8) + 0x80) >> 8;
+	*color = (*color & 0xff00ffff) | (tmp << 16);
+	tmp = (*color & 0xff000000) >> 24;
+	tmp *= fraction;
+	tmp = (tmp + (tmp >> 8) + 0x80) >> 8;
+	*color = (*color & 0x00ffffff) | (tmp << 24);
+}
+
 uint32_t	pixel_color(t_cub3d *cub3d, double tx_h, double tx_v, int side)
 {
 	int			x;
 	int			y;
 	uint32_t	color;
-	uint32_t	dark;
 
 	x = (int) (tx_h * cub3d->textures[side]->width);
 	y = (int) (tx_v * cub3d->textures[side]->height);
 	color = color_from_mem((cub3d->textures[side]->pixels)
 		+ 4 * (y * cub3d->textures[side]->width + x));
-	dark = darkness(y, cub3d->textures[side]->height);
-	color &= 0xffffff00;
-	color |= dark;
+	light_part(&color, darkness(y, cub3d->textures[side]->height));
 	return (color);
 }
 
