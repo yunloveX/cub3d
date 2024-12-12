@@ -53,6 +53,8 @@ void	init(t_cub3d *cub3d);
 
 char	**ft_dstrdup(char **dstr, int size);
 
+uint32_t	color_from_mem(uint8_t *pixel);
+
 uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);

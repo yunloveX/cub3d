@@ -22,13 +22,29 @@ static int	parse_textures(char *line, mlx_texture_t *walls[4])
 	if (!path[0] || !path[1])
 		cub3d_error("Invalid texture path", 1);
 	if (ft_strnstr(line, "NO ", 3) == line && !walls[0])
+	{
+		printf("line: %s\n", line);
 		walls[0] = mlx_load_png(path[1]);
+		printf("\n%x\n", walls[0]->pixels[0]);
+	}
 	else if (ft_strnstr(line, "SO ", 3) == line && !walls[2])
+	{
+		printf("line: %s\n", line);
 		walls[2] = mlx_load_png(path[1]);
+		printf("\n%x\n", walls[2]->pixels[0]);
+	}
 	else if (ft_strnstr(line, "EA ", 3) == line && !walls[1])
+	{
+		printf("line: %s\n", line);
 		walls[1] = mlx_load_png(path[1]);
+		printf("\n%x\n", walls[1]->pixels[0]);
+	}
 	else if (ft_strnstr(line, "WE ", 3) == line && !walls[3])
+	{
+		printf("line: %s\n", line);
 		walls[3] = mlx_load_png(path[1]);
+		printf("\n%x\n", walls[3]->pixels[0]);
+	}
 	else
 	{
 		printf("line: %s\n", line);
@@ -53,15 +69,15 @@ static int	parse_colors(char *line, t_colors *colors)
 	if (!rgb)
 		cub3d_error("malloc", 1);
 	if (*line == 'F' && rgb[0] && rgb[1] && rgb[2])
-//		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
-//				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
-		colors->floor_color = color_rgba(255, ft_atoi(rgb[2]),
-				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
+		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
+				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
+//		colors->floor_color = color_rgba(255, ft_atoi(rgb[2]),
+//				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
 	else if (*line == 'C' && rgb[0] && rgb[1] && rgb[2])
-//		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
-//				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
-		colors->ceiling_color = color_rgba(255, ft_atoi(rgb[2]),
-				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
+		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
+				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
+//		colors->ceiling_color = color_rgba(255, ft_atoi(rgb[2]),
+//				ft_atoi(rgb[1]), ft_atoi(rgb[0]));
 	else
 		cub3d_error("Invalid color1", 1);
 	double_free(rgb);

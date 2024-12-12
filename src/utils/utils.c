@@ -39,6 +39,18 @@ uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
+uint32_t	color_from_mem(uint8_t *pixel)
+{
+	uint32_t	color;
+
+	color = 0;
+	color |= ((uint32_t)*pixel++) << 24;
+	color |= ((uint32_t)*pixel++) << 16;
+	color |= ((uint32_t)*pixel++) << 8;
+	color |= (uint32_t)*pixel;
+	return (color);
+}
+
 char	**ft_dstrdup(char **dstr, int size)
 {
 	char	**copy;

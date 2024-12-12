@@ -216,9 +216,9 @@ int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
 	return (intersect(cub3d, ray, tx_h, dist));
 }
 
-int	darkness(int y, int height)
+uint32_t	darkness(int y, int height)
 {
-	int		dark_y;
+	uint32_t		dark_y;
 
 	if (y < 10)
 		dark_y = 28 * y;
@@ -234,15 +234,15 @@ uint32_t	pixel_color(t_cub3d *cub3d, double tx_h, double tx_v, int side)
 	int			x;
 	int			y;
 	uint32_t	color;
-	int			dark;
+	uint32_t	dark;
 
 	x = (int) (tx_h * cub3d->textures[side]->width);
 	y = (int) (tx_v * cub3d->textures[side]->height);
-	color = ((uint32_t *)cub3d->textures[side]->pixels)
-		[y * cub3d->textures[side]->width + x];
+	color = color_from_mem((cub3d->textures[side]->pixels)
+		+ 4 * (y * cub3d->textures[side]->width + x));
 	dark = darkness(y, cub3d->textures[side]->height);
-	color &= 0x00ffffff;
-	color |= dark << 24;
+	color &= 0xffffff00;
+	color |= dark;
 	return (color);
 }
 
@@ -257,21 +257,19 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	v = -1;
 	while(++v <= (HEIGHT + 1) / 2 - lim)
 	{
-		((uint32_t *)cub3d->img->pixels)
-		[v * WIDTH + h + WIDTH / 2] = cub3d->colors.ceiling_color;
-		((uint32_t *)cub3d->img->pixels)
-		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = cub3d->colors.floor_color;
+		mlx_put_pixel(cub3d->img, h + WIDTH / 2, v, cub3d->colors.ceiling_color);
+		mlx_put_pixel(cub3d->img, h + WIDTH / 2, HEIGHT - 1 - v, cub3d->colors.floor_color);
 	}
 	v--;
 	while(++v < (HEIGHT + 1) / 2)
 	{
 		tx_v = (2 * v - HEIGHT) / (4 * lim) + 0.5;
-		((uint32_t *)cub3d->img->pixels)
+/*		((uint32_t *)cub3d->img->pixels)
 		[v * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, tx_v, side);
 		((uint32_t *)cub3d->img->pixels)
-		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = 0;
-		((uint32_t *)cub3d->img->pixels)
-		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, 1 - tx_v, side);
+		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, 1 - tx_v, side);*/
+		mlx_put_pixel(cub3d->img, h + WIDTH / 2, v, pixel_color(cub3d, tx_h, tx_v, side));
+		mlx_put_pixel(cub3d->img, h + WIDTH / 2, HEIGHT - 1 - v, pixel_color(cub3d, tx_h, 1 - tx_v, side));
 	}
 }
 
@@ -283,15 +281,15 @@ void transparent_pixel(uint8_t *pixel, uint32_t color)
 	alpha = color & 0xff;
 	tmp = *pixel * (255 - alpha);
 	tmp += (color >> 24 & 0xff) * alpha;
-	tmp /= 255;
+	tmp = (tmp + 127) / 255;
 	*pixel = tmp;
 	tmp = *++pixel * (255 - alpha);
 	tmp += (color >> 16 & 0xff) * alpha;
-	tmp /= 255;
+	tmp = (tmp + 127) / 255;
 	*pixel = tmp;
 	tmp = *++pixel * (255 - alpha);
 	tmp += (color >> 8 & 0xff) * alpha;
-	tmp /= 255;
+	tmp = (tmp + 127) / 255;
 	*pixel = tmp;
 }
 /*
@@ -353,7 +351,7 @@ void	show_map(t_cub3d *cub3d)
 				|| y == cub3d->map.height || cub3d->map.grid[y][x] != '1')
 				color = 0xffffff40;
 			else
-				color = 0x000000c0;
+				color = 0x000000ff;
 			put_map_dot(cub3d, x + 1, y + 1, color);
 		}
 	}
