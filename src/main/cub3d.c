@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	{
 		parse(&cub3d, argv[1]);
 		init(&cub3d);
-		render(&cub3d); //TODO
+		render(&cub3d);
 		mlx_loop(cub3d.mlx);
 		mlx_terminate(cub3d.mlx);
 	}
