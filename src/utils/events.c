@@ -101,6 +101,11 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 	if (key_data.action == MLX_RELEASE)
 		return ;
 	cub3d = (t_cub3d *)param;
+/*	if (key_data.key == MLX_KEY_Y)
+	{
+			cub3d->img->enabled ^= true;
+			printf("img enabled: %d\n", cub3d->img->enabled);
+	}*/
 	if (key_data.key == MLX_KEY_A || key_data.key == MLX_KEY_LEFT)
 	{
 		i = -1;
@@ -123,23 +128,77 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 		return ;
 	render(cub3d);
 }
-/*
+
+void	scroll_hook_function(double xdelta, double ydelta, void *param)
+{
+	t_cub3d	*cub3d;
+
+	cub3d = (t_cub3d *)param;
+	if (ydelta)
+		move(cub3d, ydelta / 10.0);
+	if (xdelta)
+		rotate_horizontal(cub3d, xdelta);
+	render(cub3d);
+}
+
+void	mouse_hook_function(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
+{
+	t_cub3d	*cub3d;
+
+	cub3d = (t_cub3d *)param;
+	mods = 0;
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS && !mods)
+	{
+		cub3d->mouse_down |= 1;
+		mlx_get_mouse_pos(cub3d->mlx, &cub3d->old_x, &cub3d->old_y);
+	}
+	else if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
+		cub3d->mouse_down &= 0xfe;
+	if (button == MLX_MOUSE_BUTTON_RIGHT && action == MLX_PRESS)
+	{
+		cub3d->mouse_down |= 2;
+		mlx_get_mouse_pos(cub3d->mlx, &cub3d->old_x, &cub3d->old_y);
+	}
+	else if (button == MLX_MOUSE_BUTTON_RIGHT && action == MLX_RELEASE)
+		cub3d->mouse_down &= 0xfd;
+}
+
+
 void    loop_hook_function(void *param)
 {
     t_cub3d	*cub3d;
-	int	xpos;
-	int	ypos;
+	int32_t	xpos;
+	int32_t	ypos;
 
-//	printf("scrolling xpos: %f, ypos: %f\n", xpos, ypos);
     cub3d = (t_cub3d *)param;
-	if (!mlx_is_mouse_down(cub3d->mlx, MLX_MOUSE_BUTTON_LEFT))
+	if (!cub3d->mouse_down)
 		return ;
 	mlx_get_mouse_pos(cub3d->mlx, &xpos, &ypos);
-	if (xpos != WIDTH / 2)
-		rotate_horizontal(cub3d, -((double)xpos - (double)WIDTH / 2.0) / 10.0);
-	if (ypos != HEIGHT / 2)
+//	printf("mouse xpos: %d, ypos: %d\n", xpos, ypos);
+	if (cub3d->mouse_down == 1)
+	{
+		xpos -= cub3d->old_x;
+		ypos -= cub3d->old_y;
+	}
+	else
+	{
+		xpos -= WIDTH / 2;
+		if (abs(xpos) > 50)
+			xpos = xpos / abs(xpos) * 50;
+		ypos -= HEIGHT / 2;
+		if (abs(ypos) > 50)
+			ypos = ypos / abs(ypos) * 50;
+		xpos = -xpos / 5;
+		ypos = -ypos / 10;
+
+	}
+	if (xpos)
+		rotate_horizontal(cub3d, (double)xpos / 5.0);
+	if (ypos)
 		cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
-			cub3d->player.cam), -((double)ypos - (double)HEIGHT / 2.0) / 400.0));
+			cub3d->player.cam), (double)ypos / 100.0));
 	locate_cam(cub3d);
+	cub3d->old_x += xpos;
+	cub3d->old_y += ypos;
 	render(cub3d);
-}*/
+}

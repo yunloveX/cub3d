@@ -9,8 +9,6 @@ To Do:
 In Progress:
 
 
-	Implementar eventos: ratón
-
 
 	Definir la funcion de parseo teniendo en cuenta el bonus
 	
@@ -25,9 +23,11 @@ Done:
 
 	* 	OK: Parsear el mapa viendo los posibles errores (mapa no cerrado, simbolos no reconocidos)
 
-	Implementar movimiento:
-		*	Implementar choque con muros.
-	
+	OK: Implementar eventos de ratón (PERO se "clava" en los muros y se queda pillado) <<<<< ******** !!!!
+		Eventos del ratón:
+		 * botón izq y arrastrar: te mueves al arrastrar el ratón
+		 * botón der: te deslizas hacia el ratón, aunque no lo arrastres.
+
 	OK: implementar minimap
 
 	OK: Añadida una sombra en los bordes horizontales de los muros.

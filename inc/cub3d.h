@@ -39,7 +39,11 @@
 
 void	render(t_cub3d *cub3d);
 
-//void    loop_hook_function(void *param);
+void    loop_hook_function(void *param);
+
+void	mouse_hook_function(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+
+void	scroll_hook_function(double xdelta, double ydelta, void *param);
 
 void	key_hook_function(mlx_key_data_t key_data, void *param);
 

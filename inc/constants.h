@@ -13,8 +13,8 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define WIDTH 600 //640
-# define HEIGHT 320 //480
+# define WIDTH 1800 //640
+# define HEIGHT 960 //480
 # define CAM_DIST (WIDTH * 1)
 # define CUBE_EDGE (WIDTH * 4)
 # define FAR 1000000.0

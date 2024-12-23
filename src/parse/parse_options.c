@@ -21,25 +21,25 @@ static int	parse_textures(char *line, mlx_texture_t *walls[4])
 		cub3d_error("malloc", 1);
 	if (!path[0] || !path[1])
 		cub3d_error("Invalid texture path", 1);
-	if (ft_strnstr(line, "NO ", 3) == line && !walls[0])
+	if (ft_strnstr(line, "NO", 2) == line && !walls[0])
 	{
 		printf("line: %s\n", line);
 		walls[0] = mlx_load_png(path[1]);
 		printf("\n%x\n", walls[0]->pixels[0]);
 	}
-	else if (ft_strnstr(line, "SO ", 3) == line && !walls[2])
+	else if (ft_strnstr(line, "SO", 2) == line && !walls[2])
 	{
 		printf("line: %s\n", line);
 		walls[2] = mlx_load_png(path[1]);
 		printf("\n%x\n", walls[2]->pixels[0]);
 	}
-	else if (ft_strnstr(line, "EA ", 3) == line && !walls[1])
+	else if (ft_strnstr(line, "EA", 2) == line && !walls[1])
 	{
 		printf("line: %s\n", line);
 		walls[1] = mlx_load_png(path[1]);
 		printf("\n%x\n", walls[1]->pixels[0]);
 	}
-	else if (ft_strnstr(line, "WE ", 3) == line && !walls[3])
+	else if (ft_strnstr(line, "WE", 2) == line && !walls[3])
 	{
 		printf("line: %s\n", line);
 		walls[3] = mlx_load_png(path[1]);

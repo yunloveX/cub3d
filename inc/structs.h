@@ -55,7 +55,10 @@ typedef struct s_cub3d
 	mlx_texture_t	*textures[4];
 	t_colors		colors;
 	t_player		player;
-	t_player		player_old;
+//	t_player		player_old;
+	int				mouse_down;
+	int32_t				old_x;
+	int32_t				old_y;
 	double			jumps[3];
 	int				frames_shown;
 }	t_cub3d;

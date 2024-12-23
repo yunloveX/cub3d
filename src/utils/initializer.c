@@ -14,8 +14,12 @@
 
 static void	init_events(t_cub3d *cub3d)
 {
-/*	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);*/
 	mlx_key_hook(cub3d->mlx, key_hook_function, cub3d);
+	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);
+//	mlx_scroll_hook(mlx_t* mlx, mlx_scrollfunc func, void* param);
+	mlx_scroll_hook(cub3d->mlx, scroll_hook_function, cub3d);
+//	mlx_mouse_hook(mlx_t* mlx, mlx_mousefunc func, void* param)
+	mlx_mouse_hook(cub3d->mlx, mouse_hook_function, cub3d);
 }
 
 static void	init_graph(t_cub3d *cub3d)
@@ -36,6 +40,7 @@ static void	init_graph(t_cub3d *cub3d)
 
 void	init(t_cub3d *cub3d)
 {
+	cub3d->mouse_down = false;
 	init_graph(cub3d);
 	init_events(cub3d);
 }
