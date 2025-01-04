@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+         #
+#    By: israel <israel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2024/07/02 20:27:10 by yunlovex         ###   ########.fr        #
+#    Updated: 2025/01/02 12:29:06 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,6 @@ CC					=	gcc
 
 CFLAGS				=	-g -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES) 
 CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES_BONUS)
-#LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -lmlx42 -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
 LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -L$(QUAT_DIR) -L/usr/lib -I$(MINILIBX_DIR) -I$(QUAT_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
 LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
 INCLUDES			=	-I$(INC_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(addsuffix $(INC_DIR), $(QUAT_DIR)/) -I$(QUAT_INCLUDE) -I$(MINILIBX_INCLUDE)

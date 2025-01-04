@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: israel <israel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:19:43 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/03 13:10:01 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:00:13 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,54 +55,100 @@ static int	check_line(char *line)
 	return (EXIT_SUCCESS);
 }
 
-static void	check_cell(char **grid, int y, int x, int height)
+static void check_cell(char **grid, int y, int x, int height)
 {
-	int	width;
+    // First check if y is within bounds and grid[y] exists
+    if (y < 0 || y >= height || !grid[y])
+        return;
+        
+    // Then check if x is within bounds of current row
+    size_t width = ft_strlen(grid[y]);
+    if (x < 0 || x >= (int) width)
+        return;
+        
+    // Check if we're at a wall, visited cell, or invalid cell
+    if (grid[y][x] == '1' || grid[y][x] == 'm' || grid[y][x] == ' ')
+        return;
+        
+    // Check if we're at a valid cell type
+    if (grid[y][x] != '0' && grid[y][x] != 'N' && grid[y][x] != 'S'
+        && grid[y][x] != 'E' && grid[y][x] != 'W')
+        return;
+        
+    // Check boundaries
+    if (y == 0 || y == height - 1 || x == 0 || x == (int)width - 1)
+        return;
+        
+    // Check surrounding cells exist and aren't spaces
+    if (!grid[y + 1] || !grid[y - 1] ||
+        x >= (int) ft_strlen(grid[y + 1]) ||
+        x >= (int) ft_strlen(grid[y - 1]) ||
+        grid[y + 1][x] == ' ' || grid[y - 1][x] == ' ' ||
+        grid[y][x + 1] == ' ' || grid[y][x - 1] == ' ')
+        return;
 
-	width = ft_strlen(grid[y]);
-	if ((y <= 0 || x <= 0 || y >= height - 1 || x >= width - 1
-		|| !grid[y + 1] || grid[y][x + 1] == '\0'
-		|| grid[y][x + 1] == ' ' || grid[y][x - 1] == ' '
-		|| grid[y + 1][x] == ' ' || grid[y - 1][x] == ' ')
-		|| (grid[y][x] != '0' && grid[y][x] != 'N' && grid[y][x] != 'S'
-		&& grid[y][x] != 'E' && grid[y][x] != 'W'))
-		return ;
-	grid[y][x] = 'm';
-	check_cell(grid, y - 1, x, height);
-	check_cell(grid, y + 1, x, height);
-	check_cell(grid, y, x - 1, height);
-	check_cell(grid, y, x + 1, height);
+    // Mark as visited
+    grid[y][x] = 'm';
+    
+    // Recursively check adjacent cells
+    check_cell(grid, y - 1, x, height);
+    check_cell(grid, y + 1, x, height);
+    check_cell(grid, y, x - 1, height);
+    check_cell(grid, y, x + 1, height);
 }
 
-static void	find_zero(char **grid, int *y, int *x, int rows)
+static void find_zero(char **grid, int *y, int *x, int rows)
 {
-	*y = -1;
-	while (++*y < rows && grid[*y][*x] != '0')
-	{
-		*x = 0;
-		while (grid[*y][*x])
-			if (grid[*y][(*x)++] == '0')
-				return ;
-	}
-	return ;
+    size_t width;
+
+    *y = 0;
+    while (*y < rows && grid[*y])
+    {
+        *x = 0;
+        width = ft_strlen(grid[*y]);
+        while (*x < (int)width)
+        {
+            if (grid[*y][*x] == '0')
+                return;
+            (*x)++;
+        }
+        (*y)++;
+    }
 }
 
-int	check_map(char **grid, int rows)
+int check_map(char **grid, int rows)
 {
-	char	**copy_grid;
-	int		y;
-	int		x;
+    char    **copy_grid;
+    int     y;
+    int     x;
+    int     ret;
 
-	copy_grid = ft_dstrdup(grid, rows);
-	y = 0;
-	x = 0;
-	find_zero(copy_grid, &y, &x, rows);
-	check_cell(copy_grid, y, x, rows);
-	find_zero(copy_grid, &y, &x, rows);
-	double_free(copy_grid);
-	if (y < rows)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+    if (!grid || rows <= 0)
+        return (EXIT_FAILURE);
+        
+    copy_grid = ft_dstrdup(grid, rows);
+    if (!copy_grid)
+        return (EXIT_FAILURE);
+
+    // Find initial zero position
+    y = 0;
+    x = 0;
+    find_zero(copy_grid, &y, &x, rows);
+    
+    // If we found a zero, flood fill from there
+    if (y < rows && x < (int)ft_strlen(copy_grid[y]))
+        check_cell(copy_grid, y, x, rows);
+        
+    // Try to find another zero
+    find_zero(copy_grid, &y, &x, rows);
+    
+    // If we found another zero, map is not enclosed
+    ret = (y >= rows) ? EXIT_SUCCESS : EXIT_FAILURE;
+    
+    // Clean up
+    if (copy_grid)
+        double_free(copy_grid);
+    return (ret);
 }
 
 int	parse_map(int fd, t_map *map)

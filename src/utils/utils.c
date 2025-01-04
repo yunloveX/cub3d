@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: israel <israel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 18:48:33 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:51:23 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,26 @@ char	**ft_dstrdup(char **dstr, int size)
 	char	**copy;
 	int		i;
 
-	copy = (char **) malloc(size * sizeof(char *));
+	copy = (char **) malloc((size + 1) * sizeof(char *));
+	if (!copy)
+        return NULL;
+		
 	i = -1;
 	while (++i < size)
-		copy[i] = ft_strdup(dstr[i]);
+	{
+		if (dstr[i])
+            copy[i] = ft_strdup(dstr[i]);
+        else
+            copy[i] = NULL;
+        if (!copy[i] && dstr[i])
+        {
+            while (--i >= 0)
+                free(copy[i]);
+            free(copy);
+            return (NULL);
+        }
+	}
+	copy[size] = NULL;
 	return (copy);
 }
 
@@ -115,16 +131,20 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
  *
  * @param str The double pointer to free.
  */
-void	double_free(char **str)
+void double_free(char **str)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	while (i >= 0)
-		free(str[i--]);
-	free(str);
+    if (!str)
+        return;
+    i = 0;
+    while (str[i])
+    {
+        free(str[i]);
+		str[i] = NULL;
+        i++;
+    }
+    free(str);
 }
 
 void	locate_pos(t_cub3d *cub3d)

@@ -3,37 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: israel <israel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:36:48 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/03 08:35:14 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:05:05 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	parse(t_cub3d *cub3d, char *file)
+void parse(t_cub3d *cub3d, char *file)
 {
-	int		fd;
-	int		options;
-	char	*line;
+    int     fd;
+    int     options;
+    char    *line;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		cub3d_error(file, 1);
-	cub3d->textures[0] = NULL;
-	cub3d->textures[2] = NULL;
-	cub3d->textures[1] = NULL;
-	cub3d->textures[3] = NULL;
-	options = 0;
-	line = get_next_line(fd);
-	while (line && options < 6)
-	{
-		options += parse_options(line, cub3d);
-		free(line);
-		line = get_next_line(fd);
-	}
-	parse_map(fd, &cub3d->map);
-	close(fd);
-	parse_player(cub3d);
+    fd = open(file, O_RDONLY);
+    if (fd < 0)
+        cub3d_error(file, 1);
+    cub3d->textures[0] = NULL;
+    cub3d->textures[2] = NULL;
+    cub3d->textures[1] = NULL;
+    cub3d->textures[3] = NULL;
+    cub3d->map.grid = NULL;
+    cub3d->map.width = 0;
+    cub3d->map.height = 0;
+    options = 0;
+    line = get_next_line(fd);
+    while (line && options < 6)
+    {
+        options += parse_options(line, cub3d);
+        line = get_next_line(fd);
+    }
+	if (parse_map(fd, &cub3d->map) == EXIT_FAILURE)
+		cub3d_error("Invalid map", 1);
+    close(fd);
+    parse_player(cub3d);
 }

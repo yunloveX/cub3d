@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_options.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: israel <israel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/03 08:36:52 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:32:53 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,24 @@ static int	parse_colors(char *line, t_colors *colors)
 	return (1);
 }
 
-int	parse_options(char *line, t_cub3d *cub3d)
+int parse_options(char *line, t_cub3d *cub3d)
 {
-	char	*tmp;
+    char    *tmp;
+    int     ret;
 
-	tmp = ft_strtrim(line, " \n"); //PREGUNTA: ¿Por qué ft_strtrim si la línea viene de GNL, luego no tiene \n?
-	if (!tmp)
-		cub3d_error("malloc", 1);
-	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
-		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
-		return (parse_textures(tmp, cub3d->textures));
-	else if (*tmp == 'F' || *tmp == 'C')
-		return (parse_colors(tmp, &cub3d->colors));
-//	else if (*tmp != '\0')
-//		cub3d_error("Invalid line", 1);
-	return (0);
+    tmp = ft_strtrim(line, " \n");
+    if (!tmp)
+        cub3d_error("malloc", 1);
+        
+    ret = 0;
+    if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
+        || ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
+        ret = parse_textures(tmp, cub3d->textures);
+    else if (*tmp == 'F' || *tmp == 'C')
+        ret = parse_colors(tmp, &cub3d->colors);
+    else
+        free(tmp);  // Free tmp if not handled by parse_textures or parse_colors
+        
+    free(line);  // Free the original line
+    return ret;
 }
