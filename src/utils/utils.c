@@ -160,3 +160,11 @@ void	locate_cam(t_cub3d *cub3d)
 	cub3d->player.cam = q_add(cub3d->player.pos,
 		q_scale(cub3d->player.cam, -CUBE_EDGE * CAM_DIST));
 }
+
+void	player_equal(t_player *player_to, t_player *player_from)
+{
+	player_to->pos = player_from->pos;
+	player_to->right = player_from->right;
+	player_to->down = player_from->down;
+	player_to->cam = player_from->cam;
+}

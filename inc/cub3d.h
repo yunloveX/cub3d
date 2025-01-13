@@ -55,6 +55,8 @@ void	locate_cam(t_cub3d *cub3d);
 
 void	init(t_cub3d *cub3d);
 
+void	player_equal(t_player *player_to, t_player *player_from);
+
 char	**ft_dstrdup(char **dstr, int size);
 
 uint32_t	color_from_mem(uint8_t *pixel);

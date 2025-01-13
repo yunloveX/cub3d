@@ -211,8 +211,15 @@ int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
 	ray.i = cub3d->player.right.i * h;
 	ray.j = cub3d->player.right.j * h;
 	ray.k = 0.0;
-	ray.i += cub3d->player.pos.i - cub3d->player.cam.i;
-	ray.j += cub3d->player.pos.j - cub3d->player.cam.j;
+	ray.i += cub3d->player.pos.i; // - cub3d->player.cam.i;
+	ray.j += cub3d->player.pos.j; // - cub3d->player.cam.j;
+	if (map(cub3d,  ray.i, -ray.j) == '1')
+	{
+		*dist = 0;
+		return (-1);
+	}
+	ray.i -= cub3d->player.cam.i;
+	ray.j -= cub3d->player.cam.j;
 	return (intersect(cub3d, ray, tx_h, dist));
 }
 
@@ -383,9 +390,19 @@ void	render(t_cub3d *cub3d)
 	while(++h < WIDTH / 2)
 	{
 		side = raycast(cub3d, h, &tx_h, &dist);
+		if (side < 0)
+			break;
 		drawline(cub3d, h, tx_h, dist, side);
 	}
+	if (side < 0)
+	{
+		player_equal(&cub3d->player, &cub3d->player_old);
+		render(cub3d);
+		return ;
+	}
+	player_equal(&cub3d->player_old, &cub3d->player);
 	show_map(cub3d);
+	mlx_put_pixel(cub3d->img, WIDTH / 2, HEIGHT / 2, 0xff0000ff);
 	cub3d->frames_shown++;
 //	printf("frames_shown: %d\n", cub3d->frames_shown);
 }

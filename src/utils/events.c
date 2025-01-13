@@ -37,7 +37,7 @@
 	}
 	//TODO render
 }*/
-
+/*
 int	collision(t_cub3d *cub3d)
 {
 	t_quaternion	tmp1;
@@ -62,7 +62,7 @@ int	collision(t_cub3d *cub3d)
 	if (cub3d->map.grid[y1][x2] == '1' || cub3d->map.grid[y2][x1] == '1')
 		return (1);
 	return (0);
-}
+}*/
 
 void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 {
@@ -79,8 +79,8 @@ void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 	rot.k = sinth;
 	cub3d->player.right = q_rotate(cub3d->player.right, rot);
 	locate_cam(cub3d);
-	if (collision(cub3d))
-		rotate_horizontal(cub3d, -xpos);
+//	if (collision(cub3d))
+//		rotate_horizontal(cub3d, -xpos);
 }
 
 void	move(t_cub3d *cub3d, double step)
@@ -89,8 +89,8 @@ void	move(t_cub3d *cub3d, double step)
 	cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
 		cub3d->player.cam), step));
 	locate_cam(cub3d);
-	if (collision(cub3d))
-		move(cub3d, -step);
+//	if (collision(cub3d))
+//		move(cub3d, -step);
 }
 
 void	key_hook_function(mlx_key_data_t key_data, void *param)
@@ -183,13 +183,11 @@ void    loop_hook_function(void *param)
 	else
 	{
 		xpos -= WIDTH / 2;
-		if (abs(xpos) > 50)
-			xpos = xpos / abs(xpos) * 50;
+//		xpos *= abs(xpos) / 10;
 		ypos -= HEIGHT / 2;
-		if (abs(ypos) > 50)
-			ypos = ypos / abs(ypos) * 50;
-		xpos = -xpos / 5;
-		ypos = -ypos / 10;
+//		ypos *= abs(ypos) / 10;
+		xpos = -xpos;
+		ypos = -ypos;
 
 	}
 	if (xpos)

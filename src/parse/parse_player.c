@@ -19,7 +19,7 @@ static void	locate_player(t_cub3d *cub3d, int y, int x)
 	char	c;
 
 	cub3d->player.pos.i = 0.51 + x;
-	cub3d->player.pos.j = -0.5 - y;
+	cub3d->player.pos.j = -0.51 - y;
 	cub3d->player.pos.k = 0.5;
 	q_zero(&cub3d->player.down);
 	cub3d->player.down.k = -1.0 / CUBE_EDGE;
@@ -33,9 +33,8 @@ static void	locate_player(t_cub3d *cub3d, int y, int x)
 		cub3d->player.right.j = -1.0 / CUBE_EDGE;
 	if (c == 'W')
 		cub3d->player.right.j = 1.0 / CUBE_EDGE;
-	printf("right: %f, %f, %f\n", cub3d->player.right.i, cub3d->player.right.j, cub3d->player.right.k);
-	printf("down: %f, %f, %f\n", cub3d->player.down.i, cub3d->player.down.j, cub3d->player.down.k);
 	locate_cam(cub3d);
+	player_equal(&cub3d->player_old, &cub3d->player);
 }
 
 static int	is_player(char c)
