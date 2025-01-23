@@ -112,7 +112,8 @@ PARSE_FILES	=	parse.c			\
 
 RENDER_FILES	=	render.c			\
 
-UTILS_FILES	=	utils.c			\
+UTILS_FILES	=	utils_1.c			\
+				utils_2.c			\
 				errors.c		\
 				events.c		\
 				initializer.c	\

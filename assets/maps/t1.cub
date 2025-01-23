@@ -2,6 +2,7 @@ NO ./assets/textures/T1.png
 SO ./assets/textures/T2.png
 EA ./assets/textures/T3.png
 WE ./assets/textures/T4.png
+HN ./assets/textures/Hands.png
 
 F 160,80,0
 C 80,200,240

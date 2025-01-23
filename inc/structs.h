@@ -52,7 +52,8 @@ typedef struct s_cub3d
 	void			*win;
 	mlx_image_t		*img;
 	t_map			map;
-	mlx_texture_t	*textures[4];
+	mlx_texture_t	*textures[5];
+	mlx_texture_t	*hands;
 	t_colors		colors;
 	t_player		player;
 	t_player		player_old;

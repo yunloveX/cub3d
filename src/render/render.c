@@ -295,44 +295,6 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	}
 }
 
-void transparent_pixel(uint8_t *pixel, uint32_t color)
-{
-	int		alpha;
-	uint32_t	tmp;
-
-	alpha = color & 0xff;
-	tmp = *pixel * (255 - alpha);
-	tmp += (color >> 24 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
-	*pixel = tmp;
-	tmp = *++pixel * (255 - alpha);
-	tmp += (color >> 16 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
-	*pixel = tmp;
-	tmp = *++pixel * (255 - alpha);
-	tmp += (color >> 8 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
-	*pixel = tmp;
-}
-/*
-void	mix_colors(int color, uint32_t *pixel)
-{
-	uint32_t	r;
-	uint32_t	g;
-	uint32_t	b;
-	uint32_t	a;
-
-	r = (color & 0xff0000) >> 16;
-	g = (color & 0xff00) >> 8;
-	b = color & 0xff;
-	a = (color & 0xff000000) >> 24;
-	r = (r * a + ((*pixel & 0xff0000) >> 16) * (255 - a)) / 255;
-	g = (g * a + ((*pixel & 0xff00) >> 8) * (255 - a)) / 255;
-	b = (b * a + (*pixel & 0xff) * (255 - a)) / 255;
-	*pixel = (r << 16) | (g << 8) | b;
-}
-*/
-
 void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
 {
 	int		i;
@@ -402,6 +364,7 @@ void	render(t_cub3d *cub3d)
 	}
 	player_equal(&cub3d->player_old, &cub3d->player);
 	show_map(cub3d);
+	blend_images(cub3d->img, cub3d->textures[4], h - 174, HEIGHT - 81);
 	mlx_put_pixel(cub3d->img, WIDTH / 2, HEIGHT / 2, 0xff0000ff);
 	cub3d->frames_shown++;
 //	printf("frames_shown: %d\n", cub3d->frames_shown);

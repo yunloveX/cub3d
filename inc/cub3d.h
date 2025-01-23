@@ -59,6 +59,10 @@ void	player_equal(t_player *player_to, t_player *player_from);
 
 char	**ft_dstrdup(char **dstr, int size);
 
+void    transparent_pixel(uint8_t *pixel, uint32_t color);
+
+void blend_images(mlx_image_t* base, mlx_texture_t* overlay, int x_offset, int y_offset);
+
 uint32_t	color_from_mem(uint8_t *pixel);
 
 uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);

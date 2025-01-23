@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static int	parse_textures(char *line, mlx_texture_t *walls[4])
+static int	parse_textures(char *line, mlx_texture_t *walls[5])
 {
 	char	**path;
 
@@ -29,6 +29,8 @@ static int	parse_textures(char *line, mlx_texture_t *walls[4])
 		walls[1] = mlx_load_png(path[1]);
 	else if (ft_strnstr(line, "WE", 2) == line && !walls[3])
 		walls[3] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "HN", 2) == line && !walls[4])
+		walls[4] = mlx_load_png(path[1]);
 	else
 	{
 		printf("line: %s\n", line);
@@ -76,7 +78,8 @@ int parse_options(char *line, t_cub3d *cub3d)
         
     ret = 0;
     if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
-        || ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
+        || ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
+        || ft_strnstr(tmp, "HN", 2) == tmp)
         ret = parse_textures(tmp, cub3d->textures);
     else if (*tmp == 'F' || *tmp == 'C')
         ret = parse_colors(tmp, &cub3d->colors);
