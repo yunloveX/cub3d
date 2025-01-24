@@ -21,6 +21,8 @@ static int	parse_textures(char *line, mlx_texture_t *walls[5])
 		cub3d_error("malloc", 1);
 	if (!path[0] || !path[1])
 		cub3d_error("Invalid texture path", 1);
+	if (path[2])
+		cub3d_error("Too many texture arguments", 1);
 	if (ft_strnstr(line, "NO", 2) == line && !walls[0])
 		walls[0] = mlx_load_png(path[1]);
 	else if (ft_strnstr(line, "SO", 2) == line && !walls[2])

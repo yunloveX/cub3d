@@ -12,12 +12,46 @@
 
 #include "cub3d.h"
 
+int	transp(uint32_t color)
+{
+	int	dist;
+
+	dist = 0xff - (color & 0xff);
+	dist += 0xff - (color >> 8 & 0xff);
+	dist += 0xff - (color >> 16 & 0xff);
+	if (dist < 0x80)
+		return (0xff - dist * 2);
+	return (0);
+}
+
 void transparent_pixel(uint8_t *pixel, uint32_t color)
 {
 	int		alpha;
 	uint32_t	tmp;
 
-	alpha = 255 - (color & 0xff);
+	alpha = 0xff - transp(color);
+	if (color == 0xffffffff)
+		alpha = 0;
+	if ((color >> 24 & 0xff) != 0xff)
+		printf("color: %x\n", color);
+//	alpha = (color >> 24 & 0xff);
+
+	tmp = *pixel * (255 - alpha);
+	tmp += (color & 0xff) * alpha;
+	tmp = (tmp + 127) / 255;
+	*pixel = tmp;
+	
+	tmp = *++pixel * (255 - alpha);
+	tmp += (color >> 8 & 0xff) * alpha;
+	tmp = (tmp + 127) / 255;
+	*pixel = tmp;
+	
+	tmp = *++pixel * (255 - alpha);
+	tmp += (color >> 16 & 0xff) * alpha;
+	tmp = (tmp + 127) / 255;
+	*pixel = tmp;
+
+/*	alpha = color & 0xff;
 	tmp = *pixel * (255 - alpha);
 	tmp += (color >> 24 & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;
@@ -29,7 +63,7 @@ void transparent_pixel(uint8_t *pixel, uint32_t color)
 	tmp = *++pixel * (255 - alpha);
 	tmp += (color >> 8 & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;
-	*pixel = tmp;
+	*pixel = tmp;*/
 }
 
 void blend_images(mlx_image_t* base, mlx_texture_t* overlay, int x_offset, int y_offset)

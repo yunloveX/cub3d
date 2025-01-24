@@ -25,6 +25,7 @@ void parse(t_cub3d *cub3d, char *file)
     cub3d->textures[2] = NULL;
     cub3d->textures[1] = NULL;
     cub3d->textures[3] = NULL;
+    cub3d->textures[4] = NULL;
     cub3d->map.grid = NULL;
     cub3d->map.width = 0;
     cub3d->map.height = 0;
