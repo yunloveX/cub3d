@@ -4,8 +4,8 @@ EA ./assets/textures/T3.png
 WE ./assets/textures/T4.png
 HN ./assets/textures/Hands.png
 
-F 160,80,0
-C 80,200,240
+F 160,160,0
+C 200,200,255
 
         1111111111111111111111111
         1000000000110000000000001

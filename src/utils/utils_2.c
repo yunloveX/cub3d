@@ -14,14 +14,17 @@
 
 int	transp(uint32_t color)
 {
-	int	dist;
+	int	r;
+	int	g;
+	int	b;
 
-	dist = 0xff - (color & 0xff);
-	dist += 0xff - (color >> 8 & 0xff);
-	dist += 0xff - (color >> 16 & 0xff);
-	if (dist < 0x80)
-		return (0xff - dist * 2);
-	return (0);
+	r = color & 0xff;
+	g = (color >> 8) & 0xff;
+	b = (color >> 16) & 0xff;
+	if (abs(r - g) > 0x10 || abs(r - b) > 0x10 || abs(g - b) > 0x10
+		|| r + g + b < 0x140)
+		return (0);
+	return ((r + g + b - 0x140) * 6 / 11 + 13);
 }
 
 void transparent_pixel(uint8_t *pixel, uint32_t color)
@@ -30,12 +33,6 @@ void transparent_pixel(uint8_t *pixel, uint32_t color)
 	uint32_t	tmp;
 
 	alpha = 0xff - transp(color);
-	if (color == 0xffffffff)
-		alpha = 0;
-	if ((color >> 24 & 0xff) != 0xff)
-		printf("color: %x\n", color);
-//	alpha = (color >> 24 & 0xff);
-
 	tmp = *pixel * (255 - alpha);
 	tmp += (color & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;

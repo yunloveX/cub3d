@@ -333,9 +333,9 @@ void	show_map(t_cub3d *cub3d)
 				color = 0xff0000ff;
 			else if (x < 0 || x == cub3d->map.width|| y < 0
 				|| y == cub3d->map.height || cub3d->map.grid[y][x] != '1')
-				color = 0xffffff40;
+				color = 0x00ffffff;
 			else
-				color = 0x000000ff;
+				color = 0x00000000; // 0x000000ff;
 			put_map_dot(cub3d, x + 1, y + 1, color);
 		}
 	}
