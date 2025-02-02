@@ -19,6 +19,7 @@
 typedef struct s_map
 {
 	char	**grid;
+	int     **door_states;
 	int		width;
 	int		height;
 }	t_map;
@@ -52,7 +53,7 @@ typedef struct s_cub3d
 	void			*win;
 	mlx_image_t		*img;
 	t_map			map;
-	mlx_texture_t	*textures[5];
+	mlx_texture_t	*textures[6];
 	mlx_texture_t	*hands;
 	t_colors		colors;
 	t_player		player;

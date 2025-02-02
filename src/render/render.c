@@ -13,38 +13,18 @@
 #include "cub3d.h"
 #include "quatlib.h"
 
-//TODO render
-/*
-void	render(double xpos, double ypos, t_cub3d *cub3d)
-{
-	uint32_t	h;
-	uint32_t	v;
-	uint32_t	r;
-	uint32_t	g;
-	uint32_t	b;
-
-	h = 0;
-	v = 0;
-	while (v < HEIGHT)
-	{
-		g = 256 * ((v + (int) ypos) % HEIGHT) / HEIGHT;
-		h = 0;
-		while (h < WIDTH)
-		{
-			r = 256 * ((h + (int) xpos) % WIDTH) / WIDTH;
-			b = 255 - r - g;
-			mlx_put_pixel(cub3d->img, h, v, color_rgba(r, g, b, 255));
-			h++;
+char map(t_cub3d *cub3d, int x, int y) {
+    if (x < 0 || y < 0 || x >= cub3d->map.width || y >= cub3d->map.height)
+        return ('1');
+    // Check door state
+    if (cub3d->map.grid[y][x] == 'D') {
+        if (cub3d->map.door_states[y][x] == 0) {
+			return ('0');
 		}
-		v++;
-	}
-}*/
-
-char	map(t_cub3d *cub3d, int x, int y)
-{
-	if (x < 0 || y < 0 || x >= cub3d->map.width || y >= cub3d->map.height)
-		return ('1');
-	return (cub3d->map.grid[y][x]);
+		else 
+			return ('1');
+    }
+    return (cub3d->map.grid[y][x]);
 }
 
 int	wall_north_south(
@@ -58,12 +38,16 @@ int	wall_north_south(
 	if (delta_j < 0 && map(cub3d, x, y) == '1')
 	{
 		*tx_h = ceil(progress.i) - progress.i;
+		if (cub3d->map.door_states[y][x] == 1)
+			return (5);
 		return (0);
 	}
 	y--;
 	if (delta_j > 0 && map(cub3d, x, y) == '1')
 	{
 		*tx_h = progress.i - floor(progress.i);
+		if (cub3d->map.door_states[y][x] == 1)
+			return (5);
 		return (2);
 	}
 	return (-1);
@@ -81,12 +65,16 @@ int	wall_east_west(
 	if (delta_i < 0 && map(cub3d, x, y) == '1')
 	{
 		*tx_h = ceil(progress.j) - progress.j;
+		if (cub3d->map.door_states[y][x] == 1)
+			return (5);
 		return (3);
 	}
 	x++;
 	if (delta_i > 0 && map(cub3d, x, y) == '1')
 	{
 		*tx_h = progress.j - floor(progress.j);
+		if (cub3d->map.door_states[y][x] == 1)
+			return (5);
 		return (1);
 	}
 	return (-1);
@@ -188,21 +176,13 @@ int	intersect(t_cub3d *cub3d, t_quaternion ray, double *tx_h, double *dist)
 		if (d_jump == 0)
 			return (0); //Nunca debería pasar
 		*dist += d_jump;
-//		printf("jump: %f\n", d_jump);
 		progress = q_add(cub3d->player.cam, q_scale(ray, *dist));
-//		printf("progress: %f %f %f\n", progress.i, progress.j, progress.k);
 		ret = meet_wall(cub3d, progress, ray, tx_h);
 	}
 	return (ret);
 }
-/*
-	ray = q_add(q_scale(cub3d->player.right, h),
-		q_scale(cub3d->player.down, v));
-	ray = q_add(cub3d->player.pos, ray);
-	ray = q_sub(ray, cub3d->player.cam);
 
-side = raycast(cub3d, h, &tx_h, &dist);
-*/
+
 int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
 {
 	t_quaternion	ray;
@@ -254,18 +234,29 @@ void	light_part(uint32_t *color, uint8_t fraction)
 	*color = (*color & 0x00ffffff) | (tmp << 24);
 }
 
-uint32_t	pixel_color(t_cub3d *cub3d, double tx_h, double tx_v, int side)
-{
-	int			x;
-	int			y;
-	uint32_t	color;
+uint32_t pixel_color(t_cub3d *cub3d, double tx_h, double tx_v, int side) {
+    int         x;
+    int         y;
+    uint32_t    color;
+    mlx_texture_t *texture;
 
-	x = (int) (tx_h * cub3d->textures[side]->width);
-	y = (int) (tx_v * cub3d->textures[side]->height);
-	color = color_from_mem((cub3d->textures[side]->pixels)
-		+ 4 * (y * cub3d->textures[side]->width + x));
-	light_part(&color, darkness(y, cub3d->textures[side]->height));
-	return (color);
+    // Determine which texture to use based on `side`
+    if (side == 5) // Door texture (index 4)
+        texture = cub3d->textures[5];
+    else // Wall textures (indices 0-3)
+        texture = cub3d->textures[side];
+
+    // Calculate texture coordinates
+    x = (int)(tx_h * texture->width);
+    y = (int)(tx_v * texture->height);
+
+    // Fetch color from texture
+    color = color_from_mem(texture->pixels + 4 * (y * texture->width + x));
+
+    // Apply darkness based on vertical position
+    light_part(&color, darkness(y, texture->height));
+
+    return (color);
 }
 
 void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
@@ -275,7 +266,6 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	double		lim;
 
 	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + h * h); //0.5 * CUBE_EDGE
-//	printf("[dist, lim: %f, %f] ", dist, lim);
 	v = -1;
 	while(++v <= (HEIGHT + 1) / 2 - lim)
 	{
@@ -286,10 +276,6 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	while(++v < (HEIGHT + 1) / 2)
 	{
 		tx_v = (2 * v - HEIGHT) / (4 * lim) + 0.5;
-/*		((uint32_t *)cub3d->img->pixels)
-		[v * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, tx_v, side);
-		((uint32_t *)cub3d->img->pixels)
-		[(HEIGHT - 1 - v) * WIDTH + h + WIDTH / 2] = pixel_color(cub3d, tx_h, 1 - tx_v, side);*/
 		mlx_put_pixel(cub3d->img, h + WIDTH / 2, v, pixel_color(cub3d, tx_h, tx_v, side));
 		mlx_put_pixel(cub3d->img, h + WIDTH / 2, HEIGHT - 1 - v, pixel_color(cub3d, tx_h, 1 - tx_v, side));
 	}
@@ -306,14 +292,11 @@ void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
 		j = 0;
 		while (j < 5)
 		{
-//			mlx_put_pixel(cub3d->img, x * 5 + i, y * 5 + j, color);
-//			mlx_draw_pixel(cub3d->img->pixels +
 			transparent_pixel(cub3d->img->pixels +
 			4 * ((y * 5 + j) * WIDTH + x * 5 + i), color);
 			j++;
 		}
 		i++;
-//		mlx_put_pixel(cub3d->img, x * 5, y * 5, color);
 	}
 }
 
@@ -341,31 +324,27 @@ void	show_map(t_cub3d *cub3d)
 	}
 }
 
-void	render(t_cub3d *cub3d)
-{
-	int		h;
-	double	dist;
-	double	tx_h;
-	int		side;
+void render(t_cub3d *cub3d) {
+    int     h;
+    double  dist;
+    double  tx_h;
+    int     side;
 
-	h = -WIDTH / 2 - 1;
-	while(++h < WIDTH / 2)
-	{
-		side = raycast(cub3d, h, &tx_h, &dist);
-		if (side < 0)
-			break;
-		drawline(cub3d, h, tx_h, dist, side);
-	}
-	if (side < 0)
-	{
-		player_equal(&cub3d->player, &cub3d->player_old);
-		render(cub3d);
-		return ;
-	}
-	player_equal(&cub3d->player_old, &cub3d->player);
-	show_map(cub3d);
-	blend_images(cub3d->img, cub3d->textures[4], h - 174, HEIGHT - 81);
-	mlx_put_pixel(cub3d->img, WIDTH / 2, HEIGHT / 2, 0xff0000ff);
-	cub3d->frames_shown++;
-//	printf("frames_shown: %d\n", cub3d->frames_shown);
+    h = -WIDTH / 2 - 1;
+    while (++h < WIDTH / 2) {
+        side = raycast(cub3d, h, &tx_h, &dist);
+        if (side < 0)
+            break;
+        drawline(cub3d, h, tx_h, dist, side);
+    }
+    if (side < 0) {
+        // Reset player state instead of re-rendering recursively
+        player_equal(&cub3d->player, &cub3d->player_old);
+        return; // Exit without recursion
+    }
+    player_equal(&cub3d->player_old, &cub3d->player);
+    show_map(cub3d);
+    blend_images(cub3d->img, cub3d->textures[4], h - 174, HEIGHT - 81);
+    mlx_put_pixel(cub3d->img, WIDTH / 2, HEIGHT / 2, 0xff0000ff);
+    cub3d->frames_shown++;
 }

@@ -93,6 +93,25 @@ void	move(t_cub3d *cub3d, double step)
 //		move(cub3d, -step);
 }
 
+void toggle_door(t_cub3d *cub3d, int x, int y) {
+    if (x >= 0 && y >= 0 && x < cub3d->map.width && y < cub3d->map.height) {
+        if (cub3d->map.grid[y][x] == 'D') {
+            cub3d->map.door_states[y][x] ^= 1; // Toggle state
+        }
+    }
+}
+
+// Call this when player presses 'E'
+void check_door_interaction(t_cub3d *cub3d) {
+    int px = (int)cub3d->player.pos.i;
+    int py = (int)(-cub3d->player.pos.j);
+    // Check adjacent cells
+    toggle_door(cub3d, px + 1, py);
+    toggle_door(cub3d, px - 1, py);
+    toggle_door(cub3d, px, py + 1);
+    toggle_door(cub3d, px, py - 1);
+}
+
 void	key_hook_function(mlx_key_data_t key_data, void *param)
 {
     t_cub3d	*cub3d;
@@ -122,6 +141,8 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 		move(cub3d, 0.2);
 	else if (key_data.key == MLX_KEY_S || key_data.key == MLX_KEY_DOWN)
 		move(cub3d, -0.2);
+	else if (key_data.key == MLX_KEY_E && key_data.action == MLX_PRESS)
+        check_door_interaction(cub3d); // Toggle door state
 	else if (key_data.key == MLX_KEY_ESCAPE)
 		mlx_terminate(cub3d->mlx);
 	else
@@ -174,7 +195,6 @@ void    loop_hook_function(void *param)
 	if (!cub3d->mouse_down)
 		return ;
 	mlx_get_mouse_pos(cub3d->mlx, &xpos, &ypos);
-//	printf("mouse xpos: %d, ypos: %d\n", xpos, ypos);
 	if (cub3d->mouse_down == 1)
 	{
 		xpos -= cub3d->old_x;
@@ -183,9 +203,7 @@ void    loop_hook_function(void *param)
 	else
 	{
 		xpos -= WIDTH / 2;
-//		xpos *= abs(xpos) / 10;
 		ypos -= HEIGHT / 2;
-//		ypos *= abs(ypos) / 10;
 		xpos = -xpos;
 		ypos = -ypos;
 

@@ -33,13 +33,14 @@ static int	parse_textures(char *line, mlx_texture_t *walls[5])
 		walls[3] = mlx_load_png(path[1]);
 	else if (ft_strnstr(line, "HN", 2) == line && !walls[4])
 		walls[4] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "DO", 2) == line && !walls[5])
+    	walls[5] = mlx_load_png(path[1]);
 	else
 	{
 		printf("line: %s\n", line);
 		cub3d_error("Invalid texture", 1);
 	}
 	double_free(path);
-	free(line);
 	return (1);
 }
 
@@ -81,7 +82,7 @@ int parse_options(char *line, t_cub3d *cub3d)
     ret = 0;
     if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
         || ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
-        || ft_strnstr(tmp, "HN", 2) == tmp)
+        || ft_strnstr(tmp, "HN", 2) == tmp || ft_strnstr(tmp, "DO", 2) == tmp)
         ret = parse_textures(tmp, cub3d->textures);
     else if (*tmp == 'F' || *tmp == 'C')
         ret = parse_colors(tmp, &cub3d->colors);

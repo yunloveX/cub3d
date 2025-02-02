@@ -22,7 +22,7 @@ static char	*skip_empty_lines(int fd)
 		if (ft_strchr(line, '1') || ft_strchr(line, '2')
 			|| ft_strchr(line, 'N') || ft_strchr(line, 'S')
 			|| ft_strchr(line, 'E') || ft_strchr(line, 'W')
-			|| ft_strchr(line, '0'))
+			|| ft_strchr(line, '0') || ft_strchr(line, 'D'))
 			break ;
 		free(line);
 		line = get_next_line(fd);
@@ -46,7 +46,8 @@ static int	check_line(char *line)
 			&& line[x] != ' ' && line[x] != '0'
 			&& line[x] != '1' && line[x] != '2'
 			&& line[x] != 'N' && line[x] != 'S'
-			&& line[x] != 'E' && line[x] != 'W')
+			&& line[x] != 'E' && line[x] != 'W'
+            && line[x] != 'D')
 			return (EXIT_FAILURE);
 		x++;
 	}
@@ -72,7 +73,7 @@ static void check_cell(char **grid, int y, int x, int height)
         
     // Check if we're at a valid cell type
     if (grid[y][x] != '0' && grid[y][x] != 'N' && grid[y][x] != 'S'
-        && grid[y][x] != 'E' && grid[y][x] != 'W')
+        && grid[y][x] != 'E' && grid[y][x] != 'W' && grid[y][x] != 'D')
         return;
         
     // Check boundaries
@@ -170,11 +171,20 @@ int	parse_map(int fd, t_map *map)
 		if (!map->grid)
 			cub3d_error("malloc", 1);
 		map->grid[y++] = tmp;
-		if ((int) ft_strlen(tmp) > map->width) // y si la línea termina en espacio?
+		if ((int) ft_strlen(tmp) > map->width)
 			map->width = ft_strlen(tmp);
 		line = get_next_line(fd);
 	}
 	free(line);
 	map->height = y;
+    map->door_states = ft_calloc(map->height, sizeof(int *));
+    y = 0;
+    while (y < map->height) {
+        map->door_states[y] = ft_calloc(map->width, sizeof(int));
+        for (int x = 0; x < map->width; x++) {
+            if (map->grid[y][x] == 'D') map->door_states[y][x] = 1;
+        }
+        y++;
+    }
 	return (check_map(map->grid, map->height));
 }
