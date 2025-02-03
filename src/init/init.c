@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 18:44:56 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:18:29 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,25 @@ static void	init_events(t_cub3d *cub3d)
 {
 	mlx_key_hook(cub3d->mlx, key_hook_function, cub3d);
 	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);
-//	mlx_scroll_hook(mlx_t* mlx, mlx_scrollfunc func, void* param);
 	mlx_scroll_hook(cub3d->mlx, scroll_hook_function, cub3d);
-//	mlx_mouse_hook(mlx_t* mlx, mlx_mousefunc func, void* param)
 	mlx_mouse_hook(cub3d->mlx, mouse_hook_function, cub3d);
+}
+
+static void init_data(t_cub3d *cub3d)
+{
+	cub3d->mouse_down = false;
+    cub3d->textures[0] = NULL;
+    cub3d->textures[2] = NULL;
+    cub3d->textures[1] = NULL;
+    cub3d->textures[3] = NULL;
+    cub3d->textures[4] = NULL;
+    cub3d->textures[5] = NULL;
+    cub3d->textures[6] = NULL;
+    cub3d->textures[7] = NULL;
+    cub3d->map.grid = NULL;
+	cub3d->map.door_states = NULL;
+    cub3d->map.width = 0;
+    cub3d->map.height = 0;
 }
 
 static void	init_graph(t_cub3d *cub3d)
@@ -40,7 +55,7 @@ static void	init_graph(t_cub3d *cub3d)
 
 void	init(t_cub3d *cub3d)
 {
-	cub3d->mouse_down = false;
+	init_data(cub3d);
 	init_graph(cub3d);
 	init_events(cub3d);
 }

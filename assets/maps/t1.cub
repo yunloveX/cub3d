@@ -1,12 +1,12 @@
-NO ./assets/textures/T1.png
-SO ./assets/textures/T2.png
-EA ./assets/textures/T3.png
-WE ./assets/textures/T4.png
+NO ./assets/new_textures/TECH_1E.PNG
+SO ./assets/new_textures/CONCRETE_3C.PNG
+EA ./assets/new_textures/CONCRETE_3C.PNG
+WE ./assets/new_textures/CONCRETE_3C.PNG
 HN ./assets/textures/Hands.png
-DO ./assets/textures/door.png
+DO ./assets/new_textures/DOOR_4A.PNG
 
-F 160,80,0
-C 80,200,240
+F ./assets/new_textures/FLOOR_1A.PNG
+C ./assets/new_textures/CONCRETE_4A.PNG
 
         1111111111111111111111111
         1000000000110000000000001

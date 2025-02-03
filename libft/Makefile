@@ -143,7 +143,6 @@ all:	 			$(NAME)
 
 $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS)
 	@printf "\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$< $(NC)\033[K"
-	@sleep 0.15
 	@$(CC) $(CFLAGS) -c $< -o $@
 	
 $(NAME): 			$(OBJS)

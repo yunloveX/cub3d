@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: israel <israel@student.42.fr>              +#+  +:+       +#+         #
+#    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/01/02 12:29:06 by israel           ###   ########.fr        #
+#    Updated: 2025/02/03 12:02:47 by nulsuga          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ MAIN_DIR			=	main
 UTILS_DIR			=	utils
 PARSE_DIR			=	parse
 RENDER_DIR			=	render
+EVENT_DIR			=	events
 
 # Compilation Options
 
@@ -115,18 +116,24 @@ RENDER_FILES	=	render.c			\
 UTILS_FILES	=	utils_1.c			\
 				utils_2.c			\
 				errors.c		\
-				events.c		\
 				initializer.c	\
+
+EVENT_FILES = 	key_events.c		\
+				mouse_events.c		\
+				loop_events.c		\
+				utils.c				\
 
 
 SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
 				$(addprefix $(RENDER_DIR)/, $(RENDER_FILES)) 	\
 				$(addprefix $(UTILS_DIR)/, $(UTILS_FILES)) 	\
 				$(addprefix $(PARSE_DIR)/, $(PARSE_FILES)) 	\
+				$(addprefix $(EVENT_DIR)/, $(EVENT_FILES)) 	\
 
 SRCS 		=	$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS 		=	$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
-DIRS		=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, $(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) $(RENDER_DIR))
+DIRS		=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, \
+					$(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) $(RENDER_DIR) $(EVENT_DIR))
 
 OBJ_MAIN	=	$(addprefix $(OBJ_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_FILES:.c=.o)))
 
@@ -183,7 +190,6 @@ clean:
 fclean:				clean
 	@make -s fclean -C $(LIBFT_DIR)
 	@make -s fclean -C $(QUAT_DIR)
-#	@make -s clean -C $(MINILIBX_DIR)
 	$(RM) $(NAME)
 	$(RM) $(BONUS)
 	@echo "---- $(YELLOW)Binary files deleted. $(CHECK)$(NC) ----"
@@ -196,12 +202,10 @@ sre:			clean all
 
 $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
 	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
-	@sleep 0.5
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(QUAT) $(MINILIBX)
 	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
-	@sleep 1
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"	
 
 $(LIBFT):
@@ -215,12 +219,6 @@ $(MINILIBX):
 	cmake -S $(MINILIBX_DIR) -B $(MINILIBX_BUILD)
 	make -C $(MINILIBX_BUILD) -j4
 	echo "   $(CHECK) $(GREEN)Library created.$(NC)"
-	@sleep 2.5
-
-#$(MINILIBX):
-#		git submodule update --init
-#		cmake $(MLX42_DIR) -B $(MLX42_DIR)/build
-#		$(MAKE) -C $(MLX42_DIR)/build -j4 --quiet
 
 $(LIBCUB3D): 		$(OBJS)
 	@$(AR) $(ARFLAGS) $@ $?
@@ -240,7 +238,6 @@ $(LIBS_DIR):
 
 $(OBJBNS_DIR)/%.o:		$(SRCBNS_DIR)/%.c | $(DIRSBONUS) $(LIBS_DIR)
 	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
-	@sleep 0.5
 	@$(CC) $(CFLAGS_BONUS) -c $< -o $@				
 
 $(LIBFRACTOL_BONUS): 		$(OBJSBONUS)
@@ -255,7 +252,6 @@ $(DIRSBONUS):
 
 $(BONUS):				$(OBJBONUS_MAIN) $(LIBFRACTOL_BONUS) $(LIBFT) $(MINILIBX)
 	@$(CC) $(OBJBONUS_MAIN) $(LDFLAGS_BONUS) -o $@
-	@sleep 1
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
 
 # Tests Targets

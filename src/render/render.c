@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/03 13:17:16 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:23:14 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,8 @@ int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist)
 	ray.i = cub3d->player.right.i * h;
 	ray.j = cub3d->player.right.j * h;
 	ray.k = 0.0;
-	ray.i += cub3d->player.pos.i; // - cub3d->player.cam.i;
-	ray.j += cub3d->player.pos.j; // - cub3d->player.cam.j;
+	ray.i += cub3d->player.pos.i;
+	ray.j += cub3d->player.pos.j;
 	if (map(cub3d,  ray.i, -ray.j) == '1')
 	{
 		*dist = 0;
@@ -240,11 +240,7 @@ uint32_t pixel_color(t_cub3d *cub3d, double tx_h, double tx_v, int side) {
     uint32_t    color;
     mlx_texture_t *texture;
 
-    // Determine which texture to use based on `side`
-    if (side == 5) // Door texture (index 4)
-        texture = cub3d->textures[5];
-    else // Wall textures (indices 0-3)
-        texture = cub3d->textures[side];
+    texture = cub3d->textures[side];
 
     // Calculate texture coordinates
     x = (int)(tx_h * texture->width);
@@ -267,7 +263,7 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 
 	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + h * h); //0.5 * CUBE_EDGE
 	v = -1;
-	while(++v <= (HEIGHT + 1) / 2 - lim)
+	while (++v <= (HEIGHT + 1) / 2 - lim)
 	{
 		mlx_put_pixel(cub3d->img, h + WIDTH / 2, v, cub3d->colors.ceiling_color);
 		mlx_put_pixel(cub3d->img, h + WIDTH / 2, HEIGHT - 1 - v, cub3d->colors.floor_color);

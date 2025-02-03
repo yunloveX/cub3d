@@ -1,16 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <israel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/01/04 17:51:23 by israel           ###   ########.fr       */
+/*   Created: 2025/02/03 12:19:41 by nulsuga           #+#    #+#             */
+/*   Updated: 2025/02/03 12:21:12 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "utils.h"
+
+/**
+ * @brief Creates a 32-bit rgba color from its constituents.
+ *
+ * @details This function creates a single unsigned 32-bit color value created from
+ * its four constituents, red (most significant byte), green, blue and alpha
+ * (less significant byte). Params are unsigned 8-bit integers.
+ *
+ * @param r The red component.
+ * @param g The green component.
+ * @param b The blue component.
+ * @param a The alpha component (complementary of transparency).
+ * @return unsigned 32-bit value.
+ */
+
+uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+uint32_t	color_from_mem(uint8_t *pixel)
+{
+	uint32_t	color;
+
+	color = 0;
+	color |= ((uint32_t)*pixel++) << 24;
+	color |= ((uint32_t)*pixel++) << 16;
+	color |= ((uint32_t)*pixel++) << 8;
+	color |= (uint32_t)*pixel;
+	return (color);
+}
 
 int	transp(uint32_t color)
 {
@@ -47,43 +78,4 @@ void transparent_pixel(uint8_t *pixel, uint32_t color)
 	tmp += (color >> 16 & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;
 	*pixel = tmp;
-
-/*	alpha = color & 0xff;
-	tmp = *pixel * (255 - alpha);
-	tmp += (color >> 24 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
-	*pixel = tmp;
-	tmp = *++pixel * (255 - alpha);
-	tmp += (color >> 16 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
-	*pixel = tmp;
-	tmp = *++pixel * (255 - alpha);
-	tmp += (color >> 8 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
-	*pixel = tmp;*/
-}
-
-void blend_images(mlx_image_t* base, mlx_texture_t* overlay, int x_offset, int y_offset)
-{
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	base_x;
-	uint32_t	base_y;
-
-	y = -1;
-	while (++y < overlay->height)
-	{
-		base_y = y + y_offset;
-		if (base_y >= base->height)
-			continue;
-		x = -1;
-		while (++x < overlay->width)
-		{
-			base_x = x + x_offset;
-			if (base_x >= base->width)
-				continue;
-			transparent_pixel(base->pixels + 4 * (base_y * base->width + base_x),
-				((uint32_t*)overlay->pixels)[y * overlay->width + x]);
-		}
-	}
 }

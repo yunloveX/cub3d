@@ -29,15 +29,6 @@ typedef struct s_colors
 	uint32_t	floor_color;
 	uint32_t	ceiling_color;
 }	t_colors;
-/*
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;*/
 
 typedef struct s_player
 {
@@ -53,7 +44,7 @@ typedef struct s_cub3d
 	void			*win;
 	mlx_image_t		*img;
 	t_map			map;
-	mlx_texture_t	*textures[6];
+	mlx_texture_t	*textures[8];
 	mlx_texture_t	*hands;
 	t_colors		colors;
 	t_player		player;
