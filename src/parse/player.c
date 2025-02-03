@@ -6,19 +6,11 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:52:08 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 12:17:37 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/03 14:49:42 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	player_equal(t_player *player_to, t_player *player_from)
-{
-	player_to->pos = player_from->pos;
-	player_to->right = player_from->right;
-	player_to->down = player_from->down;
-	player_to->cam = player_from->cam;
-}
 
 static void	locate_player(t_cub3d *cub3d, int y, int x)
 {

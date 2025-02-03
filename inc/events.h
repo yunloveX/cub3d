@@ -6,14 +6,25 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:57:04 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 12:11:19 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/03 14:54:48 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EVENTS_H
 # define EVENTS_H
 
+# include "libft.h"
+# include "get_next_line.h"
+
+# include "quatlib.h"
+
 # include "structs.h"
+# include "constants.h"
+# include "parse.h"
+# include "utils.h"
+# include "cub3d.h"
+
+# include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 
 # include <stdio.h>

@@ -6,12 +6,11 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 12:23:14 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/03 16:32:05 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "quatlib.h"
 
 char map(t_cub3d *cub3d, int x, int y) {
     if (x < 0 || y < 0 || x >= cub3d->map.width || y >= cub3d->map.height)

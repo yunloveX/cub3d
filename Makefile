@@ -6,7 +6,7 @@
 #    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/03 12:02:47 by nulsuga          ###   ########.fr        #
+#    Updated: 2025/02/03 15:01:14 by nulsuga          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ UTILS_DIR			=	utils
 PARSE_DIR			=	parse
 RENDER_DIR			=	render
 EVENT_DIR			=	events
+INIT_DIR			=	init
 
 # Compilation Options
 
@@ -106,22 +107,25 @@ ARFLAGS 			= 	rsc
 
 MAIN_FILES	=	cub3d.c
 
+INIT_FILES	=	init.c		
+
 PARSE_FILES	=	parse.c			\
-				parse_map.c		\
-				parse_options.c	\
-				parse_player.c	\
+				map.c			\
+				options.c		\
+				player.c		\
 
-RENDER_FILES	=	render.c			\
+RENDER_FILES	=	render.c		\
 
-UTILS_FILES	=	utils_1.c			\
-				utils_2.c			\
-				errors.c		\
-				initializer.c	\
+UTILS_FILES		=	cam.c			\
+					color.c			\
+					errors.c		\
+					string.c		\
+					images.c		\
+					events.c		\
 
-EVENT_FILES = 	key_events.c		\
-				mouse_events.c		\
-				loop_events.c		\
-				utils.c				\
+EVENT_FILES = 	key.c				\
+				mouse.c				\
+				loop.c				\
 
 
 SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
@@ -129,11 +133,13 @@ SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
 				$(addprefix $(UTILS_DIR)/, $(UTILS_FILES)) 	\
 				$(addprefix $(PARSE_DIR)/, $(PARSE_FILES)) 	\
 				$(addprefix $(EVENT_DIR)/, $(EVENT_FILES)) 	\
+				$(addprefix $(INIT_DIR)/, $(INIT_FILES)) 		\
 
 SRCS 		=	$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 OBJS 		=	$(addprefix $(OBJ_DIR)/, $(SRCS_FILES:.c=.o))
 DIRS		=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, \
-					$(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) $(RENDER_DIR) $(EVENT_DIR))
+					$(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) \
+					$(RENDER_DIR) $(EVENT_DIR) $(INIT_DIR))
 
 OBJ_MAIN	=	$(addprefix $(OBJ_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_FILES:.c=.o)))
 
