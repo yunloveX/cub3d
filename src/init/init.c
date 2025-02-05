@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 14:30:13 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:50:10 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ static void init_data(t_cub3d *cub3d)
     cub3d->textures[3] = NULL;
     cub3d->textures[4] = NULL;
     cub3d->textures[5] = NULL;
-    cub3d->textures[6] = NULL;
-    cub3d->textures[7] = NULL;
+	cub3d->hand_animation_frame = 1;
+	cub3d->hand_animation_playing = 0;
+	cub3d->img_hands = NULL;
     cub3d->map.grid = NULL;
 	cub3d->map.door_states = NULL;
     cub3d->map.width = 0;

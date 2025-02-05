@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 14:42:09 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:46:34 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ typedef struct s_cub3d
 	void			*win;
 	mlx_image_t		*img;
 	t_map			map;
-	mlx_texture_t	*textures[8];
-	mlx_texture_t	*hands;
+	mlx_texture_t	*textures[6];
+	mlx_image_t		*img_hands;
 	t_colors		colors;
 	t_player		player;
 	t_player		player_old;
 	int				mouse_down;
+	int 			hand_animation_playing;
+	float 			hand_animation_frame;
 	int32_t				old_x;
 	int32_t				old_y;
 	double			jumps[3];

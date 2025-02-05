@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 16:32:05 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:37:40 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,6 +325,10 @@ void render(t_cub3d *cub3d) {
     double  tx_h;
     int     side;
 
+    // Clear screen
+    memset(cub3d->img->pixels, 0, WIDTH * HEIGHT * sizeof(uint32_t));
+
+    // Raycasting loop
     h = -WIDTH / 2 - 1;
     while (++h < WIDTH / 2) {
         side = raycast(cub3d, h, &tx_h, &dist);
@@ -332,14 +336,19 @@ void render(t_cub3d *cub3d) {
             break;
         drawline(cub3d, h, tx_h, dist, side);
     }
+
+    // Handle raycasting failure
     if (side < 0) {
-        // Reset player state instead of re-rendering recursively
         player_equal(&cub3d->player, &cub3d->player_old);
-        return; // Exit without recursion
+        return;
     }
+
+    // Update player state
     player_equal(&cub3d->player_old, &cub3d->player);
+
+    // Draw minimap
     show_map(cub3d);
-    blend_images(cub3d->img, cub3d->textures[4], h - 174, HEIGHT - 81);
-    mlx_put_pixel(cub3d->img, WIDTH / 2, HEIGHT / 2, 0xff0000ff);
+
+    // Frame counter
     cub3d->frames_shown++;
 }

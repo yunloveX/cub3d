@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:10:44 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 14:50:47 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:32:04 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	locate_cam(t_cub3d *cub3d);
 void	player_equal(t_player *player_to, t_player *player_from);
 
 /* IMAGES UTILS */
-void blend_images(mlx_image_t* base, mlx_texture_t* overlay, int x_offset, int y_offset);
+void blend_images(mlx_image_t *dst, mlx_texture_t *src, int x, int y, int frame, int scale);
+void sprite(t_cub3d *cub3d);
 
 /* ERROR UTILS */
 void	cub3d_error(char *message, int error);

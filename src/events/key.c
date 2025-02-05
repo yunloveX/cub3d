@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_events.c                                       :+:      :+:    :+:   */
+/*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:52:37 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 12:06:41 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/05 10:07:35 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 		while (++i < 10)
 			rotate_horizontal(cub3d, 1.0);
 	}
+	else if (key_data.key == MLX_KEY_R)
+    {
+		cub3d->hand_animation_frame = 1; // Reset animation frame
+        cub3d->hand_animation_playing ^= 1; // Toggle animation playing flag
+    }
 	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
 	{
 		i = -1;

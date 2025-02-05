@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop_events.c                                      :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:54:47 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 12:06:46 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:52:46 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void    loop_hook_function(void *param)
 	int32_t	ypos;
 
     cub3d = (t_cub3d *)param;
+	if (cub3d->hand_animation_playing)
+		sprite(cub3d);
 	if (!cub3d->mouse_down)
 		return ;
 	mlx_get_mouse_pos(cub3d->mlx, &xpos, &ypos);
