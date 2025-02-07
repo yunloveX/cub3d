@@ -2,11 +2,11 @@ NO ./assets/new_textures/TECH_1E.PNG
 SO ./assets/new_textures/CONCRETE_3C.PNG
 EA ./assets/new_textures/CONCRETE_3C.PNG
 WE ./assets/new_textures/CONCRETE_3C.PNG
-HN ./assets/sprites/v693uMa.png
+HN ./assets/sprites/animation/
 DO ./assets/new_textures/DOOR_4A.PNG
 
 F 160,160,0
-C 0,0,0
+C 0,0,160
 
         1111111111111111111111111
         1000000000110000000000001

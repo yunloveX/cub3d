@@ -38,13 +38,19 @@ typedef struct s_player
 	t_quaternion	cam;
 }	t_player;
 
+typedef struct s_frame
+{
+	mlx_texture_t	*texture;
+	struct s_frame	*next;
+}	t_frame;
+
 typedef struct s_cub3d
 {
 	mlx_t			*mlx;
 	void			*win;
 	mlx_image_t		*img;
 	t_map			map;
-	mlx_texture_t	*textures[6];
+	t_frame			*textures[6];
 	mlx_image_t		*img_hands;
 	t_colors		colors;
 	t_player		player;

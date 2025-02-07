@@ -12,7 +12,26 @@
 
 #include "cub3d.h"
 
-static int	parse_textures(char *line, mlx_texture_t *walls[8])
+#include <dirent.h>
+#include <stdlib.h>
+#include <string.h>
+#include "cub3d.h"
+
+void	load_animation(t_frame frame, char *path, char frame_nb)
+{
+	char	*name = "0.png";
+	char	*full_path;
+
+	full_path = ft_strjoin(path, name);
+	if (!full_path)
+		cub3d_error("malloc", 1);
+	full_path[ft_strlen(full_path) - 5] = frame_nb;
+	frame->texture = mlx_load_png(full_path);
+	if (frame->texture && frame_nb < '9')
+		load_animation(frame->next, path, frame_nb + 1);		
+}
+
+static int	parse_textures(char *line, t_frame *walls[8])
 {
 	char	**path;
 
@@ -23,18 +42,18 @@ static int	parse_textures(char *line, mlx_texture_t *walls[8])
 		cub3d_error("Invalid texture path", 1);
 	if (path[2])
 		cub3d_error("Too many texture arguments", 1);
-	if (ft_strnstr(line, "NO", 2) == line && !walls[0])
-		walls[0] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "SO", 2) == line && !walls[2])
-		walls[2] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "EA", 2) == line && !walls[1])
-		walls[1] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "WE", 2) == line && !walls[3])
-		walls[3] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "HN", 2) == line && !walls[4])
-		walls[4] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "DO", 2) == line && !walls[5])
-    	walls[5] = mlx_load_png(path[1]);
+	if (ft_strnstr(line, "NO", 2) == line && !walls[0]->texture)
+		walls[0]->texture = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "SO", 2) == line && !walls[2]->texture)
+		walls[2]->texture = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "EA", 2) == line && !walls[1]->texture)
+		walls[1]->texture = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "WE", 2) == line && !walls[3]->texture)
+		walls[3]->texture = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "HN", 2) == line && !walls[4]->texture)
+		load_animation(walls[4], path[1], '0');
+	else if (ft_strnstr(line, "DO", 2) == line && !walls[5]->texture)
+    	walls[5]->texture = mlx_load_png(path[1]);
 	else
 	{
 		printf("line: %s\n", line);
