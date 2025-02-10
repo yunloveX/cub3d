@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/10 09:56:43 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:03:52 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include <string.h>
-#include "cub3d.h"
 
 void	load_animation(t_list **frames, char *path)
 {
@@ -28,9 +27,6 @@ void	load_animation(t_list **frames, char *path)
 	if (!dir)
 		cub3d_error("Failed to open directory", 1);
 	ent = readdir(dir);
-	frames = (t_list **) malloc(sizeof(t_list *));
-	if (!frames)
-		cub3d_error("malloc", 1);
 	*frames = NULL;
 	while (ent != NULL)
 	{
@@ -69,7 +65,7 @@ static int	parse_textures(char *line, mlx_texture_t *textures[5], t_list **hands
 		textures[3] = mlx_load_png(path[1]);
 	else if (ft_strnstr(line, "DO", 2) == line && !textures[4])
     	textures[4] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "HN", 2) == line && !hands)
+	else if (ft_strnstr(line, "HN", 2) == line)
 		load_animation(hands, path[1]);
 	else
 	{

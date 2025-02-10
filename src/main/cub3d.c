@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 11:38:58 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/02 18:39:55 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:57:16 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv)
 		render(&cub3d);
 		mlx_loop(cub3d.mlx);
 		mlx_terminate(cub3d.mlx);
+		ft_lstclear(&cub3d.hand_frame, free);
+		free(cub3d.hand_texture);
 	}
 	return (0);
 }

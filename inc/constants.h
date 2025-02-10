@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:00:42 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/10 08:50:57 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:06:36 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define TOLERANCE 0.0000001
 # define NO_PLAYER -1
 
-# define FRAME_RATE 60
 # define FRAME_WIDTH 102
 # define FRAME_HEIGHT 102
 # define SCALE 2.0

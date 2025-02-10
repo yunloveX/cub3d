@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:10:44 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/10 08:53:51 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:04:07 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <fcntl.h>
 # include <error.h>
 # include <math.h>
+# include <time.h>
 
 /* EVENT UTILS */
 void	rotate_horizontal(t_cub3d *cub3d, double xpos);
