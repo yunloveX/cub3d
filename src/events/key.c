@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:52:37 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/05 10:07:35 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/10 09:46:30 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	key_hook_function(mlx_key_data_t key_data, void *param)
 	}
 	else if (key_data.key == MLX_KEY_R)
     {
-		cub3d->hand_animation_frame = 1; // Reset animation frame
-        cub3d->hand_animation_playing ^= 1; // Toggle animation playing flag
+		cub3d->hand_frame = *(cub3d->hand_texture); // Reset animation frame
+        cub3d->hand_playing ^= 1; // Toggle animation playing flag
     }
 	else if (key_data.key == MLX_KEY_D || key_data.key == MLX_KEY_RIGHT)
 	{

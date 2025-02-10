@@ -2,8 +2,8 @@ NO ./assets/new_textures/TECH_1E.PNG
 SO ./assets/new_textures/CONCRETE_3C.PNG
 EA ./assets/new_textures/CONCRETE_3C.PNG
 WE ./assets/new_textures/CONCRETE_3C.PNG
-HN ./assets/sprites/animation/
 DO ./assets/new_textures/DOOR_4A.PNG
+HN ./assets/sprites/animation/
 
 F 160,160,0
 C 0,0,160

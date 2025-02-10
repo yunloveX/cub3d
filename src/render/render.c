@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/04 15:37:40 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/10 10:03:34 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	wall_north_south(
 	{
 		*tx_h = ceil(progress.i) - progress.i;
 		if (cub3d->map.door_states[y][x] == 1)
-			return (5);
+			return (4);
 		return (0);
 	}
 	y--;
@@ -46,7 +46,7 @@ int	wall_north_south(
 	{
 		*tx_h = progress.i - floor(progress.i);
 		if (cub3d->map.door_states[y][x] == 1)
-			return (5);
+			return (4);
 		return (2);
 	}
 	return (-1);
@@ -65,7 +65,7 @@ int	wall_east_west(
 	{
 		*tx_h = ceil(progress.j) - progress.j;
 		if (cub3d->map.door_states[y][x] == 1)
-			return (5);
+			return (4);
 		return (3);
 	}
 	x++;
@@ -73,7 +73,7 @@ int	wall_east_west(
 	{
 		*tx_h = progress.j - floor(progress.j);
 		if (cub3d->map.door_states[y][x] == 1)
-			return (5);
+			return (4);
 		return (1);
 	}
 	return (-1);

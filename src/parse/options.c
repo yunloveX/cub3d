@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/04 11:30:21 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/10 09:56:43 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,38 @@
 #include <string.h>
 #include "cub3d.h"
 
-void	load_animation(t_frame frame, char *path, char frame_nb)
+void	load_animation(t_list **frames, char *path)
 {
-	char	*name = "0.png";
-	char	*full_path;
+	DIR				*dir;
+	struct dirent	*ent;
+	char			*file_path;
+	char			*tmp;
 
-	full_path = ft_strjoin(path, name);
-	if (!full_path)
+	dir = opendir(path);
+	if (!dir)
+		cub3d_error("Failed to open directory", 1);
+	ent = readdir(dir);
+	frames = (t_list **) malloc(sizeof(t_list *));
+	if (!frames)
 		cub3d_error("malloc", 1);
-	full_path[ft_strlen(full_path) - 5] = frame_nb;
-	frame->texture = mlx_load_png(full_path);
-	if (frame->texture && frame_nb < '9')
-		load_animation(frame->next, path, frame_nb + 1);		
+	*frames = NULL;
+	while (ent != NULL)
+	{
+		if (ft_strnstr(ent->d_name, ".png", ft_strlen(ent->d_name)))
+		{
+			tmp = ft_strdup(path);
+			file_path = ft_strjoin(tmp, ent->d_name);
+			if (!file_path)
+				cub3d_error("malloc", 1);
+			ft_lstadd_back(frames, ft_lstnew(mlx_load_png(file_path)));
+			free(file_path);
+		}
+		ent = readdir(dir);
+	}
+	closedir(dir);
 }
 
-static int	parse_textures(char *line, t_frame *walls[8])
+static int	parse_textures(char *line, mlx_texture_t *textures[5], t_list **hands)
 {
 	char	**path;
 
@@ -42,18 +59,18 @@ static int	parse_textures(char *line, t_frame *walls[8])
 		cub3d_error("Invalid texture path", 1);
 	if (path[2])
 		cub3d_error("Too many texture arguments", 1);
-	if (ft_strnstr(line, "NO", 2) == line && !walls[0]->texture)
-		walls[0]->texture = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "SO", 2) == line && !walls[2]->texture)
-		walls[2]->texture = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "EA", 2) == line && !walls[1]->texture)
-		walls[1]->texture = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "WE", 2) == line && !walls[3]->texture)
-		walls[3]->texture = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "HN", 2) == line && !walls[4]->texture)
-		load_animation(walls[4], path[1], '0');
-	else if (ft_strnstr(line, "DO", 2) == line && !walls[5]->texture)
-    	walls[5]->texture = mlx_load_png(path[1]);
+	if (ft_strnstr(line, "NO", 2) == line && !textures[0])
+		textures[0] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "SO", 2) == line && !textures[2])
+		textures[2] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "EA", 2) == line && !textures[1])
+		textures[1] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "WE", 2) == line && !textures[3])
+		textures[3] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "DO", 2) == line && !textures[4])
+    	textures[4] = mlx_load_png(path[1]);
+	else if (ft_strnstr(line, "HN", 2) == line && !hands)
+		load_animation(hands, path[1]);
 	else
 	{
 		printf("line: %s\n", line);
@@ -102,7 +119,7 @@ int parse_options(char *line, t_cub3d *cub3d)
     if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
         || ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
         || ft_strnstr(tmp, "HN", 2) == tmp || ft_strnstr(tmp, "DO", 2) == tmp)
-        ret = parse_textures(tmp, cub3d->textures);
+        ret = parse_textures(tmp, cub3d->textures, cub3d->hand_texture);
     else if (*tmp == 'F' || *tmp == 'C')
         ret = parse_colors(tmp, &cub3d->colors);
     else

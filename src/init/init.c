@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/04 15:50:10 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/10 09:58:42 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ static void init_data(t_cub3d *cub3d)
     cub3d->textures[1] = NULL;
     cub3d->textures[3] = NULL;
     cub3d->textures[4] = NULL;
-    cub3d->textures[5] = NULL;
-	cub3d->hand_animation_frame = 1;
-	cub3d->hand_animation_playing = 0;
+	cub3d->hand_frame = NULL;
+	cub3d->hand_playing = 0;
 	cub3d->img_hands = NULL;
     cub3d->map.grid = NULL;
 	cub3d->map.door_states = NULL;
@@ -46,6 +45,13 @@ static void	init_graph(t_cub3d *cub3d)
 	cub3d->img = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
 	if (!cub3d->img)
 	{
+		free(cub3d->mlx);
+		cub3d_error("image", 1);
+	}
+	cub3d->img_hands = mlx_new_image(cub3d->mlx, FRAME_WIDTH * SCALE, FRAME_HEIGHT * SCALE);
+	if (!cub3d->img_hands)
+	{
+		free(cub3d->img);
 		free(cub3d->mlx);
 		cub3d_error("image", 1);
 	}

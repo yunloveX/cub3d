@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 12:20:56 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/10 08:41:59 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ft_dstrdup(char **dstr, int size)
 {
-	char	**copy;
+	char    **copy;
 	int		i;
 
 	copy = (char **) malloc((size + 1) * sizeof(char *));

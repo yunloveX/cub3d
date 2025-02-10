@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <israel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:36:48 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/01/04 18:05:05 by israel           ###   ########.fr       */
+/*   Updated: 2025/02/10 08:59:41 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void parse(t_cub3d *cub3d, char *file)
 		cub3d_error("Invalid map", 1);
     close(fd);
     parse_player(cub3d);
+    printf("Parsed data\n");
 
 }

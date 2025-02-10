@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/04 15:46:34 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/10 09:56:56 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "MLX42/MLX42.h"
 # include "quatlib.h"
+
+# include "linked_list.h"
 
 typedef struct s_map
 {
@@ -38,26 +40,21 @@ typedef struct s_player
 	t_quaternion	cam;
 }	t_player;
 
-typedef struct s_frame
-{
-	mlx_texture_t	*texture;
-	struct s_frame	*next;
-}	t_frame;
-
 typedef struct s_cub3d
 {
 	mlx_t			*mlx;
 	void			*win;
 	mlx_image_t		*img;
-	t_map			map;
-	t_frame			*textures[6];
 	mlx_image_t		*img_hands;
+	t_map			map;
+	mlx_texture_t	*textures[5];
+	t_list			**hand_texture;
 	t_colors		colors;
 	t_player		player;
 	t_player		player_old;
 	int				mouse_down;
-	int 			hand_animation_playing;
-	float 			hand_animation_frame;
+	int 			hand_playing;
+	t_list 			*hand_frame;
 	int32_t				old_x;
 	int32_t				old_y;
 	double			jumps[3];
