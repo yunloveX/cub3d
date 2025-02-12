@@ -47,17 +47,17 @@ void	load_animation(t_list **frames, char *path)
 static void	load_texture(char *line, char *path, mlx_texture_t *textures[5],
 	t_list **hands)
 {
-	if (ft_strcmp(line, "NO") == line && !textures[0])
+	if (ft_strnstr(line, "NO", 2) == line && !textures[0])
 		textures[0] = mlx_load_png(path);
-	else if (ft_strcmp(line, "SO") == line && !textures[2])
+	else if (ft_strnstr(line, "SO", 2) == line && !textures[2])
 		textures[2] = mlx_load_png(path);
-	else if (ft_strcmp(line, "EA") == line && !textures[1])
+	else if (ft_strnstr(line, "EA", 2) == line && !textures[1])
 		textures[1] = mlx_load_png(path);
-	else if (ft_strcmp(line, "WE") == line && !textures[3])
+	else if (ft_strnstr(line, "WE", 2) == line && !textures[3])
 		textures[3] = mlx_load_png(path);
-	else if (ft_strcmp(line, "DO") == line && !textures[4])
+	else if (ft_strnstr(line, "DO", 2) == line && !textures[4])
 		textures[4] = mlx_load_png(path);
-	else if (ft_strcmp(line, "HN") == line)
+	else if (ft_strnstr(line, "HN", 2) == line)
 		load_animation(hands, path);
 	else
 	{

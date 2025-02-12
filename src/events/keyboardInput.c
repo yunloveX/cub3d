@@ -37,6 +37,9 @@ void	check_door_interaction(t_cub3d *cub3d)
 
 void	special_key_function(mlx_key_data_t key_data, void *param)
 {
+	t_cub3d	*cub3d;
+
+	cub3d = (t_cub3d *)param;
 	if (key_data.key == MLX_KEY_R)
 	{
 		cub3d->hand_frame = *(cub3d->hand_texture);

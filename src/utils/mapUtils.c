@@ -12,7 +12,7 @@
 
 #include "utils.h"
 
-static char	*skip_empty_lines(int fd)
+char	*skip_empty_lines(int fd)
 {
 	char	*line;
 
@@ -35,7 +35,7 @@ static char	*skip_empty_lines(int fd)
  * 			0 1 2 N S E W
  * mas los que queramos usar nosotros
  */
-static int	check_line(char *line)
+int	check_line(char *line)
 {
 	int	x;
 
@@ -56,7 +56,7 @@ static int	check_line(char *line)
 	return (EXIT_SUCCESS);
 }
 
-static void	check_cell(char **grid, int y, int x, int height)
+void	check_cell(char **grid, int y, int x, int height)
 {
 	size_t	width;
 
@@ -85,7 +85,7 @@ static void	check_cell(char **grid, int y, int x, int height)
 	check_cell(grid, y, x + 1, height);
 }
 
-static void	find_zero(char **grid, int *y, int *x, int rows)
+void	find_zero(char **grid, int *y, int *x, int rows)
 {
 	size_t	width;
 

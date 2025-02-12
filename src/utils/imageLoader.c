@@ -12,7 +12,7 @@
 
 #include "utils.h"
 
-static void	put_scaled_pixel(mlx_image_t *dst, int dst[2],
+static void	put_scaled_pixel(mlx_image_t *dst, int ds[2],
 	uint32_t color, int scale)
 {
 	int	si;
@@ -24,8 +24,8 @@ static void	put_scaled_pixel(mlx_image_t *dst, int dst[2],
 		sj = -1;
 		while (++sj < scale)
 		{
-			if (dst[0] + si < dst->width && dst[1] + sj < dst->height)
-				mlx_put_pixel(dst, dst[0] + si, dst[1] + sj, color);
+			if (ds[0] + si < dst->width && ds[1] + sj < dst->height)
+				mlx_put_pixel(dst, ds[0] + si, ds[1] + sj, color);
 		}
 	}
 }
@@ -47,7 +47,7 @@ void	blend_images(mlx_image_t *dst, mlx_texture_t *src, int scale)
 			src_pixel = &src->pixels[(j * src->width + i) * 4];
 			color = color_from_mem(src_pixel);
 			if (color & 0xFF000000)
-				put_scaled_pixel(dst, {i * scale, j * scale}, color, scale);
+				put_scaled_pixel(dst, (int[2]) {i * scale, j * scale}, color, scale);
 		}
 	}
 }

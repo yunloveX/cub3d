@@ -36,6 +36,9 @@
 void		rotate_horizontal(t_cub3d *cub3d, double xpos);
 void		move(t_cub3d *cub3d, double step);
 
+/* DRAW UTILS */
+void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side);
+
 /* COLOR UTILS */
 uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 uint32_t	color_from_mem(uint8_t *pixel);
@@ -65,5 +68,13 @@ int			check_line(char *line);
 void		check_cell(char **grid, int y, int x, int height);
 void		find_zero(char **grid, int *y, int *x, int rows);
 int			check_map(char **grid, int rows);
+
+/* RAYCAST UTILS*/
+char	map(t_cub3d *cub3d, int x, int y);
+int	raycast(t_cub3d *cub3d, int h, double *tx_h, double *dist);
+
+/* WALL UTILS */
+int	meet_wall(t_cub3d *cub3d, t_quaternion progress, t_quaternion ray,
+	double *tx_h);
 
 #endif
