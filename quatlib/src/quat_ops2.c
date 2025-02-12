@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:48:14 by fsusanna          #+#    #+#             */
-/*   Updated: 2025/02/04 11:21:31 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/12 09:30:16 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_quaternion	q_conj(t_quaternion q)
 
 double	q_norm(t_quaternion q)
 {
-/*	return (pow(q_dot(q, q), -0.5)); */
 	return (sqrt(q_dot(q, q)));
 }
 

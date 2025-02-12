@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_events.c                                     :+:      :+:    :+:   */
+/*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:53:53 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 12:06:52 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/12 09:42:07 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	scroll_hook_function(double xdelta, double ydelta, void *param)
 	render(cub3d);
 }
 
-void	mouse_hook_function(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
+void	mouse_hook_function(mouse_key_t button, action_t action,
+			modifier_key_t mods, void *param)
 {
 	t_cub3d	*cub3d;
 

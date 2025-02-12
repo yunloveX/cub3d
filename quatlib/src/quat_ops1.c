@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quatmath.c                                         :+:      :+:    :+:   */
+/*   quat_ops1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsusanna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:48:14 by fsusanna          #+#    #+#             */
-/*   Updated: 2023/02/20 19:20:13 by fsusanna         ###   ########.fr       */
+/*   Updated: 2025/02/12 09:30:32 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_quaternion	q_add(t_quaternion q1, t_quaternion q2)
 	q1.k += q2.k;
 	return (q1);
 }
+
 t_quaternion	q_sub(t_quaternion q1, t_quaternion q2)
 {
 	q1.r -= q2.r;

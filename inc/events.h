@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:57:04 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 14:54:48 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/12 09:28:07 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@
 
 
 /* LOOP EVENTS */
-void    loop_hook_function(void *param);
+void	loop_hook_function(void *param);
 
 /* MOUSE EVENTS */
-void	mouse_hook_function(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+void	mouse_hook_function(mouse_key_t button, action_t action,
+			modifier_key_t mods, void *param);
 void	scroll_hook_function(double xdelta, double ydelta, void *param);
 
 /* KEY EVENTS */
 void	key_hook_function(mlx_key_data_t key_data, void *param);
+
+/* CLOSE EVENTS */
+void	close_hook_function(void *param);
 
 #endif

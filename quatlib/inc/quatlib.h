@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/04 11:21:34 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/12 10:25:18 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ t_quaternion	q_conj(t_quaternion q);
 double			q_norm(t_quaternion q);
 void			q_normalize(t_quaternion *q);
 t_quaternion	q_rotate(t_quaternion p, t_quaternion rot);
+
+/*quat_ops3.c*/
+t_quaternion	q_gaps(t_quaternion point, t_quaternion dir);
 
 #endif

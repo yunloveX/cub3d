@@ -6,7 +6,7 @@ CFLAGS = -std=c89 -g #-Wall -Werror -Wextra # -Imlx # -fsanitize=address
 DIR_SRC = src
 DIR_OBJ = obj
 
-FILES_QUATLIB = quat_ops1 quat_ops2
+FILES_QUATLIB = quat_ops1 quat_ops2 quat_ops3
 
 FILES_SRC += $(addprefix $(DIR_SRC)/, $(FILES_QUATLIB))
 FILES_OBJ = $(addprefix $(DIR_OBJ)/, $(addsuffix .o, $(FILES_QUATLIB)))

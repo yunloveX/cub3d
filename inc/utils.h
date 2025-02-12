@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:10:44 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/10 11:04:07 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/12 09:52:40 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,37 @@
 # include <time.h>
 
 /* EVENT UTILS */
-void	rotate_horizontal(t_cub3d *cub3d, double xpos);
-void	move(t_cub3d *cub3d, double step);
+void		rotate_horizontal(t_cub3d *cub3d, double xpos);
+void		move(t_cub3d *cub3d, double step);
 
 /* COLOR UTILS */
 uint32_t	color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 uint32_t	color_from_mem(uint8_t *pixel);
-int	        transp(uint32_t color);
-void        transparent_pixel(uint8_t *pixel, uint32_t color);
+int			transp(uint32_t color);
+void		transparent_pixel(uint8_t *pixel, uint32_t color);
 
 /* STRING UTILS */
-char	**ft_dstrdup(char **dstr, int size);
-void    *ft_realloc(void *ptr, size_t old_size, size_t new_size);
-void    double_free(char **str);
+char		**ft_dstrdup(char **dstr, int size);
+void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void		double_free(char **str);
 
 /* CAM UTILS */
-void	locate_pos(t_cub3d *cub3d);
-void	locate_cam(t_cub3d *cub3d);
-void	player_equal(t_player *player_to, t_player *player_from);
+void		locate_pos(t_cub3d *cub3d);
+void		locate_cam(t_cub3d *cub3d);
+void		player_equal(t_player *player_to, t_player *player_from);
 
 /* IMAGES UTILS */
-void blend_images(mlx_image_t *dst, mlx_texture_t *src, int scale);
-void sprite(t_cub3d *cub3d);
+void		blend_images(mlx_image_t *dst, mlx_texture_t *src, int scale);
+void		sprite(t_cub3d *cub3d);
 
 /* ERROR UTILS */
-void	cub3d_error(char *message, int error);
+void		cub3d_error(char *message, int error);
+
+/* MAP UTILS*/
+char		*skip_empty_lines(int fd);
+int			check_line(char *line);
+void		check_cell(char **grid, int y, int x, int height);
+void		find_zero(char **grid, int *y, int *x, int rows);
+int			check_map(char **grid, int rows);
 
 #endif

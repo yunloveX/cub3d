@@ -6,7 +6,7 @@
 #    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/04 10:04:47 by nulsuga          ###   ########.fr        #
+#    Updated: 2025/02/12 10:57:40 by nulsuga          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,27 +105,32 @@ ARFLAGS 			= 	rsc
 
 # Source Files
 
-MAIN_FILES	=	cub3d.c
+MAIN_FILES		=	cub3d.c					\
 
-INIT_FILES	=	init.c		
+INIT_FILES		=	systemInit.c			\
 
-PARSE_FILES	=	parse.c			\
-				map.c			\
-				options.c		\
-				player.c		\
+PARSE_FILES		=	configParser.c			\
+					mapParser.c				\
+					dataParser.c			\
+					playerConfig.c			\
 
-RENDER_FILES	=	render.c		\
+RENDER_FILES	=	graphicsRenderer.c		\
 
-UTILS_FILES		=	cam.c			\
-					color.c			\
-					errors.c		\
-					string.c		\
-					images.c		\
-					events.c		\
+UTILS_FILES		=	camera.c				\
+					colorUtils.c			\
+					errorHandler.c			\
+					stringUtils.c			\
+					imageLoader.c			\
+					eventHandler.c			\
+					mapUtils.c				\
+					raycastUtils.c			\
+					wallUtils.c				\
+					drawUtils.c				\
 
-EVENT_FILES = 	key.c				\
-				mouse.c				\
-				loop.c				\
+EVENT_FILES 	= 	gameLoop.c				\
+					keyboardInput.c			\
+					mouseInput.c			\
+					windowClose.c			\
 
 
 SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\

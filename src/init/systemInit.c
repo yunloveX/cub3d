@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/10 10:54:38 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/12 09:43:05 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,26 @@ static void	init_events(t_cub3d *cub3d)
 	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);
 	mlx_scroll_hook(cub3d->mlx, scroll_hook_function, cub3d);
 	mlx_mouse_hook(cub3d->mlx, mouse_hook_function, cub3d);
+	mlx_close_hook(cub3d->mlx, close_hook_function, cub3d);
 }
 
-static void init_data(t_cub3d *cub3d)
+static void	init_data(t_cub3d *cub3d)
 {
-	cub3d->mouse_down = false;
-    cub3d->textures[0] = NULL;
-    cub3d->textures[2] = NULL;
-    cub3d->textures[1] = NULL;
-    cub3d->textures[3] = NULL;
-    cub3d->textures[4] = NULL;
 	cub3d->hand_texture = (t_list **) malloc(sizeof(t_list *));
 	if (!cub3d->hand_texture)
 		cub3d_error("malloc", 1);
+	cub3d->mouse_down = false;
+	cub3d->textures[0] = NULL;
+	cub3d->textures[2] = NULL;
+	cub3d->textures[1] = NULL;
+	cub3d->textures[3] = NULL;
+	cub3d->textures[4] = NULL;
 	cub3d->hand_frame = NULL;
 	cub3d->hand_playing = 0;
-	cub3d->img_hands = NULL;
-    cub3d->map.grid = NULL;
+	cub3d->map.grid = NULL;
 	cub3d->map.door_states = NULL;
-    cub3d->map.width = 0;
-    cub3d->map.height = 0;
+	cub3d->map.width = 0;
+	cub3d->map.height = 0;
 }
 
 static void	init_graph(t_cub3d *cub3d)
@@ -51,7 +51,8 @@ static void	init_graph(t_cub3d *cub3d)
 		free(cub3d->mlx);
 		cub3d_error("image", 1);
 	}
-	cub3d->img_hands = mlx_new_image(cub3d->mlx, FRAME_WIDTH * SCALE, FRAME_HEIGHT * SCALE);
+	cub3d->img_hands = mlx_new_image(cub3d->mlx,
+			FRAME_WIDTH * SCALE, FRAME_HEIGHT * SCALE);
 	if (!cub3d->img_hands)
 	{
 		free(cub3d->img);

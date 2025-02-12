@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   constants.h                                        :+:      :+:    :+:   */
+/*   quat_ops3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:00:42 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 09:27:23 by nulsuga          ###   ########.fr       */
+/*   Created: 2025/02/12 10:24:55 by nulsuga           #+#    #+#             */
+/*   Updated: 2025/02/12 10:25:03 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONSTANTS_H
-# define CONSTANTS_H
+#include "quatlib.h"
 
-# define WIDTH 1200
-# define HEIGHT 640
-# define CAM_DIST WIDTH
-# define CUBE_EDGE 4800
-# define FAR 1000000.0
-# define TOLERANCE 0.0000001
-# define NO_PLAYER -1
+t_quaternion	q_gaps(t_quaternion point, t_quaternion dir)
+{
+	t_quaternion	ret;
 
-# define FRAME_WIDTH 102
-# define FRAME_HEIGHT 102
-# define SCALE 2.0
-
-#endif
+	ret.r = 0.0;
+	ret.i = ceil(point.i) - point.i;
+	if (dir.i < 0)
+		ret.i = ret.i - 1;
+	else if (ret.i == 0)
+		ret.i = 1;
+	ret.j = ceil(point.j) - point.j;
+	if (dir.j < 0)
+		ret.j = ret.j - 1;
+	else if (ret.j == 0)
+		ret.j = 1;
+	ret.k = 0;
+	return (ret);
+}

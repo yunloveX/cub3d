@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options.c                                          :+:      :+:    :+:   */
+/*   configParser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/10 11:03:52 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:07:17 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,30 @@ void	load_animation(t_list **frames, char *path)
 	closedir(dir);
 }
 
-static int	parse_textures(char *line, mlx_texture_t *textures[5], t_list **hands)
+static void	load_texture(char *line, char *path, mlx_texture_t *textures[5],
+	t_list **hands)
+{
+	if (ft_strcmp(line, "NO") == line && !textures[0])
+		textures[0] = mlx_load_png(path);
+	else if (ft_strcmp(line, "SO") == line && !textures[2])
+		textures[2] = mlx_load_png(path);
+	else if (ft_strcmp(line, "EA") == line && !textures[1])
+		textures[1] = mlx_load_png(path);
+	else if (ft_strcmp(line, "WE") == line && !textures[3])
+		textures[3] = mlx_load_png(path);
+	else if (ft_strcmp(line, "DO") == line && !textures[4])
+		textures[4] = mlx_load_png(path);
+	else if (ft_strcmp(line, "HN") == line)
+		load_animation(hands, path);
+	else
+	{
+		printf("line: %s\n", line);
+		cub3d_error("Invalid texture", 1);
+	}
+}
+
+static int	parse_textures(char *line, mlx_texture_t *textures[5],
+	t_list **hands)
 {
 	char	**path;
 
@@ -55,23 +78,7 @@ static int	parse_textures(char *line, mlx_texture_t *textures[5], t_list **hands
 		cub3d_error("Invalid texture path", 1);
 	if (path[2])
 		cub3d_error("Too many texture arguments", 1);
-	if (ft_strnstr(line, "NO", 2) == line && !textures[0])
-		textures[0] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "SO", 2) == line && !textures[2])
-		textures[2] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "EA", 2) == line && !textures[1])
-		textures[1] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "WE", 2) == line && !textures[3])
-		textures[3] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "DO", 2) == line && !textures[4])
-    	textures[4] = mlx_load_png(path[1]);
-	else if (ft_strnstr(line, "HN", 2) == line)
-		load_animation(hands, path[1]);
-	else
-	{
-		printf("line: %s\n", line);
-		cub3d_error("Invalid texture", 1);
-	}
+	load_texture(line, path[1], textures, hands);
 	double_free(path);
 	return (1);
 }
@@ -102,25 +109,23 @@ static int	parse_colors(char *line, t_colors *colors)
 	return (1);
 }
 
-int parse_options(char *line, t_cub3d *cub3d)
+int	parse_options(char *line, t_cub3d *cub3d)
 {
-    char    *tmp;
-    int     ret;
+	char	*tmp;
+	int		ret;
 
-    tmp = ft_strtrim(line, " \n");
-    if (!tmp)
-        cub3d_error("malloc", 1);
-        
-    ret = 0;
-    if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
-        || ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
-        || ft_strnstr(tmp, "HN", 2) == tmp || ft_strnstr(tmp, "DO", 2) == tmp)
-        ret = parse_textures(tmp, cub3d->textures, cub3d->hand_texture);
-    else if (*tmp == 'F' || *tmp == 'C')
-        ret = parse_colors(tmp, &cub3d->colors);
-    else
-        free(tmp);  // Free tmp if not handled by parse_textures or parse_colors
-        
-    free(line);  // Free the original line
-    return ret;
+	tmp = ft_strtrim(line, " \n");
+	if (!tmp)
+		cub3d_error("malloc", 1);
+	ret = 0;
+	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
+		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
+		|| ft_strnstr(tmp, "HN", 2) == tmp || ft_strnstr(tmp, "DO", 2) == tmp)
+		ret = parse_textures(tmp, cub3d->textures, cub3d->hand_texture);
+	else if (*tmp == 'F' || *tmp == 'C')
+		ret = parse_colors(tmp, &cub3d->colors);
+	else
+		free(tmp);
+	free(line);
+	return (ret);
 }

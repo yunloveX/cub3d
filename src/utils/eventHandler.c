@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
+/*   eventHandler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:54:16 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 12:22:52 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/12 10:40:10 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	rotate_horizontal(t_cub3d *cub3d, double xpos)
 
 void	move(t_cub3d *cub3d, double step)
 {
-	cub3d->player.pos = q_add(cub3d->player.pos, q_scale(q_sub(cub3d->player.pos,
-		cub3d->player.cam), step));
+	cub3d->player.pos = q_add(cub3d->player.pos,
+			q_scale(q_sub(cub3d->player.pos, cub3d->player.cam), step));
 	locate_cam(cub3d);
 }

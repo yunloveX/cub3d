@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   colorUtils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:19:41 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/03 12:21:12 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/12 10:38:13 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /**
  * @brief Creates a 32-bit rgba color from its constituents.
  *
- * @details This function creates a single unsigned 32-bit color value created from
+ * @details This function creates a single unsigned 32-bit color value created 
+ * from
  * its four constituents, red (most significant byte), green, blue and alpha
  * (less significant byte). Params are unsigned 8-bit integers.
  *
@@ -36,10 +37,10 @@ uint32_t	color_from_mem(uint8_t *pixel)
 	uint32_t	color;
 
 	color = 0;
-	color |= ((uint32_t)*pixel++) << 24;
-	color |= ((uint32_t)*pixel++) << 16;
-	color |= ((uint32_t)*pixel++) << 8;
-	color |= (uint32_t)*pixel;
+	color |= ((uint32_t) * pixel++) << 24;
+	color |= ((uint32_t) * pixel++) << 16;
+	color |= ((uint32_t) * pixel++) << 8;
+	color |= (uint32_t) * pixel;
 	return (color);
 }
 
@@ -58,9 +59,9 @@ int	transp(uint32_t color)
 	return ((r + g + b - 0x140) * 6 / 11 + 13);
 }
 
-void transparent_pixel(uint8_t *pixel, uint32_t color)
+void	transparent_pixel(uint8_t *pixel, uint32_t color)
 {
-	int		alpha;
+	int			alpha;
 	uint32_t	tmp;
 
 	alpha = 0xff - transp(color);
@@ -68,12 +69,10 @@ void transparent_pixel(uint8_t *pixel, uint32_t color)
 	tmp += (color & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;
 	*pixel = tmp;
-	
 	tmp = *++pixel * (255 - alpha);
 	tmp += (color >> 8 & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;
 	*pixel = tmp;
-	
 	tmp = *++pixel * (255 - alpha);
 	tmp += (color >> 16 & 0xff) * alpha;
 	tmp = (tmp + 127) / 255;
