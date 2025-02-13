@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 10:52:54 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 08:59:51 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,44 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
  *
  * @param str The double pointer to free.
  */
-void	double_free(char **str)
+void	double_free(void **ptr)
 {
 	int	i;
 
-	if (!str)
+	if (!ptr)
 		return ;
 	i = 0;
-	while (str[i])
+	while (ptr[i])
 	{
-		free(str[i]);
-		str[i] = NULL;
+		free(ptr[i]);
+		ptr[i] = NULL;
 		i++;
 	}
-	free(str);
+	free(ptr);
+}
+
+/**
+ * @brief 
+ * Compares two strings.
+ *
+ * @details
+ * Compares two strings using ft_strncmp. The length of the longest string 
+ * is used as the length parameter.
+ *
+ * @param s1 The first string to compare.
+ * @param s2 The second string to compare.
+ * @return An integer less than, equal to, or greater than zero if s1 is found, 
+ * 	respectively, to be less than, to match, or be greater than s2.
+ */
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	len_s1;
+	int	len_s2;
+
+	len_s2 = ft_strlen(s2);
+	len_s1 = ft_strlen(s1);
+	if (len_s1 > len_s2)
+		return (ft_strncmp(s1, s2, len_s1));
+	else
+		return (ft_strncmp(s1, s2, len_s2));
 }

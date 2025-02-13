@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   mapUtils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 09:50:12 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 09:51:28 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 08:47:19 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ int	check_map(char **grid, int rows)
 	else
 		ret = EXIT_FAILURE;
 	if (copy_grid)
-		double_free(copy_grid);
+		double_free((void **) copy_grid);
 	return (ret);
 }

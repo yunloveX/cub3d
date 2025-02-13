@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:21:41 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 10:22:30 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:49:29 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ uint32_t	pixel_color(t_cub3d *cub3d, double tx_h,
 	return (color);
 }
 
-void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
+void	drawline(t_cub3d *cub3d, double tx_h, double dist, int side_height[2])
 {
 	int			v;
 	double		tx_v;
@@ -69,18 +69,18 @@ void	drawline(t_cub3d *cub3d, int h, double tx_h, double dist, int side)
 	v = -1;
 	while (++v <= (HEIGHT + 1) / 2 - lim)
 	{
-		mlx_put_pixel(cub3d->img, h + WIDTH / 2, v,
+		mlx_put_pixel(cub3d->img, side_height[1] + WIDTH / 2, v,
 			cub3d->colors.ceiling_color);
-		mlx_put_pixel(cub3d->img, h + WIDTH / 2, HEIGHT - 1 - v,
+		mlx_put_pixel(cub3d->img, side_height[1] + WIDTH / 2, HEIGHT - 1 - v,
 			cub3d->colors.floor_color);
 	}
 	v--;
 	while (++v < (HEIGHT + 1) / 2)
 	{
 		tx_v = (2 * v - HEIGHT) / (4 * lim) + 0.5;
-		mlx_put_pixel(cub3d->img, h + WIDTH / 2, v,
-			pixel_color(cub3d, tx_h, tx_v, side));
-		mlx_put_pixel(cub3d->img, h + WIDTH / 2, HEIGHT - 1 - v,
-			pixel_color(cub3d, tx_h, 1 - tx_v, side));
+		mlx_put_pixel(cub3d->img, side_height[1] + WIDTH / 2, v,
+			pixel_color(cub3d, tx_h, tx_v, side_height[0]));
+		mlx_put_pixel(cub3d->img, side_height[1] + WIDTH / 2, HEIGHT - 1 - v,
+			pixel_color(cub3d, tx_h, 1 - tx_v, side_height[0]));
 	}
 }

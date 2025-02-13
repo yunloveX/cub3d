@@ -6,12 +6,11 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 10:36:46 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:47:37 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 static void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
 {
@@ -71,7 +70,7 @@ void	render(t_cub3d *cub3d)
 		side = raycast(cub3d, h, &tx_h, &dist);
 		if (side < 0)
 			break ;
-		drawline(cub3d, h, tx_h, dist, side);
+		drawline(cub3d, tx_h, dist, (int [2], {side, h}));
 	}
 	if (side < 0)
 	{

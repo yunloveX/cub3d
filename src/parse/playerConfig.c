@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   playerConfig.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 12:52:08 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/03 14:49:42 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:29:52 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_player(t_cub3d *cub3d)
 			if (is_player(cub3d->map.grid[y][x]))
 			{
 				if (cub3d->player.pos.k)
-					cub3d_error("Error\nMultiple players found", 1);
+					cub3d_error("Error\nMultiple players found", 1, cub3d);
 				locate_player(cub3d, y, x);
 			}
 			x++;
@@ -63,5 +63,5 @@ void	parse_player(t_cub3d *cub3d)
 		y++;
 	}
 	if (!cub3d->player.pos.k)
-		cub3d_error("Error\nNo player found", 1);
+		cub3d_error("Error\nNo player found", 1, cub3d);
 }

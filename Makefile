@@ -6,7 +6,7 @@
 #    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/12 10:57:40 by nulsuga          ###   ########.fr        #
+#    Updated: 2025/02/13 08:33:01 by nulsuga          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT) $(MINILIBX)
 
 CC					=	gcc
 
-CFLAGS				=	-g  -I/usr/include -O3 $(INCLUDES) 
+CFLAGS				=	-g  -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES) 
 CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES_BONUS)
 LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -L$(QUAT_DIR) -L/usr/lib -I$(MINILIBX_DIR) -I$(QUAT_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
 LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz

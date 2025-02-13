@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:13:55 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 10:19:28 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:44:28 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	wall_east_west(t_cub3d *cub3d, t_quaternion progress, float delta_i,
 
 	x = (int) floor(progress.i - 0.5);
 	y = (int) floor(-progress.j);
-
 	if (delta_i < 0 && map(cub3d, x, y) == '1')
 	{
 		*tx_h = ceil(progress.j) - progress.j;

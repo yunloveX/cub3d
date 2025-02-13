@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   mapParser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:19:43 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 09:53:42 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:28:34 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static void	read_map_lines(int fd, t_map *map)
 		tmp = ft_strtrim(line, "\n");
 		free(line);
 		if (check_line(tmp))
-			cub3d_error("Invalid map", 1);
+			return (free(tmp));
 		map->grid = ft_realloc(map->grid, sizeof(char *) * y,
 				sizeof(char *) * (y + 1));
 		if (!map->grid)
-			cub3d_error("malloc", 1);
+			return (free(tmp));
 		map->grid[y++] = tmp;
 		if ((int) ft_strlen(tmp) > map->width)
 			map->width = ft_strlen(tmp);

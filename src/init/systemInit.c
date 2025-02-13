@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   systemInit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 09:43:05 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:23:28 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	init_data(t_cub3d *cub3d)
 {
 	cub3d->hand_texture = (t_list **) malloc(sizeof(t_list *));
 	if (!cub3d->hand_texture)
-		cub3d_error("malloc", 1);
+		cub3d_error("malloc", 1, cub3d);
 	cub3d->mouse_down = false;
 	cub3d->textures[0] = NULL;
 	cub3d->textures[2] = NULL;
@@ -44,12 +44,12 @@ static void	init_graph(t_cub3d *cub3d)
 {
 	cub3d->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	if (!cub3d->mlx)
-		cub3d_error("mlx_init", 1);
+		cub3d_error("mlx_init", 1, cub3d);
 	cub3d->img = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
 	if (!cub3d->img)
 	{
 		free(cub3d->mlx);
-		cub3d_error("image", 1);
+		cub3d_error("image", 1, cub3d);
 	}
 	cub3d->img_hands = mlx_new_image(cub3d->mlx,
 			FRAME_WIDTH * SCALE, FRAME_HEIGHT * SCALE);
@@ -57,7 +57,7 @@ static void	init_graph(t_cub3d *cub3d)
 	{
 		free(cub3d->img);
 		free(cub3d->mlx);
-		cub3d_error("image", 1);
+		cub3d_error("image", 1, cub3d);
 	}
 	cub3d->frames_shown = 0;
 	mlx_image_to_window(cub3d->mlx, cub3d->img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 10:07:17 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:36:59 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void	load_animation(t_list **frames, char *path)
+int	load_animation(t_list **frames, char *path)
 {
 	DIR				*dir;
 	struct dirent	*ent;
@@ -25,7 +25,7 @@ void	load_animation(t_list **frames, char *path)
 
 	dir = opendir(path);
 	if (!dir)
-		cub3d_error("Failed to open directory", 1);
+		return (EXIT_FAILURE);
 	ent = readdir(dir);
 	*frames = NULL;
 	while (ent != NULL)
@@ -35,35 +35,39 @@ void	load_animation(t_list **frames, char *path)
 			tmp = ft_strdup(path);
 			file_path = ft_strjoin(tmp, ent->d_name);
 			if (!file_path)
-				cub3d_error("malloc", 1);
+				return (free(tmp), EXIT_FAILURE);
 			ft_lstadd_back(frames, ft_lstnew(mlx_load_png(file_path)));
 			free(file_path);
 		}
 		ent = readdir(dir);
 	}
 	closedir(dir);
+	return (EXIT_SUCCESS);
 }
 
-static void	load_texture(char *line, char *path, mlx_texture_t *textures[5],
+static int	load_texture(char **path, mlx_texture_t *textures[5],
 	t_list **hands)
 {
-	if (ft_strnstr(line, "NO", 2) == line && !textures[0])
-		textures[0] = mlx_load_png(path);
-	else if (ft_strnstr(line, "SO", 2) == line && !textures[2])
-		textures[2] = mlx_load_png(path);
-	else if (ft_strnstr(line, "EA", 2) == line && !textures[1])
-		textures[1] = mlx_load_png(path);
-	else if (ft_strnstr(line, "WE", 2) == line && !textures[3])
-		textures[3] = mlx_load_png(path);
-	else if (ft_strnstr(line, "DO", 2) == line && !textures[4])
-		textures[4] = mlx_load_png(path);
-	else if (ft_strnstr(line, "HN", 2) == line)
-		load_animation(hands, path);
+	mlx_texture_t	*texture;
+
+	if (!ft_strcmp(path[0], "HN"))
+		return (load_animation(hands, path[1]));
+	texture = mlx_load_png(path[1]);
+	if (!texture)
+		return (EXIT_FAILURE);
+	if (!ft_strcmp(path[0], "NO") && !textures[0])
+		textures[0] = texture;
+	else if (!ft_strcmp(path[0], "SO") && !textures[2])
+		textures[2] = texture;
+	else if (!ft_strcmp(path[0], "EA") && !textures[1])
+		textures[1] = texture;
+	else if (!ft_strcmp(path[0], "WE") && !textures[3])
+		textures[3] = texture;
+	else if (!ft_strcmp(path[0], "DO") && !textures[4])
+		textures[4] = texture;
 	else
-	{
-		printf("line: %s\n", line);
-		cub3d_error("Invalid texture", 1);
-	}
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static int	parse_textures(char *line, mlx_texture_t *textures[5],
@@ -73,14 +77,14 @@ static int	parse_textures(char *line, mlx_texture_t *textures[5],
 
 	path = ft_split(line, ' ');
 	if (!path)
-		cub3d_error("malloc", 1);
+		return (printf("malloc\n"), 0);
 	if (!path[0] || !path[1])
-		cub3d_error("Invalid texture path", 1);
+		return (double_free((void **) path), 0);
 	if (path[2])
-		cub3d_error("Too many texture arguments", 1);
-	load_texture(line, path[1], textures, hands);
-	double_free(path);
-	return (1);
+		return (double_free((void **) path), 0);
+	if (load_texture(path, textures, hands))
+		return (double_free((void **) path), 0);
+	return (double_free((void **) path), 1);
 }
 
 static int	parse_colors(char *line, t_colors *colors)
@@ -90,23 +94,21 @@ static int	parse_colors(char *line, t_colors *colors)
 
 	split = ft_split(line, ' ');
 	if (!split)
-		cub3d_error("malloc", 1);
+		return (printf("malloc\n"), 0);
 	if (!split[1])
-		cub3d_error("Invalid color", 1);
+		return (double_free((void **) split), 0);
 	rgb = ft_split(split[1], ',');
 	if (!rgb)
-		cub3d_error("malloc", 1);
-	if (*line == 'F' && rgb[0] && rgb[1] && rgb[2])
+		return (printf("malloc\n"), double_free((void **) split), 0);
+	if (*line == 'F' && rgb[0] && rgb[1] && rgb[2] && !rgb[3])
 		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
 				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
-	else if (*line == 'C' && rgb[0] && rgb[1] && rgb[2])
+	else if (*line == 'C' && rgb[0] && rgb[1] && rgb[2] && !rgb[3])
 		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
 				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
 	else
-		cub3d_error("Invalid color", 1);
-	double_free(rgb);
-	double_free(split);
-	return (1);
+		return (double_free((void **) rgb), double_free((void **) split), 0);
+	return (double_free((void **) rgb), double_free((void **) split), 1);
 }
 
 int	parse_options(char *line, t_cub3d *cub3d)
@@ -116,7 +118,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 
 	tmp = ft_strtrim(line, " \n");
 	if (!tmp)
-		cub3d_error("malloc", 1);
+		cub3d_error("malloc", 1, cub3d);
 	ret = 0;
 	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
 		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
@@ -124,8 +126,6 @@ int	parse_options(char *line, t_cub3d *cub3d)
 		ret = parse_textures(tmp, cub3d->textures, cub3d->hand_texture);
 	else if (*tmp == 'F' || *tmp == 'C')
 		ret = parse_colors(tmp, &cub3d->colors);
-	else
-		free(tmp);
-	free(line);
+	free(tmp);
 	return (ret);
 }

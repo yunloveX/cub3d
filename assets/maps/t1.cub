@@ -6,7 +6,7 @@ DO ./assets/new_textures/DOOR_4A.PNG
 HN ./assets/sprites/animation/
 
 F 160,160,0
-C 0,0,160
+C 0,0,160,0
 
         1111111111111111111111111
         1000000000110000000000001
