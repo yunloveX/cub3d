@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   configParser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/13 09:36:59 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 08:55:34 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	load_animation(t_list **frames, char *path)
 		{
 			tmp = ft_strdup(path);
 			file_path = ft_strjoin(tmp, ent->d_name);
-			printf("file_path: %s\n", file_path);
 			if (!file_path)
 				return (free(tmp), EXIT_FAILURE);
 			ft_lstadd_back(frames, ft_lstnew(mlx_load_png(file_path)));
@@ -80,12 +79,12 @@ static int	parse_textures(char *line, mlx_texture_t *textures[5],
 	if (!path)
 		return (printf("malloc\n"), 0);
 	if (!path[0] || !path[1])
-		return (double_free((void **) path), 0);
+		return (double_free(path), 0);
 	if (path[2])
-		return (double_free((void **) path), 0);
+		return (double_free(path), 0);
 	if (load_texture(path, textures, hands))
-		return (double_free((void **) path), 0);
-	return (double_free((void **) path), 1);
+		return (double_free(path), 0);
+	return (double_free(path), 1);
 }
 
 static int	parse_colors(char *line, t_colors *colors)
@@ -97,10 +96,10 @@ static int	parse_colors(char *line, t_colors *colors)
 	if (!split)
 		return (printf("malloc\n"), 0);
 	if (!split[1])
-		return (double_free((void **) split), 0);
+		return (double_free(split), 0);
 	rgb = ft_split(split[1], ',');
 	if (!rgb)
-		return (printf("malloc\n"), double_free((void **) split), 0);
+		return (printf("malloc\n"), double_free(split), 0);
 	if (*line == 'F' && rgb[0] && rgb[1] && rgb[2] && !rgb[3])
 		colors->floor_color = color_rgba(ft_atoi(rgb[0]),
 				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
@@ -108,8 +107,8 @@ static int	parse_colors(char *line, t_colors *colors)
 		colors->ceiling_color = color_rgba(ft_atoi(rgb[0]),
 				ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
 	else
-		return (double_free((void **) rgb), double_free((void **) split), 0);
-	return (double_free((void **) rgb), double_free((void **) split), 1);
+		return (double_free(rgb), double_free(split), 0);
+	return (double_free(rgb), double_free(split), 1);
 }
 
 int	parse_options(char *line, t_cub3d *cub3d)

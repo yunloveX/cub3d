@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   gameLoop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:54:47 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 09:41:43 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 09:45:54 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,8 @@ static void	update_player_position(t_cub3d *cub3d, int32_t xpos, int32_t ypos)
 	cub3d->old_y += ypos;
 }
 
-void	loop_hook_function(void *param)
+void	handle_hand_animation(t_cub3d *cub3d)
 {
-	t_cub3d	*cub3d;
-	int32_t	xpos;
-	int32_t	ypos;
-
-	cub3d = (t_cub3d *) param;
 	if (cub3d->hand_playing)
 	{
 		cub3d->slow_count++;
@@ -66,9 +61,21 @@ void	loop_hook_function(void *param)
 				sprite(cub3d);
 		}
 	}
+	sprite(cub3d);
+}
+
+void	loop_hook_function(void *param)
+{
+	t_cub3d	*cub3d;
+	int32_t	xpos;
+	int32_t	ypos;
+
+	cub3d = (t_cub3d *) param;
+	handle_hand_animation(cub3d);
 	if (!cub3d->mouse_down)
 		return ;
 	handle_mouse_movement(cub3d, &xpos, &ypos);
 	update_player_position(cub3d, xpos, ypos);
 	render(cub3d);
+	sprite(cub3d);
 }

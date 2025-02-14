@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key.c                                              :+:      :+:    :+:   */
+/*   keyboardInput.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:52:37 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 09:37:56 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 09:37:49 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,21 @@ void	toggle_door(t_cub3d *cub3d, int x, int y)
 // Call this when player presses 'E'
 void	check_door_interaction(t_cub3d *cub3d)
 {
-	int	px;
-	int	py;
+	double	tx_h;
+	double	dist;
+	int		side;
 
-	px = (int)cub3d->player.pos.i;
-	py = (int)(-cub3d->player.pos.j);
-	toggle_door(cub3d, px + 1, py);
-	toggle_door(cub3d, px - 1, py);
-	toggle_door(cub3d, px, py + 1);
-	toggle_door(cub3d, px, py - 1);
+	cub3d->temp_door_x = -1;
+	cub3d->temp_door_y = -1;
+	side = raycast(cub3d, 0, &tx_h, &dist);
+	if (side == 4 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1)
+		toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
+	else
+	{
+		side = raycast(cub3d, 1, &tx_h, &dist);
+		if (side != 4 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1)
+			toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
+	}
 }
 
 void	special_key_function(mlx_key_data_t key_data, void *param)

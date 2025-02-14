@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 07:29:23 by iestero-          #+#    #+#             */
-/*   Updated: 2025/02/10 11:04:02 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:00:25 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <fcntl.h>
 # include <error.h>
 # include <math.h>
-
 
 /* RENDER */
 void	render(t_cub3d *cub3d);

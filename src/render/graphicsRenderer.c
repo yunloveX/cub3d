@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   graphicsRenderer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/13 09:47:37 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 10:00:04 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-/*
+
 static void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
 {
 	int		i;
@@ -48,13 +48,13 @@ static void	show_map(t_cub3d *cub3d)
 				color = 0xff0000ff;
 			else if (x < 0 || x == cub3d->map.width || y < 0
 				|| y == cub3d->map.height || cub3d->map.grid[y][x] != '1')
-				color = 0x00ffffff;
+				color = 0xffffffff;
 			else
-				color = 0x00000000;
+				color = 0xff000000;
 			put_map_dot(cub3d, x + 1, y + 1, color);
 		}
 	}
-}*/
+}
 
 void	render(t_cub3d *cub3d)
 {
@@ -70,7 +70,7 @@ void	render(t_cub3d *cub3d)
 		side = raycast(cub3d, h, &tx_h, &dist);
 		if (side < 0)
 			break ;
-		drawline(cub3d, tx_h, dist, (int [2]) {side, h});
+		drawline(cub3d, tx_h, dist, (int [2]){side, h});
 	}
 	if (side < 0)
 	{
@@ -78,6 +78,6 @@ void	render(t_cub3d *cub3d)
 		return ;
 	}
 	player_equal(&cub3d->player_old, &cub3d->player);
-	blend_images(cub3d->img, 0, 0, cub3d->img_map, 5);
 	cub3d->frames_shown++;
+	show_map(cub3d);
 }

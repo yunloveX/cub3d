@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yunlovex <yunlovex@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 16:30:53 by yunlovex          #+#    #+#             */
-/*   Updated: 2024/07/03 13:11:29 by yunlovex         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:00:33 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,3 @@ int		parse_options(char *line, t_cub3d *cub3d);
 void	parse_player(t_cub3d *cub3d);
 
 #endif
-

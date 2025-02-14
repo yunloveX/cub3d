@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stringUtils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/13 08:59:51 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 08:41:48 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
  *
  * @param str The double pointer to free.
  */
-void	double_free(void **ptr)
+void	double_free(char **ptr)
 {
 	int	i;
 

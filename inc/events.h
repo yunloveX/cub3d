@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:57:04 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 09:28:07 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 10:00:28 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 # include <fcntl.h>
 # include <error.h>
 # include <math.h>
-
-
 
 /* LOOP EVENTS */
 void	loop_hook_function(void *param);

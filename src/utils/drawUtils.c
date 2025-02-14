@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawUtils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:21:41 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/13 09:49:29 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 09:46:27 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	drawline(t_cub3d *cub3d, double tx_h, double dist, int side_height[2])
 	double		tx_v;
 	double		lim;
 
-	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + side_height[1] * side_height[1]);
+	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST
+			+ side_height[1] * side_height[1]);
 	v = -1;
 	while (++v <= (HEIGHT + 1) / 2 - lim)
 	{

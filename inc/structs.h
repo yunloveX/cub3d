@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/12 09:28:44 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 10:01:04 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_player
 	t_quaternion	cam;
 }	t_player;
 
-
 typedef struct s_cub3d
 {
 	mlx_t			*mlx;
@@ -51,7 +50,6 @@ typedef struct s_cub3d
 	t_player		player;
 	t_player		player_old;
 	mlx_image_t		*img;
-	mlx_texture_t	*img_map;
 	mlx_texture_t	*img_hands;
 	mlx_texture_t	*textures[5];
 	int				mouse_down;
@@ -62,6 +60,8 @@ typedef struct s_cub3d
 	int32_t			old_y;
 	double			jumps[3];
 	void			*win;
+	int     		temp_door_x;
+    int     		temp_door_y;
 }	t_cub3d;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapParser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:19:43 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/13 09:28:34 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/14 09:33:41 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ static void	initialize_door_states(t_map *map)
 	{
 		map->door_states[y] = ft_calloc(map->width, sizeof(int));
 		x = 0;
-		while (x < map->width)
+		while (map->grid[y][x] != '\0')
 		{
 			if (map->grid[y][x] == 'D')
 				map->door_states[y][x] = 1;
+			else
+				map->door_states[y][x] = -1;
 			x++;
 		}
 		y++;
