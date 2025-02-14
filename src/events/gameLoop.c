@@ -50,7 +50,22 @@ void	loop_hook_function(void *param)
 
 	cub3d = (t_cub3d *) param;
 	if (cub3d->hand_playing)
-		sprite(cub3d);
+	{
+		cub3d->slow_count++;
+		if (cub3d->slow_count % SLOW_SPRITE == 0)
+		{
+			cub3d->slow_count = 0;
+			cub3d->hand_frame = cub3d->hand_frame->next;
+			render(cub3d);
+			if (cub3d->hand_frame == NULL)
+			{
+				cub3d->hand_frame = *(cub3d->hand_texture);
+				cub3d->hand_playing = 0;
+			}
+			else
+				sprite(cub3d);
+		}
+	}
 	if (!cub3d->mouse_down)
 		return ;
 	handle_mouse_movement(cub3d, &xpos, &ypos);

@@ -24,5 +24,6 @@
 # define FRAME_WIDTH 102
 # define FRAME_HEIGHT 102
 # define SCALE 2.0
+# define SLOW_SPRITE 3
 
 #endif

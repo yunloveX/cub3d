@@ -1,10 +1,17 @@
 To Do:
 
-	Definir la funcion de dibujo teniendo en cuenta el bonus
+Las imágenes del sprite no se cargan en orden, sino como las da readdir()
 
-	Definir la funcion para manejar los diferentes eventos dentro del juego
+El punto rojo del jugador no se mueve
 
-	Hacer las partes del bonus
+Al salir da segmentation fault
+
+Se clava un poco en los muros
+
+El color del mapa no es el que debería. Yo estoy convencido de que la MLX no maneja siempre bien la endianness, pero tampoco es tan importante. Lo vemos un rato, pero se puede quedar así.
+
+Habría que duplicar el proyecto y hacer uno normal y otro bonus, ¿no? (no vale clonarlos, e que no tiene bonus no puede tener muchas funciones que utilizamos para el bonus).
+
 
 In Progress:
 

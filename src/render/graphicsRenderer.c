@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/*
 static void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
 {
 	int		i;
@@ -54,7 +54,7 @@ static void	show_map(t_cub3d *cub3d)
 			put_map_dot(cub3d, x + 1, y + 1, color);
 		}
 	}
-}
+}*/
 
 void	render(t_cub3d *cub3d)
 {
@@ -70,7 +70,7 @@ void	render(t_cub3d *cub3d)
 		side = raycast(cub3d, h, &tx_h, &dist);
 		if (side < 0)
 			break ;
-		drawline(cub3d, tx_h, dist, (int [2], {side, h}));
+		drawline(cub3d, tx_h, dist, (int [2]) {side, h});
 	}
 	if (side < 0)
 	{
@@ -78,6 +78,6 @@ void	render(t_cub3d *cub3d)
 		return ;
 	}
 	player_equal(&cub3d->player_old, &cub3d->player);
-	show_map(cub3d);
+	blend_images(cub3d->img, 0, 0, cub3d->img_map, 5);
 	cub3d->frames_shown++;
 }

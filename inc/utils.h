@@ -59,7 +59,8 @@ void		locate_cam(t_cub3d *cub3d);
 void		player_equal(t_player *player_to, t_player *player_from);
 
 /* IMAGES UTILS */
-void		blend_images(mlx_image_t *dst, mlx_texture_t *src, int scale);
+void        create_map_image(t_cub3d *cub3d);
+void		blend_images(mlx_image_t *dst, uint32_t x0, uint32_t y0, mlx_texture_t *src, int scale);
 void		sprite(t_cub3d *cub3d);
 
 /* ERROR UTILS */

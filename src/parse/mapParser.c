@@ -62,7 +62,7 @@ static void	read_map_lines(int fd, t_map *map)
 int	parse_map(int fd, t_map *map)
 {
 	read_map_lines(fd, map);
-	map->door_states = ft_calloc(map->height, sizeof(int *));
+	map->door_states = ft_calloc(map->height * map->width, sizeof(int *));
 	initialize_door_states(map);
 	return (check_map(map->grid, map->height));
 }

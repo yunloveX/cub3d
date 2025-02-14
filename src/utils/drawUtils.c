@@ -65,7 +65,7 @@ void	drawline(t_cub3d *cub3d, double tx_h, double dist, int side_height[2])
 	double		tx_v;
 	double		lim;
 
-	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + h * h);
+	lim = 0.5 / dist * sqrt(CAM_DIST * CAM_DIST + side_height[1] * side_height[1]);
 	v = -1;
 	while (++v <= (HEIGHT + 1) / 2 - lim)
 	{

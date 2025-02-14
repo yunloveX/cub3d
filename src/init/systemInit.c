@@ -27,6 +27,7 @@ static void	init_data(t_cub3d *cub3d)
 	if (!cub3d->hand_texture)
 		cub3d_error("malloc", 1, cub3d);
 	cub3d->mouse_down = false;
+	cub3d->slow_count = 0;
 	cub3d->textures[0] = NULL;
 	cub3d->textures[2] = NULL;
 	cub3d->textures[1] = NULL;
@@ -48,14 +49,6 @@ static void	init_graph(t_cub3d *cub3d)
 	cub3d->img = mlx_new_image(cub3d->mlx, WIDTH, HEIGHT);
 	if (!cub3d->img)
 	{
-		free(cub3d->mlx);
-		cub3d_error("image", 1, cub3d);
-	}
-	cub3d->img_hands = mlx_new_image(cub3d->mlx,
-			FRAME_WIDTH * SCALE, FRAME_HEIGHT * SCALE);
-	if (!cub3d->img_hands)
-	{
-		free(cub3d->img);
 		free(cub3d->mlx);
 		cub3d_error("image", 1, cub3d);
 	}

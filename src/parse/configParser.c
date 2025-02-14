@@ -34,6 +34,7 @@ int	load_animation(t_list **frames, char *path)
 		{
 			tmp = ft_strdup(path);
 			file_path = ft_strjoin(tmp, ent->d_name);
+			printf("file_path: %s\n", file_path);
 			if (!file_path)
 				return (free(tmp), EXIT_FAILURE);
 			ft_lstadd_back(frames, ft_lstnew(mlx_load_png(file_path)));
@@ -119,6 +120,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 	tmp = ft_strtrim(line, " \n");
 	if (!tmp)
 		cub3d_error("malloc", 1, cub3d);
+	printf("tmp: %s\n", tmp);
 	ret = 0;
 	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
 		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp

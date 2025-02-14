@@ -61,20 +61,20 @@ int	transp(uint32_t color)
 
 void	transparent_pixel(uint8_t *pixel, uint32_t color)
 {
-	int			alpha;
+	uint32_t	alpha;
 	uint32_t	tmp;
 
-	alpha = 0xff - transp(color);
-	tmp = *pixel * (255 - alpha);
+	alpha = color >> 24;
+	tmp = *pixel * (0xff - alpha);
 	tmp += (color & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
+	tmp = (tmp + 0x7f) / 0xff;
 	*pixel = tmp;
-	tmp = *++pixel * (255 - alpha);
-	tmp += (color >> 8 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
+	tmp = *++pixel * (0xff - alpha);
+	tmp += ((color >> 8) & 0xff) * alpha;
+	tmp = (tmp + 0x7f) / 0xff;
 	*pixel = tmp;
-	tmp = *++pixel * (255 - alpha);
-	tmp += (color >> 16 & 0xff) * alpha;
-	tmp = (tmp + 127) / 255;
+	tmp = *++pixel * (0xff - alpha);
+	tmp += ((color >> 16) & 0xff) * alpha;
+	tmp = (tmp + 0x7f) / 0xff;
 	*pixel = tmp;
 }

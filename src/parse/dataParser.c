@@ -35,4 +35,5 @@ void	parse(t_cub3d *cub3d, char *file)
 		cub3d_error("Invalid map", 1, cub3d);
 	close(fd);
 	parse_player(cub3d);
+	create_map_image(cub3d);
 }

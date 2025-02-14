@@ -51,10 +51,12 @@ typedef struct s_cub3d
 	t_player		player;
 	t_player		player_old;
 	mlx_image_t		*img;
-	mlx_image_t		*img_hands;
+	mlx_texture_t	*img_map;
+	mlx_texture_t	*img_hands;
 	mlx_texture_t	*textures[5];
 	int				mouse_down;
 	int				hand_playing;
+	int				slow_count;
 	int				frames_shown;
 	int32_t			old_x;
 	int32_t			old_y;
