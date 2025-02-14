@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   quatlib.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/12 10:25:18 by nulsuga          ###   ########.fr       */
+/*   Created: 2025/02/14 10:45:20 by iestero-          #+#    #+#             */
+/*   Updated: 2025/02/14 10:45:23 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef QUATLIB_H
 # define QUATLIB_H
