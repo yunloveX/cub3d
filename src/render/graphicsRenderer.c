@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:00:04 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:57:49 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	render(t_cub3d *cub3d)
 	double	dist;
 	double	tx_h;
 
-	memset(cub3d->img->pixels, 0, WIDTH * HEIGHT * sizeof(uint32_t));
 	h = -WIDTH / 2 - 1;
 	while (++h < WIDTH / 2)
 	{
