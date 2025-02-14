@@ -38,6 +38,7 @@ void		rotate_horizontal(t_cub3d *cub3d, double xpos);
 void		move(t_cub3d *cub3d, double step);
 
 /* DRAW UTILS */
+void		put_map_dot(t_cub3d *cub3d, int x, int y, int color);
 void		drawline(t_cub3d *cub3d, double tx_h, double dist,
 				int side_height[2]);
 
@@ -59,6 +60,7 @@ void		locate_cam(t_cub3d *cub3d);
 void		player_equal(t_player *player_to, t_player *player_from);
 
 /* IMAGES UTILS */
+void		create_map_image(t_cub3d *cub3d);
 void		blend_images(mlx_image_t *dst, uint32_t x_y[2],
 				mlx_texture_t *src, int scale);
 void		sprite(t_cub3d *cub3d);

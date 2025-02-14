@@ -12,7 +12,28 @@
 
 #include "utils.h"
 
-uint8_t	darkness(int y, int height)
+void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
+{
+	int		i;
+	int		j;
+
+	x++;
+	y++;
+	i = 0;
+	while (i < MAP_SCALE)
+	{
+		j = 0;
+		while (j < MAP_SCALE)
+		{
+			transparent_pixel(cub3d->img->pixels + 4 * ((y * MAP_SCALE + j)
+					* WIDTH + x * MAP_SCALE + i), color);
+			j++;
+		}
+		i++;
+	}
+}
+
+static uint8_t	darkness(int y, int height)
 {
 	uint8_t		dark_y;
 
@@ -25,7 +46,7 @@ uint8_t	darkness(int y, int height)
 	return (dark_y);
 }
 
-void	light_part(uint32_t *color, uint8_t fraction)
+static void	light_part(uint32_t *color, uint8_t fraction)
 {
 	uint32_t	tmp;
 
@@ -43,7 +64,7 @@ void	light_part(uint32_t *color, uint8_t fraction)
 	*color = (*color & 0x00ffffff) | (tmp << 24);
 }
 
-uint32_t	pixel_color(t_cub3d *cub3d, double tx_h,
+static uint32_t	pixel_color(t_cub3d *cub3d, double tx_h,
 				double tx_v, int side)
 {
 	int				x;

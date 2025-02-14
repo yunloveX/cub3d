@@ -12,25 +12,7 @@
 
 #include "cub3d.h"
 
-static void	put_map_dot(t_cub3d *cub3d, int x, int y, int color)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < 5)
-	{
-		j = 0;
-		while (j < 5)
-		{
-			transparent_pixel(cub3d->img->pixels + 4 * ((y * 5 + j)
-					* WIDTH + x * 5 + i), color);
-			j++;
-		}
-		i++;
-	}
-}
-
+/*
 static void	show_map(t_cub3d *cub3d)
 {
 	int		x;
@@ -54,7 +36,7 @@ static void	show_map(t_cub3d *cub3d)
 			put_map_dot(cub3d, x + 1, y + 1, color);
 		}
 	}
-}
+}*/
 
 void	render(t_cub3d *cub3d)
 {
@@ -74,9 +56,10 @@ void	render(t_cub3d *cub3d)
 	if (side < 0)
 	{
 		player_equal(&cub3d->player, &cub3d->player_old);
+		render(cub3d);
 		return ;
 	}
 	player_equal(&cub3d->player_old, &cub3d->player);
-	cub3d->frames_shown++;
-	show_map(cub3d);
+	blend_images(cub3d->img, (uint32_t [2]){0, 0}, cub3d->img_map, MAP_SCALE);
+	put_map_dot(cub3d, cub3d->player.pos.i, -cub3d->player.pos.j, 0xff0000ff);
 }

@@ -34,6 +34,7 @@ void	parse(t_cub3d *cub3d, char *file)
 		cub3d_error("Error\nMissing options", 1, cub3d);
 	if (parse_map(fd, &cub3d->map) == EXIT_FAILURE)
 		cub3d_error("Error\nInvalid map", 1, cub3d);
+	create_map_image(cub3d);
 	close(fd);
 	parse_player(cub3d);
 }

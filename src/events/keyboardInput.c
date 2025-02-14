@@ -17,7 +17,11 @@ void	toggle_door(t_cub3d *cub3d, int x, int y)
 	if (x >= 0 && y >= 0 && x < cub3d->map.width && y < cub3d->map.height)
 	{
 		if (cub3d->map.grid[y][x] == 'D')
+		{
 			cub3d->map.door_states[y][x] ^= 1;
+			((uint32_t *)cub3d->img_map->pixels)
+			[(y + 1) * cub3d->img_map->width + (x + 1)] ^= 0x00c000c0;
+		}
 	}
 }
 
@@ -36,7 +40,7 @@ void	check_door_interaction(t_cub3d *cub3d)
 	else
 	{
 		side = raycast(cub3d, 1, &tx_h, &dist);
-		if (side != 4 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1)
+		if (side != 4 && side != -1 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1)
 			toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
 	}
 }
