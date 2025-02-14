@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:36:48 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 09:56:30 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:10:57 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	parse(t_cub3d *cub3d, char *file)
 	}
 	free(line);
 	if (options < 8)
-		cub3d_error("Missing options", 1, cub3d);
+		cub3d_error("Error\nMissing options", 1, cub3d);
 	if (parse_map(fd, &cub3d->map) == EXIT_FAILURE)
-		cub3d_error("Invalid map", 1, cub3d);
+		cub3d_error("Error\nInvalid map", 1, cub3d);
 	close(fd);
 	parse_player(cub3d);
 }

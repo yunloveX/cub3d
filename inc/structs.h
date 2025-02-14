@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:01:04 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:05:50 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,25 @@ typedef struct s_player
 
 typedef struct s_cub3d
 {
+	void			*win;
 	mlx_t			*mlx;
 	t_map			map;
 	t_list			*hand_frame;
 	t_list			**hand_texture;
+	int32_t			old_x;
+	int32_t			old_y;
 	t_colors		colors;
 	t_player		player;
 	t_player		player_old;
 	mlx_image_t		*img;
-	mlx_texture_t	*img_hands;
 	mlx_texture_t	*textures[5];
 	int				mouse_down;
 	int				hand_playing;
 	int				slow_count;
 	int				frames_shown;
-	int32_t			old_x;
-	int32_t			old_y;
+	int				temp_door_x;
+	int				temp_door_y;
 	double			jumps[3];
-	void			*win;
-	int     		temp_door_x;
-    int     		temp_door_y;
 }	t_cub3d;
 
 #endif

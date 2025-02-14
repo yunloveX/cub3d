@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 08:55:34 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:07:46 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	parse_options(char *line, t_cub3d *cub3d)
 	tmp = ft_strtrim(line, " \n");
 	if (!tmp)
 		cub3d_error("malloc", 1, cub3d);
-	printf("tmp: %s\n", tmp);
 	ret = 0;
 	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
 		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
