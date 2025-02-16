@@ -6,7 +6,7 @@
 #    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/16 12:55:17 by nulsuga          ###   ########.fr        #
+#    Updated: 2025/02/16 17:18:03 by nulsuga          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,7 +129,6 @@ UTILS_FILES		=	camera.c				\
 
 EVENT_FILES 	= 	gameLoop.c				\
 					keyboardInput.c			\
-					mouseInput.c			\
 					windowClose.c			\
 
 
