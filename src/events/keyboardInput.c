@@ -40,8 +40,14 @@ void	check_door_interaction(t_cub3d *cub3d)
 	else
 	{
 		side = raycast(cub3d, 1, &tx_h, &dist);
-		if (side != 4 && side != -1 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1)
-			toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
+		if (side != 4 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1
+			&& (abs((int)(cub3d->player.pos.i - cub3d->temp_door_x - 0.5)) > 0.5
+			|| abs((int)(-cub3d->player.pos.j - cub3d->temp_door_y - 0.5)) > 0.5))
+			{
+				printf("player pos: %f, %f\n", cub3d->player.pos.i, -cub3d->player.pos.j);
+				printf("door pos: %d, %d\n", cub3d->temp_door_x, cub3d->temp_door_y);
+				toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
+			}
 	}
 }
 

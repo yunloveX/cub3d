@@ -13,8 +13,8 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define WIDTH 2400
-# define HEIGHT 1280
+# define WIDTH 1200
+# define HEIGHT 640
 # define CAM_DIST WIDTH
 # define CUBE_EDGE 4800
 # define FAR 1000000.0
@@ -25,6 +25,6 @@
 # define FRAME_HEIGHT 102
 # define SPRITE_SCALE (2 * WIDTH / 1200)
 # define MAP_SCALE (5 * WIDTH / 1200)
-# define SLOW_SPRITE 20
+# define SLOW_SPRITE 5
 
 #endif
