@@ -31,4 +31,4 @@ COPY . .
 RUN make
 
 # Set default command to run the program
-CMD ["./cub3d", "./assets/maps/t1.cub"]
+CMD ["./cub3d", "./assets/maps/correct/t1.cub"]

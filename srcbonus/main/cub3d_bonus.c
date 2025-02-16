@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   constants.h                                        :+:      :+:    :+:   */
+/*   cub3d_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:00:42 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/16 13:02:24 by nulsuga          ###   ########.fr       */
+/*   Created: 2024/06/15 11:38:58 by yunlovex          #+#    #+#             */
+/*   Updated: 2025/02/16 12:59:13 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONSTANTS_H
-# define CONSTANTS_H
+#include "cub3d_bonus.h"
 
-# define WIDTH 1200
-# define HEIGHT 640
-# define CAM_DIST WIDTH
-# define CUBE_EDGE 4800
-# define FAR 1000000.0
-# define TOLERANCE 0.0000001
-# define NO_PLAYER -1
+int	main(int argc, char **argv)
+{
+	t_cub3d	cub3d;
 
-# define FRAME_WIDTH 102
-# define FRAME_HEIGHT 102
-# define SPRITE_SCALE 2
-# define MAP_SCALE 5
-# define SLOW_SPRITE 5
-
-#endif
+	if (argc != 2 || !argv)
+		printf("Error\nInvalid number of arguments\n");
+	else
+	{
+		init(&cub3d);
+		parse(&cub3d, argv[1]);
+		render(&cub3d);
+		cub3d.hand_frame = *(cub3d.hand_texture);
+		mlx_loop(cub3d.mlx);
+		mlx_terminate(cub3d.mlx);
+	}
+	return (0);
+}

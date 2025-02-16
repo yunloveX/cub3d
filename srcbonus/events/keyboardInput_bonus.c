@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keyboardInput.c                                    :+:      :+:    :+:   */
+/*   keyboardInput_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:52:37 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/16 12:46:27 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/16 12:56:09 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "events.h"
+#include "events_bonus.h"
 
 void	toggle_door(t_cub3d *cub3d, int x, int y)
 {

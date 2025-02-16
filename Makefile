@@ -6,7 +6,7 @@
 #    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/13 08:33:01 by nulsuga          ###   ########.fr        #
+#    Updated: 2025/02/16 12:55:17 by nulsuga          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -133,11 +133,11 @@ EVENT_FILES 	= 	gameLoop.c				\
 					windowClose.c			\
 
 
-SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 	\
+SRCS_FILES	= 	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES)) 		\
 				$(addprefix $(RENDER_DIR)/, $(RENDER_FILES)) 	\
-				$(addprefix $(UTILS_DIR)/, $(UTILS_FILES)) 	\
-				$(addprefix $(PARSE_DIR)/, $(PARSE_FILES)) 	\
-				$(addprefix $(EVENT_DIR)/, $(EVENT_FILES)) 	\
+				$(addprefix $(UTILS_DIR)/, $(UTILS_FILES)) 		\
+				$(addprefix $(PARSE_DIR)/, $(PARSE_FILES)) 		\
+				$(addprefix $(EVENT_DIR)/, $(EVENT_FILES)) 		\
 				$(addprefix $(INIT_DIR)/, $(INIT_FILES)) 		\
 
 SRCS 		=	$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
@@ -150,23 +150,46 @@ OBJ_MAIN	=	$(addprefix $(OBJ_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_FILES:.c=.o
 
 # Source Bonus Files
 
-MAIN_BONUS_FILES	=	
+MAIN_FILES_BONUS		=	cub3d_bonus.c				\
 
-PARSE_BONUS_FILES	=	
+INIT_FILES_BONUS		=	systemInit_bonus.c			\
 
-RENDER_BONUS_FILES	=	
+PARSE_FILES_BONUS		=	configParser_bonus.c		\
+							mapParser_bonus.c			\
+							dataParser_bonus.c			\
+							playerConfig_bonus.c		\
 
-UTILS_BONUS_FILES	=	
+RENDER_FILES_BONUS		=	graphicsRenderer_bonus.c	\
 
-SRCSBONUS_FILES		=	$(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES)) 		\
-						$(addprefix $(RENDER_DIR)/, $(RENDER_BONUS_FILES)) 	\
-						$(addprefix $(UTILS_DIR)/, $(UTILS_BONUS_FILES)) 	\
-						$(addprefix $(PARSE_DIR)/, $(PARSE_BONUS_FILES)) 	\
+UTILS_FILES_BONUS		=	camera_bonus.c				\
+							colorUtils_bonus.c			\
+							errorHandler_bonus.c		\
+							stringUtils_bonus.c			\
+							imageLoader_bonus.c			\
+							eventHandler_bonus.c		\
+							mapUtils_bonus.c			\
+							raycastUtils_bonus.c		\
+							wallUtils_bonus.c			\
+							drawUtils_bonus.c			\
+
+EVENT_FILES_BONUS 		= 	gameLoop_bonus.c			\
+							keyboardInput_bonus.c		\
+							mouseInput_bonus.c			\
+							windowClose_bonus.c			\
+
+SRCSBONUS_FILES		=	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES_BONUS)) 			\
+						$(addprefix $(RENDER_DIR)/, $(RENDER_FILES_BONUS)) 		\
+						$(addprefix $(UTILS_DIR)/, $(UTILS_FILES_BONUS)) 		\
+						$(addprefix $(PARSE_DIR)/, $(PARSE_FILES_BONUS)) 		\
+						$(addprefix $(EVENT_DIR)/, $(EVENT_FILES_BONUS)) 		\
+						$(addprefix $(INIT_DIR)/, $(INIT_FILES_BONUS)) 			\
 
 SRCSBONUS 			=	$(addprefix $(SRCBNS_DIR)/, $(SRCSBONUS_FILES))
 OBJSBONUS 			=	$(addprefix $(OBJBNS_DIR)/, $(SRCSBONUS_FILES:.c=.o))
-DIRSBONUS			=	$(OBJBNS_DIR) $(addprefix $(OBJBNS_DIR)/, $(RENDER_DIR) $(UTILS_DIR) $(MAIN_DIR) $(PARSE_DIR))
-
+DIRSBONUS			=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, 		\
+						$(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) 		\
+						$(RENDER_DIR) $(EVENT_DIR) $(INIT_DIR))
+						
 OBJBONUS_MAIN		=	$(addprefix $(OBJBNS_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES:.c=.o)))
 
 # Tests
@@ -179,11 +202,11 @@ TESTSOBJS				=	$(addprefix $(TESTS_DIR_OBJ)/, $(TESTS_FILES:.c=.o))
 
 # Rules
 
-all:				$(NAME)
+all:	$(NAME)
 
-bonus:				$(BONUS)
+bonus:	$(BONUS)
 
-test:				$(TESTS_BINARIES)
+test:	$(TESTS_BINARIES)
 
 tclean:
 	@$(RM) $(TESTS_BINARIES)
@@ -205,19 +228,62 @@ fclean:				clean
 	$(RM) $(BONUS)
 	@echo "---- $(YELLOW)Binary files deleted. $(CHECK)$(NC) ----"
 
-re:					fclean all
+re:		fclean all
 
-sre:			clean all
+sre:	clean all
 
 # Mandatory Part Targets
+
+$(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(QUAT) $(MINILIBX)
+	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
+	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
 
 $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
 	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(QUAT) $(MINILIBX)
-	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
-	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"	
+$(LIBCUB3D): 		$(OBJS)
+	@$(AR) $(ARFLAGS) $@ $?
+	@echo "\n   $(CHECK) $(GREEN)Library created.$(NC)"
+
+$(DIRS):
+	@clear
+	@echo $(MANDATORY_PART)
+	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)libCub3D$(NC)"
+	@$(MKDIR) $(DIRS)
+
+
+# Bonus Part Targets
+
+$(BONUS):				$(OBJBONUS_MAIN) $(LIBFRACTOL_BONUS) $(LIBFT) $(MINILIBX)
+	@$(CC) $(OBJBONUS_MAIN) $(LDFLAGS_BONUS) -o $@
+	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
+
+$(OBJBNS_DIR)/%.o:		$(SRCBNS_DIR)/%.c | $(DIRSBONUS) $(LIBS_DIR)
+	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
+	@$(CC) $(CFLAGS_BONUS) -c $< -o $@				
+
+$(LIBCUB3D_BONUS): 		$(OBJSBONUS)
+	@$(AR) $(ARFLAGS) $@ $?
+	@echo "\n   $(CHECK) $(GREEN)Library created.$(NC)"
+
+$(DIRSBONUS):
+	@clear
+	@echo $(BONUS_PART)
+	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)libCub3D_bonus$(NC)"
+	@$(MKDIR) $(DIRSBONUS)
+
+# Tests Targets
+
+$(TESTS_DIR_OBJ)/%.o:	$(TESTS_DIR_SRC)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(TESTS_BINARIES):	$(TESTSOBJS)
+	@$(CC) $< $(LDFLAGS) -o $@ 
+	@echo "---------- $(CHECK) $(GREEN)Binary created.$(NC) ----------"
+
+
+# Additional Rules
 
 $(LIBFT):
 	@make -s -C $(LIBFT_DIR)
@@ -231,48 +297,8 @@ $(MINILIBX):
 	make -C $(MINILIBX_BUILD) -j4
 	echo "   $(CHECK) $(GREEN)Library created.$(NC)"
 
-$(LIBCUB3D): 		$(OBJS)
-	@$(AR) $(ARFLAGS) $@ $?
-	@echo "\n   $(CHECK) $(GREEN)Library created.$(NC)"
-
-$(DIRS):
-	@clear
-	@echo $(MANDATORY_PART)
-	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)libCub3D$(NC)"
-	@$(MKDIR) $(DIRS)
-
 $(LIBS_DIR):
 	@$(MKDIR) $@
-
-
-# Bonus Part Targets
-
-$(OBJBNS_DIR)/%.o:		$(SRCBNS_DIR)/%.c | $(DIRSBONUS) $(LIBS_DIR)
-	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
-	@$(CC) $(CFLAGS_BONUS) -c $< -o $@				
-
-$(LIBFRACTOL_BONUS): 		$(OBJSBONUS)
-	@$(AR) $(ARFLAGS) $@ $?
-	@echo "\n   $(CHECK) $(GREEN)Library created.$(NC)"
-
-$(DIRSBONUS):
-	@clear
-	@echo $(BONUS_PART)
-	@echo "\n   ---> $(BLUE)Creating:\t$(LIGHT_GRAY)libFractolBonus$(NC)"
-	@$(MKDIR) $(DIRSBONUS)
-
-$(BONUS):				$(OBJBONUS_MAIN) $(LIBFRACTOL_BONUS) $(LIBFT) $(MINILIBX)
-	@$(CC) $(OBJBONUS_MAIN) $(LDFLAGS_BONUS) -o $@
-	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
-
-# Tests Targets
-
-$(TESTS_DIR_OBJ)/%.o:	$(TESTS_DIR_SRC)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(TESTS_BINARIES):	$(TESTSOBJS)
-	@$(CC) $< $(LDFLAGS) -o $@ 
-	@echo "---------- $(CHECK) $(GREEN)Binary created.$(NC) ----------"
 	
 
 .SILENT:			clean fclean
