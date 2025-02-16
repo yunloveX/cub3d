@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:16:52 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/12 10:52:15 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:13:43 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ char	map(t_cub3d *cub3d, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= cub3d->map.width || y >= cub3d->map.height)
 		return ('1');
-	if (cub3d->map.grid[y][x] == 'D')
-	{
-		if (cub3d->map.door_states[y][x] == 0)
-			return ('0');
-		else
-			return ('1');
-	}
 	return (cub3d->map.grid[y][x]);
 }
 

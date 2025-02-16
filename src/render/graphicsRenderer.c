@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   graphicsRenderer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:57:49 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:12:20 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-static void	show_map(t_cub3d *cub3d)
-{
-	int		x;
-	int		y;
-	int		color;
-
-	y = -2;
-	while (++y < cub3d->map.height + 1)
-	{
-		x = -2;
-		while (++x < cub3d->map.width + 1)
-		{
-			if (x == (int) cub3d->player.pos.i
-				&& y == (int) -cub3d->player.pos.j)
-				color = 0xff0000ff;
-			else if (x < 0 || x == cub3d->map.width || y < 0
-				|| y == cub3d->map.height || cub3d->map.grid[y][x] != '1')
-				color = 0xffffffff;
-			else
-				color = 0xff000000;
-			put_map_dot(cub3d, x + 1, y + 1, color);
-		}
-	}
-}*/
 
 void	render(t_cub3d *cub3d)
 {

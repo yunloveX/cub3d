@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapUtils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 09:50:12 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/14 08:41:42 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:13:21 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*skip_empty_lines(int fd)
 		if (ft_strchr(line, '1') || ft_strchr(line, '2')
 			|| ft_strchr(line, 'N') || ft_strchr(line, 'S')
 			|| ft_strchr(line, 'E') || ft_strchr(line, 'W')
-			|| ft_strchr(line, '0') || ft_strchr(line, 'D'))
+			|| ft_strchr(line, '0'))
 			break ;
 		free(line);
 		line = get_next_line(fd);
@@ -46,8 +46,7 @@ int	check_line(char *line)
 			&& line[x] != ' ' && line[x] != '0'
 			&& line[x] != '1' && line[x] != '2'
 			&& line[x] != 'N' && line[x] != 'S'
-			&& line[x] != 'E' && line[x] != 'W'
-			&& line[x] != 'D')
+			&& line[x] != 'E' && line[x] != 'W')
 			return (EXIT_FAILURE);
 		x++;
 	}
@@ -68,7 +67,7 @@ void	check_cell(char **grid, int y, int x, int height)
 	if (grid[y][x] == '1' || grid[y][x] == 'm' || grid[y][x] == ' ')
 		return ;
 	if (grid[y][x] != '0' && grid[y][x] != 'N' && grid[y][x] != 'S'
-		&& grid[y][x] != 'E' && grid[y][x] != 'W' && grid[y][x] != 'D')
+		&& grid[y][x] != 'E' && grid[y][x] != 'W')
 		return ;
 	if (y == 0 || y == height - 1 || x == 0 || x == (int)width - 1)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   configParser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:07:46 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:11:26 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static int	load_texture(char **path, mlx_texture_t *textures[5],
 {
 	mlx_texture_t	*texture;
 
-	if (!ft_strcmp(path[0], "HN"))
-		return (load_animation(hands, path[1]));
 	texture = mlx_load_png(path[1]);
 	if (!texture)
 		return (EXIT_FAILURE);
@@ -63,8 +61,6 @@ static int	load_texture(char **path, mlx_texture_t *textures[5],
 		textures[1] = texture;
 	else if (!ft_strcmp(path[0], "WE") && !textures[3])
 		textures[3] = texture;
-	else if (!ft_strcmp(path[0], "DO") && !textures[4])
-		textures[4] = texture;
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -121,8 +117,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 		cub3d_error("malloc", 1, cub3d);
 	ret = 0;
 	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
-		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp
-		|| ft_strnstr(tmp, "HN", 2) == tmp || ft_strnstr(tmp, "DO", 2) == tmp)
+		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
 		ret = parse_textures(tmp, cub3d->textures, cub3d->hand_texture);
 	else if (*tmp == 'F' || *tmp == 'C')
 		ret = parse_colors(tmp, &cub3d->colors);

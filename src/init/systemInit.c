@@ -6,7 +6,7 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/13 09:23:28 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:10:18 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,16 @@ static void	init_events(t_cub3d *cub3d)
 {
 	mlx_key_hook(cub3d->mlx, key_hook_function, cub3d);
 	mlx_loop_hook(cub3d->mlx, loop_hook_function, cub3d);
-	mlx_scroll_hook(cub3d->mlx, scroll_hook_function, cub3d);
-	mlx_mouse_hook(cub3d->mlx, mouse_hook_function, cub3d);
 	mlx_close_hook(cub3d->mlx, close_hook_function, cub3d);
 }
 
 static void	init_data(t_cub3d *cub3d)
 {
-	cub3d->hand_texture = (t_list **) malloc(sizeof(t_list *));
-	if (!cub3d->hand_texture)
-		cub3d_error("malloc", 1, cub3d);
-	cub3d->mouse_down = false;
-	cub3d->slow_count = 0;
 	cub3d->textures[0] = NULL;
 	cub3d->textures[2] = NULL;
 	cub3d->textures[1] = NULL;
 	cub3d->textures[3] = NULL;
 	cub3d->textures[4] = NULL;
-	cub3d->hand_frame = NULL;
-	cub3d->hand_playing = 0;
 	cub3d->map.grid = NULL;
 	cub3d->map.door_states = NULL;
 	cub3d->map.width = 0;

@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mapParser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:19:43 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 09:33:41 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:12:04 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	initialize_door_states(t_map *map)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < map->height)
-	{
-		map->door_states[y] = ft_calloc(map->width, sizeof(int));
-		x = 0;
-		while (map->grid[y][x] != '\0')
-		{
-			if (map->grid[y][x] == 'D')
-				map->door_states[y][x] = 1;
-			else
-				map->door_states[y][x] = -1;
-			x++;
-		}
-		y++;
-	}
-}
 
 static void	read_map_lines(int fd, t_map *map)
 {
@@ -65,6 +43,5 @@ int	parse_map(int fd, t_map *map)
 {
 	read_map_lines(fd, map);
 	map->door_states = ft_calloc(map->height * map->width, sizeof(int *));
-	initialize_door_states(map);
 	return (check_map(map->grid, map->height));
 }

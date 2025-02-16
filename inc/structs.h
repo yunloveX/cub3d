@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:59:26 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:05:50 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:17:18 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_cub3d
 	void			*win;
 	mlx_t			*mlx;
 	t_map			map;
-	t_list			*hand_frame;
-	t_list			**hand_texture;
 	int32_t			old_x;
 	int32_t			old_y;
 	t_colors		colors;
@@ -54,13 +52,9 @@ typedef struct s_cub3d
 	t_player		player_old;
 	mlx_image_t		*img;
 	mlx_texture_t	*img_map;
-	mlx_texture_t	*textures[5];
+	mlx_texture_t	*textures[4];
 	int				mouse_down;
-	int				hand_playing;
-	int				slow_count;
 	int				frames_shown;
-	int				temp_door_x;
-	int				temp_door_y;
 	double			jumps[3];
 }	t_cub3d;
 

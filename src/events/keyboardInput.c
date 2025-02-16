@@ -6,62 +6,19 @@
 /*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:52:37 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/16 12:46:27 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:06:57 by nulsuga          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "events.h"
-
-void	toggle_door(t_cub3d *cub3d, int x, int y)
-{
-	if (x >= 0 && y >= 0 && x < cub3d->map.width && y < cub3d->map.height)
-	{
-		if (cub3d->map.grid[y][x] == 'D')
-		{
-			cub3d->map.door_states[y][x] ^= 1;
-			((uint32_t *)cub3d->img_map->pixels)
-			[(y + 1) * cub3d->img_map->width + (x + 1)] ^= 0x00c000c0;
-		}
-	}
-}
-
-// Call this when player presses 'E'
-void	check_door_interaction(t_cub3d *cub3d)
-{
-	double	tx_h;
-	double	dist;
-	int		side;
-
-	cub3d->temp_door_x = -1;
-	cub3d->temp_door_y = -1;
-	side = raycast(cub3d, 0, &tx_h, &dist);
-	if (side == 4 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1)
-		toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
-	else
-	{
-		side = raycast(cub3d, 1, &tx_h, &dist);
-		if (side != 4 && cub3d->temp_door_x != -1 && cub3d->temp_door_y != -1
-			&& (abs((int)(cub3d->player.pos.i - cub3d->temp_door_x - 0.5)) > 0.5
-			|| abs((int)(-cub3d->player.pos.j - cub3d->temp_door_y - 0.5))
-				> 0.5))
-			toggle_door(cub3d, cub3d->temp_door_x, cub3d->temp_door_y);
-	}
-}
 
 void	special_key_function(mlx_key_data_t key_data, void *param)
 {
 	t_cub3d	*cub3d;
 
 	cub3d = (t_cub3d *)param;
-	if (key_data.key == MLX_KEY_R)
-	{
-		cub3d->hand_frame = *(cub3d->hand_texture);
-		cub3d->hand_playing ^= 1;
-	}
 	else if (key_data.key == MLX_KEY_ESCAPE)
 		close_hook_function(cub3d);
-	else if (key_data.key == MLX_KEY_E && key_data.action == MLX_PRESS)
-		check_door_interaction(cub3d);
 	else
 		return ;
 }
