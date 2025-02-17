@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:10:44 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/14 10:00:52 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:44:01 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,6 @@ int			ft_strcmp(char *s1, char *s2);
 void		locate_pos(t_cub3d *cub3d);
 void		locate_cam(t_cub3d *cub3d);
 void		player_equal(t_player *player_to, t_player *player_from);
-
-/* IMAGES UTILS */
-void		create_map_image(t_cub3d *cub3d);
-void		blend_images(mlx_image_t *dst, uint32_t x_y[2],
-				mlx_texture_t *src, int scale);
-void		sprite(t_cub3d *cub3d);
 
 /* ERROR UTILS */
 void		cub3d_error(char *message, int error, t_cub3d *cub3d);

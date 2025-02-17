@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphicsRenderer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:16:50 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/16 17:12:20 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/17 08:37:09 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,4 @@ void	render(t_cub3d *cub3d)
 		return ;
 	}
 	player_equal(&cub3d->player_old, &cub3d->player);
-	blend_images(cub3d->img, (uint32_t [2]){0, 0}, cub3d->img_map, MAP_SCALE);
-	put_map_dot(cub3d, cub3d->player.pos.i, -cub3d->player.pos.j, 0xff0000ff);
 }

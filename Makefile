@@ -6,7 +6,7 @@
 #    By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/17 08:24:42 by iestero-         ###   ########.fr        #
+#    Updated: 2025/02/17 08:36:21 by iestero-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,6 @@ UTILS_FILES		=	camera.c				\
 					colorUtils.c			\
 					errorHandler.c			\
 					stringUtils.c			\
-					imageLoader.c			\
 					eventHandler.c			\
 					mapUtils.c				\
 					raycastUtils.c			\
@@ -237,7 +236,7 @@ $(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(QUAT) $(MINILIBX)
 	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
 
-$(OBJ)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
+$(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
 	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
 	@$(CC) $(CFLAGS) -c $< -o $@
 

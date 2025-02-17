@@ -6,44 +6,11 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/17 08:07:05 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:30:54 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#include <dirent.h>
-#include <stdlib.h>
-#include <string.h>
-
-int	load_animation(t_list **frames, char *path)
-{
-	DIR				*dir;
-	struct dirent	*ent;
-	char			*file_path;
-	char			*tmp;
-
-	dir = opendir(path);
-	if (!dir)
-		return (EXIT_FAILURE);
-	ent = readdir(dir);
-	*frames = NULL;
-	while (ent != NULL)
-	{
-		if (ft_strnstr(ent->d_name, ".png", ft_strlen(ent->d_name)))
-		{
-			tmp = ft_strdup(path);
-			file_path = ft_strjoin(tmp, ent->d_name);
-			if (!file_path)
-				return (free(tmp), EXIT_FAILURE);
-			ft_lstadd_back(frames, ft_lstnew(mlx_load_png(file_path)));
-			free(file_path);
-		}
-		ent = readdir(dir);
-	}
-	closedir(dir);
-	return (EXIT_SUCCESS);
-}
 
 static int	load_texture(char **path, mlx_texture_t *textures[5])
 {
