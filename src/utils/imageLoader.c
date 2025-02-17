@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:30:25 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:01:37 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:06:21 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,4 @@ void	blend_images(mlx_image_t *dst, uint32_t position[2],
 		}
 		j++;
 	}
-}
-
-void	sprite(t_cub3d *cub3d)
-{
-	mlx_texture_t	*frame;
-	int				x_pos;
-	int				y_pos;
-
-	frame = cub3d->hand_frame->content;
-	x_pos = WIDTH / 2 - (frame->width / 2) * SPRITE_SCALE;
-	y_pos = HEIGHT - (frame->height) * SPRITE_SCALE;
-	blend_images(cub3d->img, (uint32_t [2]){x_pos, y_pos}, frame, SPRITE_SCALE);
 }

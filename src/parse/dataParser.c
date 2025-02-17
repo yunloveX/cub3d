@@ -6,7 +6,7 @@
 /*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:36:48 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/14 10:10:57 by iestero-         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:09:48 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	parse(t_cub3d *cub3d, char *file)
 		cub3d_error(file, 1, cub3d);
 	line = get_next_line(fd);
 	options = 0;
-	while (line && options < 8)
+	while (line && options < 6)
 	{
 		options += parse_options(line, cub3d);
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
-	if (options < 8)
+	if (options < 6)
 		cub3d_error("Error\nMissing options", 1, cub3d);
 	if (parse_map(fd, &cub3d->map) == EXIT_FAILURE)
 		cub3d_error("Error\nInvalid map", 1, cub3d);

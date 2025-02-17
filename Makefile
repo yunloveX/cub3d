@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+         #
+#    By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 10:56:39 by yunlovex          #+#    #+#              #
-#    Updated: 2025/02/16 17:18:03 by nulsuga          ###   ########.fr        #
+#    Updated: 2025/02/17 08:24:42 by iestero-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,16 +84,16 @@ INIT_DIR			=	init
 # Compilation Options
 
 LDLIBS				=	$(LIBCUB3D) $(LIBFT) $(MINILIBX) $(QUAT)
-LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT) $(MINILIBX)
+LDLIBS_BONUS		=	$(LIBCUB3D_BONUS) $(LIBFT) $(MINILIBX) $(QUAT)
 
 CC					=	gcc
 
 CFLAGS				=	-g  -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES) 
-CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -I$(MINILIBX_DIR) -O3 $(INCLUDES_BONUS)
+CFLAGS_BONUS		=	-g -Wall -Werror -Wextra -I/usr/include -O3 $(INCLUDES_BONUS)
 LDFLAGS				=   $(LDLIBS) -L$(MINILIBX_DIR) -L$(QUAT_DIR) -L/usr/lib -I$(MINILIBX_DIR) -I$(QUAT_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
-LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -I$(MINILIBX_DIR) -lXext -lX11 -lm -lz
+LDFLAGS_BONUS		=	$(LDLIBS_BONUS) -L$(MINILIBX_DIR) -L$(QUAT_DIR) -L/usr/lib -I$(MINILIBX_DIR) -I$(QUAT_DIR) -lglfw -ldl -lXext -lX11 -lm -lz
 INCLUDES			=	-I$(INC_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(addsuffix $(INC_DIR), $(QUAT_DIR)/) -I$(QUAT_INCLUDE) -I$(MINILIBX_INCLUDE)
-INCLUDES_BONUS		=	-I$(INCBONUS_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(MINILIBX_DIR)
+INCLUDES_BONUS		=	-I$(INCBONUS_DIR) -I$(addsuffix $(INC_DIR), $(LIBFT_DIR)/) -I$(addsuffix $(INC_DIR), $(QUAT_DIR)/) -I$(QUAT_INCLUDE) -I$(MINILIBX_INCLUDE)
 
 SANITIZE			=	-fsanitize=address
 
@@ -185,9 +185,9 @@ SRCSBONUS_FILES		=	$(addprefix $(MAIN_DIR)/, $(MAIN_FILES_BONUS)) 			\
 
 SRCSBONUS 			=	$(addprefix $(SRCBNS_DIR)/, $(SRCSBONUS_FILES))
 OBJSBONUS 			=	$(addprefix $(OBJBNS_DIR)/, $(SRCSBONUS_FILES:.c=.o))
-DIRSBONUS			=	$(OBJ_DIR)  $(addprefix $(OBJ_DIR)/, 		\
-						$(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) 		\
-						$(RENDER_DIR) $(EVENT_DIR) $(INIT_DIR))
+DIRSBONUS			=	$(OBJBNS_DIR)  $(addprefix $(OBJBNS_DIR)/, 				\
+							$(MAIN_DIR) $(UTILS_DIR) $(PARSE_DIR) 				\
+							$(RENDER_DIR) $(EVENT_DIR) $(INIT_DIR))
 						
 OBJBONUS_MAIN		=	$(addprefix $(OBJBNS_DIR)/, $(addprefix $(MAIN_DIR)/, $(MAIN_BONUS_FILES:.c=.o)))
 
@@ -237,7 +237,7 @@ $(NAME):			$(OBJ_MAIN) $(LIBCUB3D) $(LIBFT) $(QUAT) $(MINILIBX)
 	@$(CC) $(OBJ_MAIN) $(LDFLAGS) -o $@
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
 
-$(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
+$(OBJ)/%.o:		$(SRC_DIR)/%.c | $(DIRS) $(LIBS_DIR)
 	@printf "\r\r\t---> $(BLUE)Compiling:\t$(LIGHT_GRAY)$<$(NC)\033[K"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -254,7 +254,7 @@ $(DIRS):
 
 # Bonus Part Targets
 
-$(BONUS):				$(OBJBONUS_MAIN) $(LIBFRACTOL_BONUS) $(LIBFT) $(MINILIBX)
+$(BONUS):				$(OBJBONUS_MAIN) $(LIBCUB3D_BONUS) $(LIBFT) $(QUAT) $(MINILIBX)
 	@$(CC) $(OBJBONUS_MAIN) $(LDFLAGS_BONUS) -o $@
 	@echo "\n$(GREEN)The program is ready.$(SMILEY) $(CHECK)$(NC)"
 

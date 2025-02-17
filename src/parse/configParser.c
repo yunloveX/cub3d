@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   configParser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:20:07 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/16 17:11:26 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/17 08:07:05 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	load_animation(t_list **frames, char *path)
 	return (EXIT_SUCCESS);
 }
 
-static int	load_texture(char **path, mlx_texture_t *textures[5],
-	t_list **hands)
+static int	load_texture(char **path, mlx_texture_t *textures[5])
 {
 	mlx_texture_t	*texture;
 
@@ -66,8 +65,7 @@ static int	load_texture(char **path, mlx_texture_t *textures[5],
 	return (EXIT_SUCCESS);
 }
 
-static int	parse_textures(char *line, mlx_texture_t *textures[5],
-	t_list **hands)
+static int	parse_textures(char *line, mlx_texture_t *textures[5])
 {
 	char	**path;
 
@@ -78,7 +76,7 @@ static int	parse_textures(char *line, mlx_texture_t *textures[5],
 		return (double_free(path), 0);
 	if (path[2])
 		return (double_free(path), 0);
-	if (load_texture(path, textures, hands))
+	if (load_texture(path, textures))
 		return (double_free(path), 0);
 	return (double_free(path), 1);
 }
@@ -118,7 +116,7 @@ int	parse_options(char *line, t_cub3d *cub3d)
 	ret = 0;
 	if (ft_strnstr(tmp, "NO", 2) == tmp || ft_strnstr(tmp, "SO", 2) == tmp
 		|| ft_strnstr(tmp, "EA", 2) == tmp || ft_strnstr(tmp, "WE", 2) == tmp)
-		ret = parse_textures(tmp, cub3d->textures, cub3d->hand_texture);
+		ret = parse_textures(tmp, cub3d->textures);
 	else if (*tmp == 'F' || *tmp == 'C')
 		ret = parse_colors(tmp, &cub3d->colors);
 	free(tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboardInput.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:52:37 by nulsuga           #+#    #+#             */
-/*   Updated: 2025/02/16 17:06:57 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/17 08:05:45 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	special_key_function(mlx_key_data_t key_data, void *param)
 	t_cub3d	*cub3d;
 
 	cub3d = (t_cub3d *)param;
-	else if (key_data.key == MLX_KEY_ESCAPE)
+	if (key_data.key == MLX_KEY_ESCAPE)
 		close_hook_function(cub3d);
 	else
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   systemInit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nulsuga <nulsuga@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iestero- <iestero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:47:24 by yunlovex          #+#    #+#             */
-/*   Updated: 2025/02/16 17:10:18 by nulsuga          ###   ########.fr       */
+/*   Updated: 2025/02/17 08:08:14 by iestero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	init_data(t_cub3d *cub3d)
 	cub3d->textures[2] = NULL;
 	cub3d->textures[1] = NULL;
 	cub3d->textures[3] = NULL;
-	cub3d->textures[4] = NULL;
 	cub3d->map.grid = NULL;
 	cub3d->map.door_states = NULL;
 	cub3d->map.width = 0;
